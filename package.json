@@ -1,0 +1,31 @@
+{
+  "author": "Hasan Karahan",
+  "bin": {
+    "avalanche-cli": "avalanche-cli.sh"
+  },
+  "bugs": {
+    "url": "https://github.com/hsk81/avalanche-cli/issues"
+  },
+  "description": "A command line interface for Avalanche APIs",
+  "homepage": "https://github.com/hsk81/avalanche-cli#readme",
+  "keywords": [
+    "ava",
+    "avax",
+    "avalanche",
+    "blockchain",
+    "api",
+    "cli"
+  ],
+  "license": "BSD-3-Clause",
+  "name": "avalanche-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsk81/avalanche-cli.git"
+  },
+  "scripts": {
+    "postinstall": "./npm/postinstall.sh",
+    "postuninstall": "./npm/postuninstall.sh",
+    "test": "./avalanche-cli.test.sh"
+  },
+  "version": "0.0.0"
+}
