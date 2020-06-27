@@ -109,7 +109,7 @@ function rpc_params {
     printf '"subnetID":"%s",' "$AVA_SUBNET_ID" ;
     printf '"vmID":"%s",' "$AVA_VM_ID" ;
     printf '"name":"%s",' "$AVA_NAME" ;
-    printf '"payerNonce":%d,' "$AVA_PAYER_NONCE" ;
+    printf '"payerNonce":%s,' "$AVA_PAYER_NONCE" ;
     printf '"genesisData":"%s"' "$AVA_GENESIS_DATA" ;
     printf '}' ;
 }

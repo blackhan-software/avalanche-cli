@@ -85,7 +85,7 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"size":%d,' "$AVA_SIZE" ;
+    printf '"size":%s,' "$AVA_SIZE" ;
     if [ -n "$AVA_SUBNET_ID" ] ; then
         printf '"subnetID":"%s"' "$AVA_SUBNET_ID" ;
     else

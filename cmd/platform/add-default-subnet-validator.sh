@@ -8,6 +8,7 @@ source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
+source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 
 ###############################################################################
 ###############################################################################
@@ -18,7 +19,7 @@ function cli_help {
     usage+=" [-i|--id=\${AVA_ID}]" ;
     usage+=" [-b|--start-time=\${AVA_START_TIME}]" ;
     usage+=" [-e|--end-timer=\${AVA_END_TIME}]" ;
-    usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}]" ;
+    usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-@|--destination=\${AVA_DESTINATION}]" ;
     usage+=" [-r|--delegation-fee-rate=\${AVA_DELEGATION_FEE_RATE}]" ;
@@ -121,12 +122,12 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"id":"%s",' "$AVA_ID" ;
-    printf '"startTime":%d,' "$AVA_START_TIME" ;
-    printf '"endTime":%d,' "$AVA_END_TIME" ;
-    printf '"stakeAmount":%d,' "$AVA_STAKE_AMOUNT" ;
-    printf '"payerNonce":%d,' "$AVA_PAYER_NONCE" ;
+    printf '"startTime":%s,' "$AVA_START_TIME" ;
+    printf '"endTime":%s,' "$AVA_END_TIME" ;
+    printf '"stakeAmount":%s,' "$(si "$AVA_STAKE_AMOUNT")" ;
+    printf '"payerNonce":%s,' "$AVA_PAYER_NONCE" ;
     printf '"destination":"%s",' "$AVA_DESTINATION" ;
-    printf '"delegationFeeRate":%d' "$AVA_DELEGATION_FEE_RATE" ;
+    printf '"delegationFeeRate":%s' "$AVA_DELEGATION_FEE_RATE" ;
     printf '}' ;
 }
 

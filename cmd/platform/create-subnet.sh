@@ -104,8 +104,8 @@ function rpc_params {
     printf '"controlKeys":[' ; # shellcheck disable=SC2046
     join_by ',' $(map_by '"%s" ' "${AVA_CONTROL_KEYS[@]}") ;
     printf '],' ;
-    printf '"threshold":%d,' "$AVA_THRESHOLD" ;
-    printf '"payerNonce":%d' "$AVA_PAYER_NONCE" ;
+    printf '"threshold":%s,' "$AVA_THRESHOLD" ;
+    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
     printf '}' ;
 }
 

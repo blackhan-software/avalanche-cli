@@ -100,7 +100,7 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"to":"%s",' "$AVA_TO" ;
-    printf '"payerNonce":%d,' "$AVA_PAYER_NONCE" ;
+    printf '"payerNonce":%s,' "$AVA_PAYER_NONCE" ;
     printf '"username":"%s",' "$AVA_USERNAME" ;
     printf '"password":"%s"' "$AVA_PASSWORD" ;
     printf '}' ;

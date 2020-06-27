@@ -93,9 +93,9 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"amount":%d,' "$(si "$AVA_AMOUNT")" ;
+    printf '"amount":%s,' "$(si "$AVA_AMOUNT")" ;
     printf '"to":"%s",' "$AVA_TO" ;
-    printf '"payerNonce":%d' "$AVA_PAYER_NONCE" ;
+    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
     printf '}' ;
 }
 

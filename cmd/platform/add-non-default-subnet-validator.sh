@@ -115,10 +115,10 @@ function rpc_params {
     printf '{' ;
     printf '"id":"%s",' "$AVA_ID" ;
     printf '"subnetID":"%s",' "$AVA_SUBNET_ID" ;
-    printf '"startTime":%d,' "$AVA_START_TIME" ;
-    printf '"endTime":%d,' "$AVA_END_TIME" ;
-    printf '"weight":%d,' "$AVA_WEIGHT" ;
-    printf '"payerNonce":%d' "$AVA_PAYER_NONCE" ;
+    printf '"startTime":%s,' "$AVA_START_TIME" ;
+    printf '"endTime":%s,' "$AVA_END_TIME" ;
+    printf '"weight":%s,' "$AVA_WEIGHT" ;
+    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
     printf '}' ;
 }
 
