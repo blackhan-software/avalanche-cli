@@ -19,7 +19,7 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"platform.exportAVA",' ;
     expect_d+='"params":{' ;
-    expect_d+='"amount":999,' ;
+    expect_d+='"amount":1000000,' ;
     expect_d+='"to":"TO",' ;
     expect_d+='"payerNonce":3' ;
     expect_d+="}}'" ;
@@ -29,19 +29,19 @@ function check {
 }
 
 function test_platform__export_ava_1a {
-    check "$(RPC_ID=1 $(cmd) -# 999 -@ TO -% 3)" ;
+    check "$(RPC_ID=1 $(cmd) -# 1M -@ TO -% 3)" ;
 }
 
 function test_platform__export_ava_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=999 $(cmd) -@ TO -% 3)" ;
+    check "$(RPC_ID=1 AVA_AMOUNT=1M $(cmd) -@ TO -% 3)" ;
 }
 
 function test_platform__export_ava_1c {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 999 -% 3)" ;
+    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 1M -% 3)" ;
 }
 
 function test_platform__export_ava_1d {
-    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -# 999 -@ TO)" ;
+    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -# 1M -@ TO)" ;
 }
 
 ###############################################################################
