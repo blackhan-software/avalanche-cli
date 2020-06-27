@@ -148,7 +148,7 @@ function rpc_params {
     printf '{' ;
     printf '"name":"%s",' "$AVA_NAME" ;
     printf '"symbol":"%s",' "$AVA_SYMBOL" ;
-    printf '"denomination":%d,' "$AVA_DENOMINATION" ;
+    printf '"denomination":%s,' "$AVA_DENOMINATION" ;
     printf '"minterSets":[' ;
 
     # shellcheck disable=SC2046,SC2086

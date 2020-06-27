@@ -152,11 +152,11 @@ function rpc_params {
     printf '{' ;
     printf '"name":"%s",' "$AVA_NAME" ;
     printf '"symbol":"%s",' "$AVA_SYMBOL" ;
-    printf '"denomination":%d,' "$AVA_DENOMINATION" ;
+    printf '"denomination":%s,' "$AVA_DENOMINATION" ;
     printf '"initialHolders":[' ;
     # shellcheck disable=SC2046
     join_by ',' $( \
-        zip_by '{"address":"%s","amount":%d} ' \
+        zip_by '{"address":"%s","amount":%s} ' \
             "${AVA_ADDRESSES[@]}" "${AVA_AMOUNTS_SI[@]}") ;
     printf '],' ;
     printf '"username":"%s",' "$AVA_USERNAME" ;
