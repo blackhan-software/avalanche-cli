@@ -1,0 +1,4 @@
+.travis.yml
+*.test.bash
+*.test.json
+*.test.sh
