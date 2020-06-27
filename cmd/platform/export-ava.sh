@@ -8,6 +8,7 @@ source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
+source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 
 ###############################################################################
 ###############################################################################
@@ -15,7 +16,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
@@ -92,7 +93,7 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"amount":%d,' "$AVA_AMOUNT" ;
+    printf '"amount":%d,' "$(si "$AVA_AMOUNT")" ;
     printf '"to":"%s",' "$AVA_TO" ;
     printf '"payerNonce":%d' "$AVA_PAYER_NONCE" ;
     printf '}' ;
