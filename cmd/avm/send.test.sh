@@ -19,7 +19,7 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"avm.send",' ;
     expect_d+='"params":{' ;
-    expect_d+='"amount":999,' ;
+    expect_d+='"amount":1000,' ;
     expect_d+='"assetID":"ASSET_ID",' ;
     expect_d+='"to":"TO",' ;
     expect_d+='"username":"USERNAME",' ;
@@ -32,37 +32,37 @@ function check {
 
 function test_avm__send_1a {
     check "$(RPC_ID=1 $(cmd) \
-        -# 999 -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
+        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=999 $(cmd) \
+    check "$(RPC_ID=1 AVA_AMOUNT=1K $(cmd) \
         -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1c {
     check "$(RPC_ID=1 AVA_ASSET_ID=ASSET_ID $(cmd) \
-        -# 999 -@ TO -u USERNAME -p PASSWORD)" ;
+        -# 1K -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1d {
     check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) \
-        -# 999 -a ASSET_ID -@ TO -p PASSWORD)" ;
+        -# 1K -a ASSET_ID -@ TO -p PASSWORD)" ;
 }
 
 function test_avm__send_1e {
     check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) \
-        -# 999 -a ASSET_ID -@ TO -u USERNAME)" ;
+        -# 1K -a ASSET_ID -@ TO -u USERNAME)" ;
 }
 
 function test_avm__send_2a {
     check "$(RPC_ID=1 $(cmd) \
-        -# 999 -a ASSET_ID -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
+        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__send_2b {
     check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
-        -# 999 -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
+        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 
 ###############################################################################

@@ -20,7 +20,7 @@ function check {
     expect_d+='"method":"avm.exportAVA",' ;
     expect_d+='"params":{' ;
     expect_d+='"to":"TO",' ;
-    expect_d+='"amount":999,' ;
+    expect_d+='"amount":1000000000000000000,' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -30,33 +30,33 @@ function check {
 }
 
 function test_avm__export_ava_1a {
-    check "$(RPC_ID=1 $(cmd) -# 999 -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(RPC_ID=1 $(cmd) -# 1E -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=999 $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(RPC_ID=1 AVA_AMOUNT=1E $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1c {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 999 -u USERNAME -p PASSWORD)" ;
+    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 1E -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -# 999 -@ TO -p PASSWORD)" ;
+    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -# 1E -@ TO -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -# 999 -@ TO -u USERNAME)" ;
+    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -# 1E -@ TO -u USERNAME)" ;
 }
 
 function test_avm__export_ava_2a {
     check "$(RPC_ID=1 $(cmd) \
-        -# 999 -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
+        -# 1E -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__export_ava_2b {
     check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
-        -# 999 -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
+        -# 1E -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 
 ###############################################################################

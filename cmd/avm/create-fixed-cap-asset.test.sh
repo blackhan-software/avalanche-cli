@@ -23,8 +23,8 @@ function check {
     expect_d+='"symbol":"SYMBOL",' ;
     expect_d+='"denomination":0,' ;
     expect_d+='"initialHolders":[' ;
-    expect_d+='{"address":"A1","amount":111},' ;
-    expect_d+='{"address":"A2","amount":222}' ;
+    expect_d+='{"address":"A1","amount":1000000000},' ;
+    expect_d+='{"address":"A2","amount":2000000000000}' ;
     expect_d+='],' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
@@ -37,59 +37,59 @@ function check {
 function test_avm__create_fixed_cap_asset_1a {
     check "$(RPC_ID=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1b {
     check "$(RPC_ID=1 AVA_NAME=NAME $(cmd) \
         -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1c {
     check "$(RPC_ID=1 AVA_SYMBOL=SYMBOL $(cmd) \
         -n NAME -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1d {
     check "$(RPC_ID=1 AVA_DENOMINATION=0 $(cmd) \
         -n NAME -s SYMBOL -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1e {
     check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) \
         -n NAME -s SYMBOL -d 0 -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1f {
     check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME \
-        -@ A1 -# 111 -@ A2 -# 222)" ;
+        -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_2a {
     check "$(RPC_ID=1 AVA_ADDRESS_0=A1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -# 111 -@ A2 -# 222)" ;
+        -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_2b {
     check "$(RPC_ID=1 AVA_ADDRESS_0=A1 AVA_ADDRESS_1=A2 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -# 111 -# 222)" ;
+        -# 1G -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_3a {
-    check "$(RPC_ID=1 AVA_AMOUNT_0=111 $(cmd) \
+    check "$(RPC_ID=1 AVA_AMOUNT_0=1G $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -@ A2 -# 222)" ;
+        -@ A1 -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_3b {
-    check "$(RPC_ID=1 AVA_AMOUNT_0=111 AVA_AMOUNT_1=222 $(cmd) \
+    check "$(RPC_ID=1 AVA_AMOUNT_0=1G AVA_AMOUNT_1=2T $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -@ A2)" ;
 }
@@ -97,13 +97,13 @@ function test_avm__create_fixed_cap_asset_3b {
 function test_avm__create_fixed_cap_asset_4a {
     check "$(RPC_ID=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222 -b BC_ID)" BC_ID ;
+        -@ A1 -# 1G -@ A2 -# 2T -b BC_ID)" BC_ID ;
 }
 
 function test_avm__create_fixed_cap_asset_4b {
     check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
-        -@ A1 -# 111 -@ A2 -# 222 -b BC_ID)" BC_ID ;
+        -@ A1 -# 1G -@ A2 -# 2T -b BC_ID)" BC_ID ;
 }
 
 ###############################################################################
