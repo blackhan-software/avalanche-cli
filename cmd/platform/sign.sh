@@ -16,7 +16,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-t|--tx=\${AVA_TO}]" ;
-    usage+=" [-a|--signer=\${AVA_SIGNER}]" ;
+    usage+=" [-@|--signer=\${AVA_SIGNER}]" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;
     usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
@@ -31,7 +31,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-t" "--tx=" ) ;
-    options+=( "-a" "--signer=" ) ;
+    options+=( "-@" "--signer=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-N" "--node=" ) ;
@@ -43,7 +43,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:t:a:u:p:-:" OPT "$@"
+    while getopts ":hSVYN:t:@:u:p:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -55,7 +55,7 @@ function cli {
                 cli_options && exit 0 ;;
             t|tx)
                 AVA_TX="${OPTARG}" ;;
-            a|signer)
+            @|signer)
                 AVA_SIGNER="${OPTARG}" ;;
             u|username)
                 AVA_USERNAME="${OPTARG}" ;;

@@ -31,12 +31,12 @@ function check {
 
 function test_platform__sign_1a {
     check "$(RPC_ID=1 \
-        $(cmd) -t TX -a ADDRESS -u USERNAME -p PASSWORD)" ;
+        $(cmd) -t TX -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__sign_1b {
     check "$(RPC_ID=1 AVA_TX=TX \
-        $(cmd) -a ADDRESS -u USERNAME -p PASSWORD)" ;
+        $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__sign_1c {
@@ -46,12 +46,12 @@ function test_platform__sign_1c {
 
 function test_platform__sign_1d {
     check "$(RPC_ID=1 AVA_USERNAME=USERNAME \
-        $(cmd) -t TX -a ADDRESS -p PASSWORD)" ;
+        $(cmd) -t TX -@ ADDRESS -p PASSWORD)" ;
 }
 
 function test_platform__sign_1e {
     check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD \
-        $(cmd) -t TX -a ADDRESS -u USERNAME)" ;
+        $(cmd) -t TX -@ ADDRESS -u USERNAME)" ;
 }
 
 ###############################################################################
