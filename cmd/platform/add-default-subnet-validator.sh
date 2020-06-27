@@ -20,7 +20,7 @@ function cli_help {
     usage+=" [-e|--end-timer=\${AVA_END_TIME}]" ;
     usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
-    usage+=" [-d|--destination=\${AVA_DESTINATION}]" ;
+    usage+=" [-@|--destination=\${AVA_DESTINATION}]" ;
     usage+=" [-r|--delegation-fee-rate=\${AVA_DELEGATION_FEE_RATE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
@@ -38,7 +38,7 @@ function cli_options {
     options+=( "-e" "--end-time=" ) ;
     options+=( "-#" "--stake-amount=" ) ;
     options+=( "-%" "--payer-nonce=" ) ;
-    options+=( "-d" "--destination=" ) ;
+    options+=( "-@" "--destination=" ) ;
     options+=( "-r" "--delegation-fee-rate=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
@@ -49,7 +49,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:i:b:e:#:%:d:r:-:" OPT "$@"
+    while getopts ":hSVYN:i:b:e:#:%:@:r:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -69,7 +69,7 @@ function cli {
                 AVA_STAKE_AMOUNT="${OPTARG}" ;;
             %|payer-nonce)
                 AVA_PAYER_NONCE="${OPTARG}" ;;
-            d|destination)
+            @|destination)
                 AVA_DESTINATION="${OPTARG}" ;;
             r|delegation-fee-rate)
                 AVA_DELEGATION_FEE_RATE="${OPTARG}" ;;

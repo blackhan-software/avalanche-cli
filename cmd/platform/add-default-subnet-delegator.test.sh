@@ -34,37 +34,37 @@ function check {
 function test_platform__add_default_subnet_delegator_1a {
     check "$(RPC_ID=1 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1000000 -% 3 -d DESTINATION)" ;
+        -# 1000000 -% 3 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1b {
     check "$(RPC_ID=1 AVA_ID=ID $(cmd) \
         -b 2000000000 -e 3000000000 \
-        -# 1000000 -% 3 -d DESTINATION)" ;
+        -# 1000000 -% 3 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1c {
     check "$(RPC_ID=1 AVA_START_TIME=2000000000 $(cmd) \
         -i ID -e 3000000000 \
-        -# 1000000 -% 3 -d DESTINATION)" ;
+        -# 1000000 -% 3 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1d {
     check "$(RPC_ID=1 AVA_END_TIME=3000000000 $(cmd) \
         -i ID -b 2000000000 \
-        -# 1000000 -% 3 -d DESTINATION)" ;
+        -# 1000000 -% 3 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1e {
     check "$(RPC_ID=1 AVA_STAKE_AMOUNT=1000000 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -% 3 -d DESTINATION)" ;
+        -% 3 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1f {
     check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1000000 -d DESTINATION)" ;
+        -# 1000000 -@ DESTINATION)" ;
 }
 
 function test_platform__add_default_subnet_delegator_1g {
