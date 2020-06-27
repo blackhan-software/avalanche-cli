@@ -9,15 +9,15 @@ function si {
     local metric; metric="$(\
         [[ "$1" =~ $metric_rx ]] && printf '%s' "${BASH_REMATCH[1]}")"
     case "$metric" in
-        Y) printf '%d000000000000000000000000' "$number" ;;
-        Z) printf '%d000000000000000000000' "$number" ;;
-        E) printf '%d000000000000000000' "$number" ;;
-        P) printf '%d000000000000000' "$number" ;;
-        T) printf '%d000000000000' "$number" ;;
-        G) printf '%d000000000' "$number" ;;
-        M) printf '%d000000' "$number" ;;
-        K) printf '%d000' "$number" ;;
-        *) printf '%d' "$number" ;;
+        Y) printf '%s000000000000000000000000' "$number" ;;
+        Z) printf '%s000000000000000000000' "$number" ;;
+        E) printf '%s000000000000000000' "$number" ;;
+        P) printf '%s000000000000000' "$number" ;;
+        T) printf '%s000000000000' "$number" ;;
+        G) printf '%s000000000' "$number" ;;
+        M) printf '%s000000' "$number" ;;
+        K) printf '%s000' "$number" ;;
+        *) printf '%s' "$number" ;;
     esac
 }
 
