@@ -10,6 +10,7 @@ source "$CMD_SCRIPT/../../cli/command.sh" ;
 source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
+source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 
 ###############################################################################
 ###############################################################################
@@ -21,7 +22,7 @@ function cli_help {
     usage+=" [-s|--symbol=\${AVA_SYMBOL}]" ;
     usage+=" [-d|--denomination=\${AVA_DENOMINATION}]" ;
     usage+=" [-@|--address|--initial-holder-address=\${AVA_ADDRESS_\$IDX}]*" ;
-    usage+=" [-#|--amount|--initial-holder-amount=\${AVA_AMOUNT_\$IDX}]*" ;
+    usage+=" [-#|--amount|--initial-holder-amount=\${AVA_AMOUNT_\$IDX}[Y|Z|E|P|T|G|M|K]]*" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;
     usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
@@ -145,6 +146,9 @@ function rpc_method {
 }
 
 function rpc_params {
+    local -a AVA_AMOUNTS_SI=( $(for n in "${AVA_AMOUNTS[@]}" ; do
+        printf '%s ' "$(si "$n")" ;
+    done) ) ;
     printf '{' ;
     printf '"name":"%s",' "$AVA_NAME" ;
     printf '"symbol":"%s",' "$AVA_SYMBOL" ;
@@ -153,7 +157,7 @@ function rpc_params {
     # shellcheck disable=SC2046
     join_by ',' $( \
         zip_by '{"address":"%s","amount":%d} ' \
-            "${AVA_ADDRESSES[@]}" "${AVA_AMOUNTS[@]}") ;
+            "${AVA_ADDRESSES[@]}" "${AVA_AMOUNTS_SI[@]}") ;
     printf '],' ;
     printf '"username":"%s",' "$AVA_USERNAME" ;
     printf '"password":"%s"' "$AVA_PASSWORD" ;

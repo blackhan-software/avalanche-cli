@@ -10,6 +10,7 @@ source "$CMD_SCRIPT/../../cli/command.sh" ;
 source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
+source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 
 ###############################################################################
 ###############################################################################
@@ -17,7 +18,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVA_ASSET_ID}]" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
     usage+=" [-m|--minter=\${AVA_MINTER_\$IDX}]*" ;
@@ -115,7 +116,7 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"amount":%d,' "$AVA_AMOUNT" ;
+    printf '"amount":%d,' "$(si "$AVA_AMOUNT")" ;
     printf '"assetID":"%s",' "$AVA_ASSET_ID" ;
     printf '"to":"%s",' "$AVA_TO" ;
     printf '"minters":[' ;

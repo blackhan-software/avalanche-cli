@@ -8,6 +8,7 @@ source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
+source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 
 ###############################################################################
 ###############################################################################
@@ -16,7 +17,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;
     usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
@@ -107,7 +108,7 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"to":"%s",' "$AVA_TO" ;
-    printf '"amount":%d,' "$AVA_AMOUNT" ;
+    printf '"amount":%d,' "$(si "$AVA_AMOUNT")" ;
     printf '"username":"%s",' "$AVA_USERNAME" ;
     printf '"password":"%s"' "$AVA_PASSWORD" ;
     printf '}' ;
