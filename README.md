@@ -138,7 +138,7 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
   "lastReceived": "2020-06-27T04:16:38+02:00"
 }
 ```
-..where the `-S` (`--silent`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
+..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
 ## [Admin API](https://docs.ava.network/v1.0/en/api/admin)
 
@@ -372,7 +372,7 @@ $ AVA_YES_RUN_RPC=1 avalanche-cli info peers
 
 ### `${AVA_SILENT_RPC}` or `--silent-rpc` (`-S`)
 
-Can bu used to make a `curl` request with its corresponding `--silent` flag on &ndash; where by default this is *off*. However when *on*, this will *not* silence the actual reponse (if there is any)! This is useful when one for example wants to pipe the JSON response to a processor like [`jq`] (without getting annoyed by `curl`'s messages displayed on via `/dev/stderr`):
+Can bu used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual reponse (if there is any)! This is useful when one for example wants to pipe the JSON response to a processor like [`jq`] (without getting annoyed by `curl`'s messages displayed on via `/dev/stderr`):
 
 ```
 $ avalanche-cli info peers -YS | jq
@@ -386,7 +386,7 @@ $ AVA_SILENT_RPC=1 avalanche-cli info peers -Y | jq
 
 ### `${AVA_VERBOSE_RPC}` or `--verbose-rpc` (`-V`)
 
-Can bu used to make a `curl` request with its corresponding `--verbose` flag on &ndash; where by default this is *off*. This is useful, when one wants to get a detailed view of an ongoing request:
+Can bu used to make a `curl` request with its corresponding *verbose* flag on &ndash; where by default it is *off*. This is useful, when one wants to get a detailed view of an ongoing request:
 
 ```
 $ avalanche-cli info peers -YV
