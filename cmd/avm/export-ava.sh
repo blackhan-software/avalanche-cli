@@ -17,7 +17,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;
     usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;

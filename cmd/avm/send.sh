@@ -16,7 +16,7 @@ source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVA_ASSET_ID}]" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;

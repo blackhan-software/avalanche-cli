@@ -22,7 +22,7 @@ function cli_help {
     usage+=" [-s|--symbol=\${AVA_SYMBOL}]" ;
     usage+=" [-d|--denomination=\${AVA_DENOMINATION}]" ;
     usage+=" [-@|--address|--initial-holder-address=\${AVA_ADDRESS_\$IDX}]*" ;
-    usage+=" [-#|--amount|--initial-holder-amount=\${AVA_AMOUNT_\$IDX}[Y|Z|E|P|T|G|M|K]]*" ;
+    usage+=" [-#|--amount|--initial-holder-amount=\${AVA_AMOUNT_\$IDX}[E|P|T|G|M|K]]*" ;
     usage+=" [-u|--username=\${AVA_USERNAME}]" ;
     usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
