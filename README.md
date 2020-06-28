@@ -105,7 +105,7 @@ Please note, that the line above starts with an *empty space* (`$__export AVA_..
 
 ### User deletion
 
-Let's delete the previously created user:
+Let's delete the previously created user, where it is not required to provide the `-u` (`--username`) and `-p` (`--password`) options again, since the corresponding environment variables have been exported above:
 
 ```sh
 $ avalanche-cli keystore delete-user
