@@ -22,7 +22,7 @@ function check {
     expect_d+='"id":"ID",' ;
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
-    expect_d+='"stakeAmount":1000000000000000000000,' ;
+    expect_d+='"stakeAmount":1000,' ;
     expect_d+='"payerNonce":3,' ;
     expect_d+='"destination":"DESTINATION",' ;
     expect_d+='"delegationFeeRate":100000' ; ## 10%
@@ -35,29 +35,29 @@ function check {
 function test_platform__add_default_subnet_validator_1a {
     check "$(RPC_ID=1 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1Z -% 3 -@ DESTINATION -r 100000)" ;
+        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1b {
     check "$(RPC_ID=1 AVA_ID=ID $(cmd) \
         -b 2000000000 -e 3000000000 \
-        -# 1Z -% 3 -@ DESTINATION -r 100000)" ;
+        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1c {
     check "$(RPC_ID=1 AVA_START_TIME=2000000000 $(cmd) \
         -i ID -e 3000000000 \
-        -# 1Z -% 3 -@ DESTINATION -r 100000)" ;
+        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1d {
     check "$(RPC_ID=1 AVA_END_TIME=3000000000 $(cmd) \
         -i ID -b 2000000000 \
-        -# 1Z -% 3 -@ DESTINATION -r 100000)" ;
+        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1e {
-    check "$(RPC_ID=1 AVA_STAKE_AMOUNT=1Z $(cmd) \
+    check "$(RPC_ID=1 AVA_STAKE_AMOUNT=1K $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
         -% 3 -@ DESTINATION -r 100000)" ;
 }
@@ -65,19 +65,19 @@ function test_platform__add_default_subnet_validator_1e {
 function test_platform__add_default_subnet_validator_1f {
     check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1Z -@ DESTINATION -r 100000)" ;
+        -# 1K -@ DESTINATION -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1g {
     check "$(RPC_ID=1 AVA_DESTINATION=DESTINATION $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1Z -% 3 -r 100000)" ;
+        -# 1K -% 3 -r 100000)" ;
 }
 
 function test_platform__add_default_subnet_validator_1h {
     check "$(RPC_ID=1 AVA_DELEGATION_FEE_RATE=100000 $(cmd) \
         -i ID -b 2000000000 -e 3000000000 \
-        -# 1Z -% 3 -@ DESTINATION)" ;
+        -# 1K -% 3 -@ DESTINATION)" ;
 }
 
 ###############################################################################

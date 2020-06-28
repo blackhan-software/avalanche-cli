@@ -19,7 +19,7 @@ function cli_help {
     usage+=" [-i|--id=\${AVA_ID}]" ;
     usage+=" [-b|--start-time=\${AVA_START_TIME}]" ;
     usage+=" [-e|--end-timer=\${AVA_END_TIME}]" ;
-    usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
+    usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-@|--destination=\${AVA_DESTINATION}]" ;
     usage+=" [-r|--delegation-fee-rate=\${AVA_DELEGATION_FEE_RATE}]" ;

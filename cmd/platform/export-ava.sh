@@ -16,7 +16,7 @@ source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}[Y|Z|E|P|T|G|M|K]]" ;
+    usage+=" [-#|--amount=\${AVA_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-@|--to=\${AVA_TO}]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
