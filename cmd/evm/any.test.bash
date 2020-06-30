@@ -82,7 +82,7 @@ function rpc_method {
 
 function rpc_params {
     IFS=" " read -ra a <<< "$1" ; # shellcheck disable=SC2046
-    join_by ',' $(map_by '"%s" ' "${a[@]}") ;
+    join_by ',' $(map_by '%s ' "${a[@]}") ;
 }
 
 ###############################################################################

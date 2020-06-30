@@ -98,7 +98,7 @@ function rpc_method {
 
 function rpc_params {
     printf '[' ; # shellcheck disable=SC2046
-    join_by ',' $(map_by '"%s" ' "${AVA_PARAMETERS[@]}") ;
+    join_by ',' $(map_by '%s ' "${AVA_PARAMETERS[@]}") ;
     printf ']' ;
 }
 
