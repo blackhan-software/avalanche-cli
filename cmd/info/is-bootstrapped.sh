@@ -15,6 +15,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
+    usage+=" [-b|--blockchain-id=|--chain=\${AVA_BLOCKCHAIN_ID}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
@@ -26,6 +27,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
+    options+=( "-b" "--blockchain-id=" "--chain=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -35,7 +37,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:-:" OPT "$@"
+    while getopts ":hSVYN:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -45,6 +47,8 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
+            b|blockchain-id|chain)
+                AVA_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
                 AVA_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -59,6 +63,9 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
+    if [ -z "$AVA_BLOCKCHAIN_ID" ] ; then
+        cli_help && exit 1 ;
+    fi
     if [ -z "$AVA_NODE" ] ; then
         AVA_NODE="127.0.0.1:9650" ;
     fi
@@ -66,16 +73,18 @@ function cli {
 }
 
 function rpc_method {
-    printf "admin.getNetworkName" ;
+    printf "info.isBootstrapped" ;
 }
 
 function rpc_params {
-    printf "{}" ;
+    printf '{' ;
+    printf '"chain":"%s"' "$AVA_BLOCKCHAIN_ID" ;
+    printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/admin" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVA_NODE/ext/info" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

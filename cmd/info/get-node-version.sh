@@ -66,7 +66,7 @@ function cli {
 }
 
 function rpc_method {
-    printf "admin.peers" ;
+    printf "info.getNodeVersion" ;
 }
 
 function rpc_params {
@@ -75,7 +75,7 @@ function rpc_params {
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/admin" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVA_NODE/ext/info" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

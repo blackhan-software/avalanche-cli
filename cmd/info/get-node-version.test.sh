@@ -3,7 +3,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh admin get-network-name" ;
+    printf "./avalanche-cli.sh info get-node-version" ;
 }
 
 function check {
@@ -11,14 +11,14 @@ function check {
     local result_u ; result_u=$(printf '%s' "$result" | cut -d' ' -f3) ;
     local result_h ; result_h=$(printf '%s' "$result" | cut -d' ' -f5) ;
     local result_d ; result_d=$(printf '%s' "$result" | cut -d' ' -f7) ;
-    local expect_u ; expect_u="'127.0.0.1:9650/ext/admin'" ;
+    local expect_u ; expect_u="'127.0.0.1:9650/ext/info'" ;
     assertEquals "$expect_u" "$result_u" ;
     local expect_h ; expect_h="'content-type:application/json'" ;
     assertEquals "$expect_h" "$result_h" ;
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"admin.getNetworkName",' ;
+    expect_d+='"method":"info.getNodeVersion",' ;
     expect_d+='"params":{' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
@@ -26,7 +26,7 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_admin__get_network_name {
+function test_info__get_node_version {
     check "$(RPC_ID=1 $(cmd))" ;
 }
 

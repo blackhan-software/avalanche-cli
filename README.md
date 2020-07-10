@@ -145,18 +145,12 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
 This API can be used for measuring node health and debugging.
 
 ```
-admin get-node-id                                 Get the ID of this node.
-admin peers                                       Get description of peer connections.
-admin get-network-id                              Get the ID of the network this node is participating in.
 admin alias                                       Assign an API an alias, a different endpoint for the API. The original endpoint will still work. This change only affects this node; other nodes will not know about this alias.
 admin alias-chain                                 Give a blockchain an alias, a different name that can be used any place the blockchain's ID is used.
-admin get-blockchain-id                           Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context).
 admin start-cpu-profiler                          Start profiling the CPU utilization of the node. Will write the profile to the specified file on stop.
 admin stop-cpu-profiler                           Stop the CPU profile that was previously started.
 admin memory-profile                              Dump the current memory footprint of the node to the specified file.
 admin lock-profile                                Dump the mutex statistics of the node to the specified file.
-admin get-node-version                            Get the version of this node.
-admin get-network-name                            Get the name of the network this node is running on.
 ```
 
 ## [AVM (X-Chain) API](https://docs.ava.network/v1.0/en/api/avm)
@@ -268,10 +262,13 @@ health get-liveness                               Get health check on this node.
 This API can be used to access basic information about the node.
 
 ```
-info get-node-id                                  Get the ID of this node.
-info peers                                        Get description of peer connections.
-info get-network-id                               Get the ID of the network this node is participating in.
 info get-blockchain-id                            Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context).
+info get-network-id                               Get the ID of the network this node is participating in.
+info get-network-name                             Get the name of the network this node is running on.
+info get-node-id                                  Get the ID of this node.
+info get-node-version                             Get the version of this node.
+info is-bootstrapped                              Check whether a given chain is done bootstrapping.
+info peers                                        Get description of peer connections.
 ```
 
 ## [IPC API](https://docs.ava.network/v1.0/en/api/ipc)

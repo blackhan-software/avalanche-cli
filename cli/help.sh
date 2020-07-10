@@ -177,18 +177,12 @@ CLI_HELP+=( "-v|--version|Print CLI version information and quit." ) ;
 
 ## Admin API:
 CLI_TEXT+=( "admin|This API can be used for measuring node health and debugging. See: ${LK}https://docs.ava.network/v1.0/en/api/admin${NN}" ) ;
-CLI_HELP+=( "admin|get-node-id|Get the ID of this node." ) ;
-CLI_HELP+=( "admin|peers|Get description of peer connections." ) ;
-CLI_HELP+=( "admin|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "admin|alias|Assign an API an alias, a different endpoint for the API. The original endpoint will still work. This change only affects this node; other nodes will not know about this alias." ) ;
 CLI_HELP+=( "admin|alias-chain|Give a blockchain an alias, a different name that can be used any place the blockchain's ID is used." ) ;
-CLI_HELP+=( "admin|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
 CLI_HELP+=( "admin|start-cpu-profiler|Start profiling the CPU utilization of the node. Will write the profile to the specified file on stop." ) ;
 CLI_HELP+=( "admin|stop-cpu-profiler|Stop the CPU profile that was previously started." ) ;
 CLI_HELP+=( "admin|memory-profile|Dump the current memory footprint of the node to the specified file." ) ;
 CLI_HELP+=( "admin|lock-profile|Dump the mutex statistics of the node to the specified file." ) ;
-CLI_HELP+=( "admin|get-node-version|Get the version of this node." ) ;
-CLI_HELP+=( "admin|get-network-name|Get the name of the network this node is running on." ) ;
 
 ## AVM (X-Chain) API:
 CLI_TEXT+=( "avm|The X-Chain, AVA's native platform for creating and trading assets, is an instance of the AVA Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.ava.network/v1.0/en/api/avm${NN}")
@@ -278,10 +272,13 @@ CLI_HELP+=( "health|get-liveness|Get health check on this node." ) ;
 
 ## Info API:
 CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/v1.0/en/api/info/${NN}" ) ;
-CLI_HELP+=( "info|get-node-id|Get the ID of this node." ) ;
-CLI_HELP+=( "info|peers|Get description of peer connections." ) ;
-CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "info|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
+CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
+CLI_HELP+=( "info|get-network-name|Get the name of the network this node is running on." ) ;
+CLI_HELP+=( "info|get-node-id|Get the ID of this node." ) ;
+CLI_HELP+=( "info|get-node-version|Get the version of this node." ) ;
+CLI_HELP+=( "info|is-bootstrapped|Check whether a given chain is done bootstrapping." ) ;
+CLI_HELP+=( "info|peers|Get description of peer connections." ) ;
 
 ## IPC API:
 CLI_TEXT+=( "ipcs|The IPC API allows users to create a UNIX domain socket for a blockchain to publish to. When the blockchain accepts a vertex/block it will publish the vertex to the socket. A node will only expose this API if it is started with command-line argument 'api-ipcs-enabled=true'. See: ${LK}https://docs.ava.network/v1.0/en/api/ipc${NN}" ) ;
