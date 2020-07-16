@@ -409,7 +409,7 @@ $ AVA_VERBOSE_RPC=1 avalanche-cli info peers -Y
 
 ## Copyright
 
-(c) 2020, Hasan Karahan.
+(c) 2020, Hasan Karahan, MSc in CS, ETH Zurich.
 
 [AVA]:https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]:https://stedolan.github.io/jq/
