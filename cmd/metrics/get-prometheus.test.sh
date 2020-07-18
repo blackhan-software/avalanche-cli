@@ -13,7 +13,7 @@ function check {
     local result_d ; result_d=$(printf '%s' "$result" | cut -d' ' -f7) ;
     local expect_u ; expect_u="'127.0.0.1:9650/ext/metrics'" ;
     assertEquals "$expect_u" "$result_u" ;
-    local expect_h ; expect_h="'content-type:application/json'" ;
+    local expect_h ; expect_h="'content-type:text/plain'" ;
     assertEquals "$expect_h" "$result_h" ;
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
