@@ -23,9 +23,9 @@ function check {
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
     expect_d+='"stakeAmount":1000,' ;
-    expect_d+='"payerNonce":3,' ;
+    expect_d+='"delegationFeeRate":100000,' ; ## 10%
     expect_d+='"destination":"DESTINATION",' ;
-    expect_d+='"delegationFeeRate":100000' ; ## 10%
+    expect_d+='"payerNonce":3' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;

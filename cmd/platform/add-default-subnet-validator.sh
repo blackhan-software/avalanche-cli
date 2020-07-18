@@ -20,8 +20,8 @@ function cli_help {
     usage+=" [-b|--start-time=\${AVA_START_TIME}]" ;
     usage+=" [-e|--end-time=\${AVA_END_TIME}]" ;
     usage+=" [-#|--stake-amount=\${AVA_STAKE_AMOUNT}[E|P|T|G|M|K]]" ;
-    usage+=" [-@|--destination=\${AVA_DESTINATION}]" ;
     usage+=" [-r|--delegation-fee-rate=\${AVA_DELEGATION_FEE_RATE}[%]]" ;
+    usage+=" [-@|--destination=\${AVA_DESTINATION}]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
@@ -38,8 +38,8 @@ function cli_options {
     options+=( "-b" "--start-time=" ) ;
     options+=( "-e" "--end-time=" ) ;
     options+=( "-#" "--stake-amount=" ) ;
-    options+=( "-@" "--destination=" ) ;
     options+=( "-r" "--delegation-fee-rate=" ) ;
+    options+=( "-@" "--destination=" ) ;
     options+=( "-%" "--payer-nonce=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
@@ -100,13 +100,13 @@ function cli {
     if [ -z "$AVA_STAKE_AMOUNT" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PAYER_NONCE" ] ; then
+    if [ -z "$AVA_DELEGATION_FEE_RATE" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVA_DESTINATION" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_DELEGATION_FEE_RATE" ] ; then
+    if [ -z "$AVA_PAYER_NONCE" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVA_NODE" ] ; then
@@ -125,9 +125,9 @@ function rpc_params {
     printf '"startTime":%s,' "$AVA_START_TIME" ;
     printf '"endTime":%s,' "$AVA_END_TIME" ;
     printf '"stakeAmount":%s,' "$(si "$AVA_STAKE_AMOUNT")" ;
-    printf '"payerNonce":%s,' "$AVA_PAYER_NONCE" ;
+    printf '"delegationFeeRate":%s,' "$(pct "$AVA_DELEGATION_FEE_RATE")" ;
     printf '"destination":"%s",' "$AVA_DESTINATION" ;
-    printf '"delegationFeeRate":%s' "$(pct "$AVA_DELEGATION_FEE_RATE")" ;
+    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
     printf '}' ;
 }
 
