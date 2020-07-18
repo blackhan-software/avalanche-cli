@@ -18,7 +18,11 @@ function rpc_post {
             printf '%s %s\n' "curl" "${args}" ;
         fi
     else
-        eval curl "${args}" ;
+        if [ -n "$(command -v jq)" ] ; then
+            eval curl "${args}" --no-progress-meter | jq -c ;
+        else
+            eval curl "${args}" --no-progress-meter ;
+        fi
     fi
 }
 
