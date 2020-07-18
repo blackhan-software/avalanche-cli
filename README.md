@@ -35,6 +35,12 @@ Version         : 2.10-2
 Description     : Programmable completion for the bash shell
 ```
 
+```
+Name            : jq
+Version         : 1.6-2
+Description     : Command-line JSON processor
+```
+
 Only for installation (and for `npx`):
 ```
 Name            : npm
