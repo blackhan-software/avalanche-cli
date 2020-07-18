@@ -19,7 +19,11 @@ function rpc_post {
         fi
     else
         if [ -n "$(command -v jq)" ] ; then
-            eval curl "${args}" --no-progress-meter | jq -c ;
+            if [ "$mime" == "content-type:application/json" ] ; then
+                eval curl "${args}" --no-progress-meter | jq -c ;
+            else
+                eval curl "${args}" --no-progress-meter ;
+            fi
         else
             eval curl "${args}" --no-progress-meter ;
         fi
