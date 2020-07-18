@@ -17,7 +17,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-K|--control-key=\${AVA_CONTROL_KEY_\$IDX}]*" ;
+    usage+=" [-@|--control-key=\${AVA_CONTROL_KEY_\$IDX}]*" ;
     usage+=" [-t|--threshold=\${AVA_THRESHOLD}]" ;
     usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
@@ -31,7 +31,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-K" "--control-key=" ) ;
+    options+=( "-@" "--control-key=" ) ;
     options+=( "-t" "--threshold=" ) ;
     options+=( "-%" "--payer-nonce=" ) ;
     options+=( "-N" "--node=" ) ;
@@ -45,7 +45,7 @@ function cli_options {
 function cli {
     local -ag AVA_CONTROL_KEYS=() ;
     get_control_keys AVA_CONTROL_KEYS ;
-    while getopts ":hSVYN:K:t:%:-:" OPT "$@"
+    while getopts ":hSVYN:@:t:%:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -55,7 +55,7 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            K|control-key)
+            @|control-key)
                 local i; i="$(next_index AVA_CONTROL_KEYS)" ;
                 AVA_CONTROL_KEYS["$i"]="${OPTARG}" ;;
             t|threshold)

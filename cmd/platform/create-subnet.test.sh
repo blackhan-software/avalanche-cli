@@ -29,27 +29,27 @@ function check {
 }
 
 function test_platform__create_subnet_1a {
-    check "$(RPC_ID=1 $(cmd) -K K1 -K K2 -K K3 -t 2 -% 3)" ;
+    check "$(RPC_ID=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 -% 3)" ;
 }
 
 function test_platform__create_subnet_1b {
     check "$(RPC_ID=1 \
         AVA_CONTROL_KEY_0=K1 \
-        $(cmd) -K K2 -K K3 -t 2 -% 3)" ;
+        $(cmd) -@ K2 -@ K3 -t 2 -% 3)" ;
     check "$(RPC_ID=1 \
         AVA_CONTROL_KEY_0=K1 AVA_CONTROL_KEY_1=K2 \
-        $(cmd) -K K3 -t 2 -% 3)" ;
+        $(cmd) -@ K3 -t 2 -% 3)" ;
     check "$(RPC_ID=1 \
         AVA_CONTROL_KEY_0=K1 AVA_CONTROL_KEY_1=K2 AVA_CONTROL_KEY_2=K3 \
         $(cmd) -t 2 -% 3)" ;
 }
 
 function test_platform__create_subnet_1c {
-    check "$(RPC_ID=1 AVA_THRESHOLD=2 $(cmd) -K K1 -K K2 -K K3 -% 3)" ;
+    check "$(RPC_ID=1 AVA_THRESHOLD=2 $(cmd) -@ K1 -@ K2 -@ K3 -% 3)" ;
 }
 
 function test_platform__create_subnet_1d {
-    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -K K1 -K K2 -K K3 -t 2)" ;
+    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -@ K1 -@ K2 -@ K3 -t 2)" ;
 }
 
 ###############################################################################
