@@ -80,5 +80,17 @@ function test_platform__add_default_subnet_validator_1h {
         -# 1K -% 3 -@ DESTINATION)" ;
 }
 
+function test_platform__add_default_subnet_validator_1i {
+    check "$(RPC_ID=1 AVA_DESTINATION=DESTINATION $(cmd) \
+        -i ID -b 2000000000 -e 3000000000 \
+        -# 1K -% 3 -r 10.0%)" ;
+}
+
+function test_platform__add_default_subnet_validator_1h {
+    check "$(RPC_ID=1 AVA_DELEGATION_FEE_RATE=10.0% $(cmd) \
+        -i ID -b 2000000000 -e 3000000000 \
+        -# 1K -% 3 -@ DESTINATION)" ;
+}
+
 ###############################################################################
 ###############################################################################
