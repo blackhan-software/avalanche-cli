@@ -132,7 +132,7 @@ $ avalanche-cli keystore delete-user -Y
 Since `avalance-cli` does not process the JSON reponses, it is recommended to use the excellent [`jq`] tool to handle them. For example:
 
 ```sh
-$ avalanche-cli info peers -YS | jq .result.peers[0]
+$ avalanche-cli info peers -Y | jq .result.peers[0]
 ```
 ```json
 {
@@ -144,7 +144,6 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
   "lastReceived": "2020-06-27T04:16:38+02:00"
 }
 ```
-..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
 ## [Admin API](https://docs.ava.network/v1.0/en/api/admin)
 
@@ -387,16 +386,16 @@ $ AVA_YES_RUN_RPC=1 avalanche-cli info peers
 
 ### `${AVA_SILENT_RPC}` or `--silent-rpc` (`-S`)
 
-Can bu used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual reponse (if there is any)! This is useful when one for example wants to pipe the JSON response to a processor like [`jq`] (without getting annoyed by `curl`'s messages displayed on via `/dev/stderr`):
+Can bu used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual response (if there is any):
 
 ```
-$ avalanche-cli info peers -YS | jq
+$ avalanche-cli info peers -YS
 ```
 ```
-$ avalanche-cli info peers -Y --silent-rpc | jq
+$ avalanche-cli info peers -Y --silent-rpc
 ```
 ```
-$ AVA_SILENT_RPC=1 avalanche-cli info peers -Y | jq
+$ AVA_SILENT_RPC=1 avalanche-cli info peers -Y
 ```
 
 ### `${AVA_VERBOSE_RPC}` or `--verbose-rpc` (`-V`)
