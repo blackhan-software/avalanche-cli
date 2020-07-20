@@ -22,8 +22,8 @@ function check {
     expect_d+='"subnetID":"SUBNET_ID",' ;
     expect_d+='"vmID":"VM_ID",' ;
     expect_d+='"name":"NAME",' ;
-    expect_d+='"payerNonce":3,' ;
-    expect_d+='"genesisData":"GENESIS_DATA"' ;
+    expect_d+='"genesisData":"GENESIS_DATA",' ;
+    expect_d+='"payerNonce":3' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;

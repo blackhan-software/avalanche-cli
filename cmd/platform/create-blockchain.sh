@@ -18,8 +18,8 @@ function cli_help {
     usage+=" [-s|--subnet-id=\${AVA_SUBNET_ID}]" ;
     usage+=" [-v|--vm-id=\${AVA_VM_ID}]" ;
     usage+=" [-n|--name=\${AVA_NAME}]" ;
-    usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-g|--genesis-data=\${AVA_GENESIS_DATA}]" ;
+    usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
     usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
@@ -34,8 +34,8 @@ function cli_options {
     options+=( "-s" "--subnet-id=" ) ;
     options+=( "-v" "--vm-id=" ) ;
     options+=( "-n" "--name=" ) ;
-    options+=( "-%" "--payer-nonce=" ) ;
     options+=( "-g" "--genesis-data=" ) ;
+    options+=( "-%" "--payer-nonce=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -45,7 +45,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:s:v:n:%:g:-:" OPT "$@"
+    while getopts ":hSVYN:s:v:n:g:%:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -61,10 +61,10 @@ function cli {
                 AVA_VM_ID="${OPTARG}" ;;
             n|name)
                 AVA_NAME="${OPTARG}" ;;
-            %|payer-nonce)
-                AVA_PAYER_NONCE="${OPTARG}" ;;
             g|genesis-data)
                 AVA_GENESIS_DATA="${OPTARG}" ;;
+            %|payer-nonce)
+                AVA_PAYER_NONCE="${OPTARG}" ;;
             N|node)
                 AVA_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -88,10 +88,10 @@ function cli {
     if [ -z "$AVA_NAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PAYER_NONCE" ] ; then
+    if [ -z "$AVA_GENESIS_DATA" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_GENESIS_DATA" ] ; then
+    if [ -z "$AVA_PAYER_NONCE" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVA_NODE" ] ; then
@@ -109,8 +109,8 @@ function rpc_params {
     printf '"subnetID":"%s",' "$AVA_SUBNET_ID" ;
     printf '"vmID":"%s",' "$AVA_VM_ID" ;
     printf '"name":"%s",' "$AVA_NAME" ;
-    printf '"payerNonce":%s,' "$AVA_PAYER_NONCE" ;
-    printf '"genesisData":"%s"' "$AVA_GENESIS_DATA" ;
+    printf '"genesisData":"%s",' "$AVA_GENESIS_DATA" ;
+    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
     printf '}' ;
 }
 
