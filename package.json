@@ -27,5 +27,5 @@
     "postuninstall": "./npm/postuninstall.sh",
     "test": "./avalanche-cli.test.sh"
   },
-  "version": "0.5.7020"
+  "version": "0.5.7021"
 }
