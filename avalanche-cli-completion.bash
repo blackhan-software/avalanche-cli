@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#compdef avalanche-cli
 # shellcheck disable=2207
 ###############################################################################
 
-function _ava_cli_args {
+function _avalanche_cli {
     local curr_0="${COMP_WORDS[COMP_CWORD]}" ;
     local word_1="${COMP_WORDS[1]}" ;
     local word_2="${COMP_WORDS[2]}" ;
@@ -34,9 +34,12 @@ function _ava_cli_args {
 
 ###############################################################################
 
-if [ -n "$(command -v complete)" ] ; then
-    complete -F _ava_cli_args avalanche-cli ;
+if [ -n "$ZSH_VERSION" ] ; then
+    autoload bashcompinit ;
+    bashcompinit ;
 fi
+
+complete -F _avalanche_cli avalanche-cli ;
 
 ###############################################################################
 ###############################################################################

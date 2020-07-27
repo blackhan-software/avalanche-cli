@@ -12,6 +12,9 @@ NPM_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 #     fi
 # fi
 
+###############################################################################
+# bash-completion
+
 TGT_FILE="$HOME/.bash_completion" ;
 TMP_FILE="/tmp/.bash_completion-$RANDOM" ;
 
@@ -23,6 +26,16 @@ fi
 SRC_PATH=$(cd "$NPM_SCRIPT/.." >/dev/null 2>&1 && pwd) ;
 SRC_FILE="$SRC_PATH/avalanche-cli-completion.bash" ;
 echo "source \"$SRC_FILE\"" >> "$TGT_FILE" 2>/dev/null || true ;
+
+###############################################################################
+# zsh-completion
+
+TGT_PATH="/usr/local/share/zsh/site-functions" ;
+TGT_FILE="$TGT_PATH/_avalanche-cli" ;
+
+if [ -d "$TGT_PATH" ] ; then
+    ln -sf "$SRC_FILE" "$TGT_FILE" ;
+fi
 
 ###############################################################################
 ###############################################################################
