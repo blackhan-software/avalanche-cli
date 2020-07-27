@@ -132,7 +132,7 @@ $ avalanche-cli keystore delete-user -Y
 Since `avalance-cli` does not process the JSON reponses, it is recommended to use the excellent [`jq`] tool to handle them. For example:
 
 ```sh
-$ avalanche-cli info peers -Y | jq .result.peers[0]
+$ avalanche-cli info peers -YS | jq .result.peers[0]
 ```
 ```json
 {
@@ -144,6 +144,7 @@ $ avalanche-cli info peers -Y | jq .result.peers[0]
   "lastReceived": "2020-06-27T04:16:38+02:00"
 }
 ```
+..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
 ## [Admin API](https://docs.ava.network/v1.0/en/api/admin)
 

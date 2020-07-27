@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC1091,SC2214,SC2231
 ###############################################################################
-CLI_SCRIPT=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-CLI_SCRIPT=$(cd "$CLI_SCRIPT" >/dev/null 2>&1 && pwd)
+CLI=$(dirname "${BASH_SOURCE[0]}")/$(dirname "$(readlink "${BASH_SOURCE[0]}")")
+CLI=$(cd "$CLI" >/dev/null 2>&1 && pwd)
 ###############################################################################
 
 function cli {
@@ -29,9 +29,9 @@ function cli {
 
 function cli_run {
     local cmd="$1" ;
-    local cmd_path="$CLI_SCRIPT/cmd/$cmd" ;
+    local cmd_path="$CLI/cmd/$cmd" ;
     local sub="$2" ;
-    local sub_path="$CLI_SCRIPT/cmd/$cmd/$sub.sh" ;
+    local sub_path="$CLI/cmd/$cmd/$sub.sh" ;
     if [ -d "$cmd_path" ] ; then
         if [ -f "$sub_path" ] ; then
             exec "$sub_path" "${@:3}" ;
@@ -63,7 +63,7 @@ function cli_supoptions {
 }
 
 function cli_supcommands {
-    for path in $CLI_SCRIPT/cmd/* ; do
+    for path in $CLI/cmd/* ; do
         path="${path##*/}" ;
         printf '%s ' "$path" ;
     done
@@ -75,7 +75,7 @@ function cli_suboptions {
 }
 
 function cli_subcommands {
-    for path in $CLI_SCRIPT/cmd/"$1"/*.sh ; do
+    for path in $CLI/cmd/"$1"/*.sh ; do
         if [[ ! "$path" =~ \.test\.sh$ ]] ; then
             path="${path##*/}" ;
             path="${path%.*}" ;
@@ -86,13 +86,13 @@ function cli_subcommands {
 }
 
 function cli_usage {
-    source "$CLI_SCRIPT/cli/help.sh" && \
+    source "$CLI/cli/help.sh" && \
         printf '%s\n' "$(cli_help "$1" "$2")" ;
 }
 
 function cli_version {
-    source "$CLI_SCRIPT/cli/jq.sh" && \
-        jq ".version" < "$CLI_SCRIPT/package.json" ;
+    source "$CLI/cli/jq.sh" && \
+        jq ".version" < "$CLI/package.json" ;
 }
 
 ###############################################################################
