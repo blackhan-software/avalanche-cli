@@ -20,8 +20,9 @@ if [ -f "$TGT_FILE" ] ; then
     [ -f "$TMP_FILE"  ] && mv "$TMP_FILE" "$TGT_FILE" 2>/dev/null || true ;
 fi
 
-SRC_FILE="$NPM_SCRIPT/../avalanche-cli-completion.bash" ;
-echo "source $(realpath "$SRC_FILE")" >> "$TGT_FILE" 2>/dev/null || true ;
+SRC_PATH=$(cd "$NPM_SCRIPT/.." >/dev/null 2>&1 && pwd) ;
+SRC_FILE="$SRC_PATH/avalanche-cli-completion.bash" ;
+echo "source \"$SRC_FILE\"" >> "$TGT_FILE" 2>/dev/null || true ;
 
 ###############################################################################
 ###############################################################################
