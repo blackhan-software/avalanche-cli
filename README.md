@@ -17,15 +17,22 @@ Usage: avalanche-cli [OPTIONS] COMMMAND
 ## Dependencies
 
 ```
-Name            : bash
-Version         : 5.0.017-1
-Description     : The GNU Bourne Again shell
-```
-
-```
 Name            : curl
 Version         : 7.70.0-1
 Description     : An URL retrieval utility and library
+```
+
+```
+Name            : zsh
+Version         : 5.7.1
+Description     : the Z shell
+```
+
+Or instead of `zsh`:
+```
+Name            : bash
+Version         : 5.0.017-1
+Description     : The GNU Bourne Again shell
 ```
 
 Optional:
