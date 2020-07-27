@@ -57,7 +57,7 @@ Description     : A package manager
 
 ## Installation
 
-Avoid installing `avalanche-cli` as `root` (or with `sudo`), since otherwise `bash-completion` will *not* get activated. Instead, setup `npm` to install packages globally (per user) *without* breaking out of the `$HOME` folder:
+Avoid installing `avalanche-cli` as `root` (or with `sudo`). Instead, setup `npm` to install packages globally (per user) *without* breaking out of the `$HOME` folder:
 
 ```sh
 $ export PATH="$PATH:$HOME/.node/bin" ## *also* put this e.g. into ~/.bashrc
