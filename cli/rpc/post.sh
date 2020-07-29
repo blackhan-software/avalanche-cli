@@ -18,9 +18,12 @@ function rpc_post {
             printf '%s %s\n' "curl" "${args}" ;
         fi
     else
-        if [ -n "$(command -v jq)" ] ; then
-            if [ "$mime" == "content-type:application/json" ] ; then
-                eval curl "${args}" | jq -c ;
+        if [ -n "$AVA_PIPE_RPC" ] ; then
+            eval "$AVA_PIPE_RPC" ;
+        fi
+        if [ -n "${AVA_PIPE_RPC[*]}" ] ; then
+            if [ -n "${AVA_PIPE_RPC[$mime]}" ] ; then
+                eval curl "${args}" | ${AVA_PIPE_RPC[$mime]} ;
             else
                 eval curl "${args}" ;
             fi

@@ -42,12 +42,6 @@ Version         : 2.10-2
 Description     : Programmable completion for the bash shell
 ```
 
-```
-Name            : jq
-Version         : 1.6-2
-Description     : Command-line JSON processor
-```
-
 Only for installation (and for `npx`):
 ```
 Name            : npm
@@ -418,6 +412,23 @@ $ avalanche-cli info peers -Y --verbose-rpc
 ```
 ```
 $ AVA_VERBOSE_RPC=1 avalanche-cli info peers -Y
+```
+
+### `${AVA_PIPE_RPC}`
+
+Can be used to pipe a `curl` response through a command, where `AVA_PIPE_RPC` needs to be an (implicit) associative array with content types as keys and corresponding commands as value entries. For example:
+
+```
+$ export AVA_PIPE_RPC="declare -A AVA_PIPE_RPC=([content-type:application/json]='jq -c')"
+```
+```
+$ avalanche-cli info peers -Y
+```
+
+Now, each `application/json` response will be compactified and colorized by using the [`jq`] command line JSON processor. To temporarily omit piping through any command, (unset or) set `AVA_PIPE_RPC` to an empty string:
+
+```
+$ AVA_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
 ## Copyright
