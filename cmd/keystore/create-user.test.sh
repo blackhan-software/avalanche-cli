@@ -28,15 +28,15 @@ function check {
 }
 
 function test_keystore__create_user_1a {
-    check "$(RPC_ID=1 $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_keystore__create_user_1b {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
 }
 
 function test_keystore__create_user_1c {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
 }
 
 ###############################################################################

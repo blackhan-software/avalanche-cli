@@ -30,51 +30,51 @@ function check {
 }
 
 function test_avm__create_mint_tx_1a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -# 1P -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" ;
 }
 
 function test_avm__create_mint_tx_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=1P $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_AMOUNT=1P $(cmd) \
         -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" ;
 }
 
 function test_avm__create_mint_tx_1c {
-    check "$(RPC_ID=1 AVA_ASSET_ID=ASSET_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_ASSET_ID=ASSET_ID $(cmd) \
         -# 1P -@ TO -m M1 -m M2 -m M3)" ;
 }
 
 function test_avm__create_mint_tx_1d {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) \
         -# 1P -a ASSET_ID -m M1 -m M2 -m M3)" ;
 }
 
 function test_avm__create_mint_tx_2a {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTER_0=M1 $(cmd) \
         -# 1P -a ASSET_ID -@ TO -m M2 -m M3)" ;
 }
 
 function test_avm__create_mint_tx_2b {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTER_0=M1 AVA_MINTER_1=M2 $(cmd) \
         -# 1P -a ASSET_ID -@ TO -m M3)" ;
 }
 
 function test_avm__create_mint_tx_2c {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTER_0=M1 AVA_MINTER_1=M2 AVA_MINTER_2=M3 $(cmd) \
         -# 1P -a ASSET_ID -@ TO)" ;
 }
 
 function test_avm__create_mint_tx_3a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -# 1P -a ASSET_ID -@ TO \
         -m M1 -m M2 -m M3 -b BC_ID)" BC_ID ;
 }
 
 function test_avm__create_mint_tx_3b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -# 1P -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" BC_ID ;
 }
 

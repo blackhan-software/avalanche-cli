@@ -28,15 +28,15 @@ function check {
 }
 
 function test_platform__list_accounts_1 {
-    check "$(RPC_ID=1 $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__list_accounts_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
 }
 
 function test_platform__list_accounts_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
 }
 
 ###############################################################################

@@ -27,7 +27,7 @@ function check {
 }
 
 function test_info__get_node_id {
-    check "$(RPC_ID=1 $(cmd))" ;
+    check "$(AVA_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

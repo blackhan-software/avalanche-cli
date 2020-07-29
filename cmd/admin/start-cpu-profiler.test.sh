@@ -28,11 +28,11 @@ function check {
 }
 
 function test_admin__start_cpu_profiler_1a {
-    check "$(RPC_ID=1 $(cmd) -f FILE_NAME)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -f FILE_NAME)" ;
 }
 
 function test_admin__start_cpu_profiler_1b {
-    check "$(RPC_ID=1 AVA_FILE_NAME=FILE_NAME $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_FILE_NAME=FILE_NAME $(cmd))" ;
 }
 
 ###############################################################################

@@ -31,37 +31,37 @@ function check {
 }
 
 function test_avm__send_1a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=1K $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_AMOUNT=1K $(cmd) \
         -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1c {
-    check "$(RPC_ID=1 AVA_ASSET_ID=ASSET_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_ASSET_ID=ASSET_ID $(cmd) \
         -# 1K -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) \
         -# 1K -a ASSET_ID -@ TO -p PASSWORD)" ;
 }
 
 function test_avm__send_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) \
         -# 1K -a ASSET_ID -@ TO -u USERNAME)" ;
 }
 
 function test_avm__send_2a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__send_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

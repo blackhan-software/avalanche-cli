@@ -30,23 +30,23 @@ function check {
 }
 
 function test_platform__import_ava_1a {
-    check "$(RPC_ID=1 $(cmd) -@ TO -% 3 -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ TO -% 3 -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_ava_1b {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -% 3 -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) -% 3 -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_ava_1c {
-    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_ava_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -@ TO -% 3 -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -@ TO -% 3 -p PASSWORD)" ;
 }
 
 function test_platform__import_ava_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -@ TO -% 3 -u USERNAME)" ;
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -@ TO -% 3 -u USERNAME)" ;
 }
 
 ###############################################################################

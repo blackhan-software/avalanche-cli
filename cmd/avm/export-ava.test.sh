@@ -30,32 +30,32 @@ function check {
 }
 
 function test_avm__export_ava_1a {
-    check "$(RPC_ID=1 $(cmd) -# 1E -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -# 1E -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=1E $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_AMOUNT=1E $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1c {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 1E -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) -# 1E -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -# 1E -@ TO -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -# 1E -@ TO -p PASSWORD)" ;
 }
 
 function test_avm__export_ava_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -# 1E -@ TO -u USERNAME)" ;
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -# 1E -@ TO -u USERNAME)" ;
 }
 
 function test_avm__export_ava_2a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -# 1E -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__export_ava_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -# 1E -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

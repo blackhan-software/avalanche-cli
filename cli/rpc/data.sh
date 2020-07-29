@@ -11,7 +11,7 @@ function rpc_data {
 }
 
 function rpc_id {
-    printf '%s' "${RPC_ID-$RANDOM}" ;
+    printf '%s' "${AVA_ID_RPC-$RANDOM}" ;
 }
 
 function rpc_method {

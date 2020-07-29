@@ -28,19 +28,19 @@ function check {
 }
 
 function test_avm__get_all_balances_1a {
-    check "$(RPC_ID=1 $(cmd) -@ ADDRESS)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS)" ;
 }
 
 function test_avm__get_all_balances_1b {
-    check "$(RPC_ID=1 AVA_ADDRESS=ADDRESS $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_ADDRESS=ADDRESS $(cmd))" ;
 }
 
 function test_avm__get_all_balances_2a {
-    check "$(RPC_ID=1 $(cmd) -@ ADDRESS -b BC_ID)" BC_ID ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS -b BC_ID)" BC_ID ;
 }
 
 function test_avm__get_all_balances_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -@ ADDRESS)" BC_ID ;
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -@ ADDRESS)" BC_ID ;
 }
 
 ###############################################################################

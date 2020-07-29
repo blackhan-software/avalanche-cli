@@ -28,15 +28,15 @@ function check {
 }
 
 function test_admin__alias_1a {
-    check "$(RPC_ID=1 $(cmd) -a ALIAS -e ENDPOINT)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -a ALIAS -e ENDPOINT)" ;
 }
 
 function test_admin__alias_1b {
-    check "$(RPC_ID=1 AVA_ALIAS=ALIAS $(cmd) -e ENDPOINT)" ;
+    check "$(AVA_ID_RPC=1 AVA_ALIAS=ALIAS $(cmd) -e ENDPOINT)" ;
 }
 
 function test_admin__alias_1c {
-    check "$(RPC_ID=1 AVA_ENDPOINT=ENDPOINT $(cmd) -a ALIAS)" ;
+    check "$(AVA_ID_RPC=1 AVA_ENDPOINT=ENDPOINT $(cmd) -a ALIAS)" ;
 }
 
 ###############################################################################

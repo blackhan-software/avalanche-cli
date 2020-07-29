@@ -29,19 +29,19 @@ function check {
 }
 
 function test_platform__export_ava_1a {
-    check "$(RPC_ID=1 $(cmd) -# 1M -@ TO -% 3)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -# 1M -@ TO -% 3)" ;
 }
 
 function test_platform__export_ava_1b {
-    check "$(RPC_ID=1 AVA_AMOUNT=1M $(cmd) -@ TO -% 3)" ;
+    check "$(AVA_ID_RPC=1 AVA_AMOUNT=1M $(cmd) -@ TO -% 3)" ;
 }
 
 function test_platform__export_ava_1c {
-    check "$(RPC_ID=1 AVA_TO=TO $(cmd) -# 1M -% 3)" ;
+    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) -# 1M -% 3)" ;
 }
 
 function test_platform__export_ava_1d {
-    check "$(RPC_ID=1 AVA_PAYER_NONCE=3 $(cmd) -# 1M -@ TO)" ;
+    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) -# 1M -@ TO)" ;
 }
 
 ###############################################################################

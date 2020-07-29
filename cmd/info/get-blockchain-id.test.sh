@@ -28,11 +28,11 @@ function check {
 }
 
 function test_info__blockchain_id_1a {
-    check "$(RPC_ID=1 $(cmd) -a ALIAS)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -a ALIAS)" ;
 }
 
 function test_info__blockchain_id_1b {
-    check "$(RPC_ID=1 AVA_ALIAS=ALIAS $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_ALIAS=ALIAS $(cmd))" ;
 }
 
 ###############################################################################

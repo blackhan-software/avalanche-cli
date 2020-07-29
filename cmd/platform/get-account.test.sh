@@ -28,11 +28,11 @@ function check {
 }
 
 function test_platform__get_account_1a {
-    check "$(RPC_ID=1 $(cmd) -@ ADDRESS)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS)" ;
 }
 
 function test_platform__get_account_1b {
-    check "$(RPC_ID=1 AVA_ADDRESS=ADDRESS $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_ADDRESS=ADDRESS $(cmd))" ;
 }
 
 ###############################################################################

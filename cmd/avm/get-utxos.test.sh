@@ -28,20 +28,20 @@ function check {
 }
 
 function test_avm__get_utxos_1a {
-    check "$(RPC_ID=1 $(cmd) -@ A1 -@ A2 -@ A3)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ A1 -@ A2 -@ A3)" ;
 }
 
 function test_avm__get_utxos_1b {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_ADDRESS_0=A1 AVA_ADDRESS_1=A2 AVA_ADDRESS_2=A3 $(cmd))" ;
 }
 
 function test_avm__get_utxos_2a {
-    check "$(RPC_ID=1 $(cmd) -@ A1 -@ A2 -@ A3 -b BC_ID)" BC_ID ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ A1 -@ A2 -@ A3 -b BC_ID)" BC_ID ;
 }
 
 function test_avm__get_utxos_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -@ A1 -@ A2 -@ A3)" BC_ID ;
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -@ A1 -@ A2 -@ A3)" BC_ID ;
 }
 
 ###############################################################################

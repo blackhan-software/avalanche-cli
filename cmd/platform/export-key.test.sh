@@ -29,19 +29,19 @@ function check {
 }
 
 function test_platform__export_key_1a {
-    check "$(RPC_ID=1 $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_key_1b {
-    check "$(RPC_ID=1 AVA_ADDRESS=ADDRESS $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_ADDRESS=ADDRESS $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_key_1c {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) -@ ADDRESS -p PASSWORD)" ;
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -@ ADDRESS -p PASSWORD)" ;
 }
 
 function test_platform__export_key_1d {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) -@ ADDRESS -u USERNAME)" ;
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -@ ADDRESS -u USERNAME)" ;
 }
 
 ###############################################################################

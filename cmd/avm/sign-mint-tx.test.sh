@@ -30,37 +30,37 @@ function check {
 }
 
 function test_avm__sign_mint_tx_1a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -t TX -m MINTER -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__sign_mint_tx_1b {
-    check "$(RPC_ID=1 AVA_TX=TX $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_TX=TX $(cmd) \
         -m MINTER -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__sign_mint_tx_1c {
-    check "$(RPC_ID=1 AVA_MINTER=MINTER $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_MINTER=MINTER $(cmd) \
         -t TX -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__sign_mint_tx_1d {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) \
         -t TX -m MINTER -p PASSWORD)" ;
 }
 
 function test_avm__sign_mint_tx_1e {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) \
         -t TX -m MINTER -u USERNAME)" ;
 }
 
 function test_avm__sign_mint_tx_2a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -t TX -m MINTER -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__sign_mint_tx_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -t TX -m MINTER -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

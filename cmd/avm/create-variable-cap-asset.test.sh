@@ -36,64 +36,64 @@ function check {
 }
 
 function test_avm__create_variable_cap_asset_1a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_1b {
-    check "$(RPC_ID=1 AVA_NAME=NAME $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_NAME=NAME $(cmd) \
         -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_1c {
-    check "$(RPC_ID=1 AVA_SYMBOL=SYMBOL $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_SYMBOL=SYMBOL $(cmd) \
         -n NAME -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_1d {
-    check "$(RPC_ID=1 AVA_DENOMINATION=0 $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_DENOMINATION=0 $(cmd) \
         -n NAME -s SYMBOL -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_1e {
-    check "$(RPC_ID=1 AVA_USERNAME=USERNAME $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) \
         -n NAME -s SYMBOL -d 0 -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_1f {
-    check "$(RPC_ID=1 AVA_PASSWORD=PASSWORD $(cmd) \
+    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_2a {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_THRESHOLD_0=1 AVA_MINTERS_0=A1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_2b {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTERS_1="B1 B2" AVA_THRESHOLD_1=2 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m C1 -m C2 -m C3 -t3)" ;
 }
 
 function test_avm__create_variable_cap_asset_2c {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTERS_2="C1 C2 C3" AVA_THRESHOLD_2=3 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2)" ;
 }
 
 function test_avm__create_variable_cap_asset_3 {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_MINTERS_0="A1" AVA_THRESHOLD_0=1 \
         AVA_MINTERS_1="B1 B2" AVA_THRESHOLD_1=2 \
         AVA_MINTERS_2="C1 C2 C3" AVA_THRESHOLD_2=3 \
@@ -101,13 +101,13 @@ function test_avm__create_variable_cap_asset_3 {
 }
 
 function test_avm__create_variable_cap_asset_4a {
-    check "$(RPC_ID=1 $(cmd) \
+    check "$(AVA_ID_RPC=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3 -b BC_ID)" BC_ID ;
 }
 
 function test_avm__create_variable_cap_asset_4b {
-    check "$(RPC_ID=1 \
+    check "$(AVA_ID_RPC=1 \
         AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -m A1 -t1 -m B1 -m B2 -t2 -m C1 -m C2 -m C3 -t3)" BC_ID ;

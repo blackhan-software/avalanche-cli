@@ -28,19 +28,19 @@ function check {
 }
 
 function test_avm__get_tx_1a {
-    check "$(RPC_ID=1 $(cmd) -t TX_ID)" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -t TX_ID)" ;
 }
 
 function test_avm__get_tx_1b {
-    check "$(RPC_ID=1 AVA_TX_ID=TX_ID $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_TX_ID=TX_ID $(cmd))" ;
 }
 
 function test_avm__get_tx_2a {
-    check "$(RPC_ID=1 $(cmd) -t TX_ID -b BC_ID)" BC_ID ;
+    check "$(AVA_ID_RPC=1 $(cmd) -t TX_ID -b BC_ID)" BC_ID ;
 }
 
 function test_avm__get_tx_2b {
-    check "$(RPC_ID=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -t TX_ID)" BC_ID ;
+    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -t TX_ID)" BC_ID ;
 }
 
 ###############################################################################

@@ -34,11 +34,11 @@ function check {
 }
 
 function test_avm__get_build_genesis_1a {
-    check "$(RPC_ID=1 $(cmd) -g "$(data)")" ;
+    check "$(AVA_ID_RPC=1 $(cmd) -g "$(data)")" ;
 }
 
 function test_avm__get_build_genesis_1b {
-    check "$(RPC_ID=1 AVA_GENESIS_DATA="$(data)" $(cmd))" ;
+    check "$(AVA_ID_RPC=1 AVA_GENESIS_DATA="$(data)" $(cmd))" ;
 }
 
 ###############################################################################

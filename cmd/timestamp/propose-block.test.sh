@@ -28,11 +28,11 @@ function check {
 }
 
 function test_timestamp__propose_block_1a {
-    check "$(RPC_ID=1 $(cmd) -d DATA)" ID ;
+    check "$(AVA_ID_RPC=1 $(cmd) -d DATA)" ID ;
 }
 
 function test_timestamp__propose_block_1a {
-    check "$(RPC_ID=1 AVA_DATA=DATA $(cmd))" ID ;
+    check "$(AVA_ID_RPC=1 AVA_DATA=DATA $(cmd))" ID ;
 }
 
 ###############################################################################
