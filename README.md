@@ -434,7 +434,7 @@ $ export AVA_ARGS_RPC="--no-progress-meter" ## if supported by curl implementati
 $ avalanche-cli info peers -Y
 ```
 
-Now, each request will be performed without a progress meter (which can be distracting in case one chooses to pipe the response through another command).
+Now, each request will be performed without a progress meter (which can be distracting in case one chooses to pipe a response through another command).
 
 ### `${AVA_PIPE_RPC}`
 
