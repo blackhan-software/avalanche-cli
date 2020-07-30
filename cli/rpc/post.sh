@@ -4,6 +4,9 @@
 function rpc_post {
     local mime="${3-content-type:application/json}" ;
     local args="--url '${1}' --header '${mime}' --data '${2}'" ;
+    if (( ${#AVA_ARGS_RPC} > 0 )) ; then
+        args="${args} ${AVA_ARGS_RPC[*]}" ;
+    fi
     if [ "$AVA_SILENT_RPC" == "1" ] ; then
         args="${args} --silent" ;
     fi

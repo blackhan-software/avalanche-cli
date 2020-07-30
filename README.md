@@ -358,7 +358,7 @@ All commands share the following options and corresponding environment variables
 
 Can be used to set the [AVA] node which the `avalanche-cli` tool will be communicating with &ndash; where the default is `127.0.0.1:9650`. For example:
 
-```
+```sh
 $ avalanche-cli info peers -N=127.0.0.1:9650
 ```
 
@@ -372,56 +372,75 @@ $ AVA_NODE=127.0.0.1:9650 avalanche-cli info peers
 
 ### `${AVA_YES_RUN_RPC}` or `--yes-run-rpc` (`-Y`)
 
-Can be used to actually execute the `curl` request the `avalanche-cli` tool puts toghether &ndash; where by default this is *off*, i.e. the corresponding `curl` request will only be shown but *not* executed. For example:
+Can be used to actually execute the `curl` request the `avalanche-cli` tool puts together &ndash; where by default this is *off*, i.e. the corresponding `curl` request will only be shown but *not* executed. For example:
 
-```
+```sh
 $ avalanche-cli info peers -Y
 ```
 
-```
+```sh
 $ avalanche-cli info peers --yes-run-rpc
 ```
 
-```
+```sh
 $ AVA_YES_RUN_RPC=1 avalanche-cli info peers
 ```
 
 ### `${AVA_SILENT_RPC}` or `--silent-rpc` (`-S`)
 
-Can bu used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual response (if there is any):
+Can be used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual response (if there is any):
 
-```
+```sh
 $ avalanche-cli info peers -YS
 ```
-```
+
+```sh
 $ avalanche-cli info peers -Y --silent-rpc
 ```
-```
+
+```sh
 $ AVA_SILENT_RPC=1 avalanche-cli info peers -Y
 ```
 
 ### `${AVA_VERBOSE_RPC}` or `--verbose-rpc` (`-V`)
 
-Can bu used to make a `curl` request with its corresponding *verbose* flag on &ndash; where by default it is *off*. This is useful, when one wants to get a detailed view of an ongoing request:
+Can be used to make a `curl` request with its corresponding *verbose* flag on &ndash; where by default it is *off*. This is useful, if one wants to get a detailed view of an ongoing request:
 
-```
+```sh
 $ avalanche-cli info peers -YV
 ```
-```
+
+```sh
 $ avalanche-cli info peers -Y --verbose-rpc
 ```
-```
+
+```sh
 $ AVA_VERBOSE_RPC=1 avalanche-cli info peers -Y
 ```
+
+### `${AVA_ARGS_RPC}`
+
+Can be used to make a `curl` request with a corresponding argument (or arguments). This is useful, since it allows to access all of `curl`'s capabilities. For example:
+
+```sh
+$ export AVA_ARGS_RPC="--no-progress-meter" ## if supported by curl
+```
+
+```sh
+$ avalanche-cli info peers -Y
+```
+
+Now, each request will be performed without a progress meter (which can be distracting in case one chooses to pipe the response through another command).
 
 ### `${AVA_PIPE_RPC}`
 
 Can be used to pipe a `curl` response through a command, where `AVA_PIPE_RPC` needs to be an (implicit) associative array with content types as keys and corresponding commands as value entries. For example:
 
-```
+```sh
 $ export AVA_PIPE_RPC="declare -A AVA_PIPE_RPC=([content-type:application/json]='jq -c')"
 ```
-```
+
+```sh
 $ avalanche-cli info peers -Y
 ```
 
