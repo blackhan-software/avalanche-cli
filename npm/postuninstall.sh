@@ -28,7 +28,7 @@ TGT_PATH="/usr/local/share/zsh/site-functions" ;
 TGT_FILE="$TGT_PATH/_avalanche-cli" ;
 
 if [ -f "$TGT_FILE" ] ; then
-    rm "$TGT_FILE" ;
+    rm -f "$TGT_FILE" 2>/dev/null || true ;
 fi
 
 ###############################################################################

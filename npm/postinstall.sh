@@ -34,7 +34,7 @@ TGT_PATH="/usr/local/share/zsh/site-functions" ;
 TGT_FILE="$TGT_PATH/_avalanche-cli" ;
 
 if [ -d "$TGT_PATH" ] ; then
-    ln -sf "$SRC_FILE" "$TGT_FILE" ;
+    ln -sf "$SRC_FILE" "$TGT_FILE" 2>/dev/null || true;
 fi
 
 ###############################################################################
