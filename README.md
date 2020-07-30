@@ -427,7 +427,7 @@ Further, all commands share the following two &ndash; very general &ndash; envir
 Can be used to make a `curl` request with a corresponding argument (or arguments). This is useful, since it allows to access all of `curl`'s capabilities. For example:
 
 ```sh
-$ export AVA_ARGS_RPC="--no-progress-meter" ## if supported by curl
+$ export AVA_ARGS_RPC="--no-progress-meter" ## if supported by curl implementation
 ```
 
 ```sh
