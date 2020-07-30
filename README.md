@@ -418,6 +418,10 @@ $ avalanche-cli info peers -Y --verbose-rpc
 $ AVA_VERBOSE_RPC=1 avalanche-cli info peers -Y
 ```
 
+## Common Variables
+
+Further, all commands share the following two &ndash; very general &ndash; environment variables:
+
 ### `${AVA_ARGS_RPC}`
 
 Can be used to make a `curl` request with a corresponding argument (or arguments). This is useful, since it allows to access all of `curl`'s capabilities. For example:
