@@ -448,17 +448,7 @@ $ export AVA_PIPE_RPC="declare -A AVA_PIPE_RPC=([content-type:application/json]=
 $ avalanche-cli info peers -Y
 ```
 
-Now, *each* `application/json` response will be compactified and colorized by using the [`jq`] command line JSON processor. Also, by using `jq -c .result` (instead of just `jq -c`), the *actual* result can directly be extracted from an RPC's JSON response:
-
-```sh
-$ export AVA_PIPE_RPC="declare -A AVA_PIPE_RPC=([content-type:application/json]='jq -c .result')"
-```
-
-```sh
-$ avalanche-cli info peers -Y
-```
-
-To temporarily omit piping through any command, (unset or) set `AVA_PIPE_RPC` to an empty string:
+Now, *each* `application/json` response will be compactified and colorized by using the [`jq`] command line JSON processor. Further, to temporarily omit piping through any command, (unset or) set `AVA_PIPE_RPC` to an empty string:
 
 ```
 $ AVA_PIPE_RPC='' avalanche-cli info peers -Y
