@@ -14,6 +14,26 @@ Usage: avalanche-cli [OPTIONS] COMMMAND
 -v --version                                      Print CLI version information and quit.
 ```
 
+## Installation
+
+It is possible to run `avalanche-cli` *without any installation* whatsoever, by simply invoking it via [`npx`] (aka the [`npm`] package executor):
+
+```sh
+$ npx avalanche-cli --help
+```
+
+But, if you decide to permanently install it via [`npm`], then do so via:
+
+```sh
+$ npm install avalanche-cli -g ## avoid `sudo` (see FAQ)
+```
+
+```sh
+$ avalanche-cli -h ## show help info
+```
+
+Also, an installion via `npm` activates *command line completion* (i.e. hitting the TAB key after writing `avalanche-cli` should offer a list of available commands and options). Finally, for `avalanche-cli` to work properly your operating system needs to provide the following dependencies:
+
 ## Dependencies
 
 ```
@@ -42,34 +62,11 @@ Version         : 2.10-2
 Description     : Programmable completion for the bash shell
 ```
 
-Only for installation (and for `npx`):
+Only for installation (and for [`npx`]):
 ```
 Name            : npm
 Version         : 6.14.5-1
 Description     : A package manager
-```
-
-## Installation
-
-Avoid installing `avalanche-cli` as `root` (or with `sudo`). Instead, setup `npm` to install packages globally (per user) *without* breaking out of the `$HOME` folder:
-
-```sh
-$ export PATH="$PATH:$HOME/.node/bin" ## *also* put this e.g. into ~/.bashrc
-$ echo 'prefix = ~/.node' >> ~/.npmrc ## use ~/.node for global npm packages
-```
-
-```sh
-$ npm install avalanche-cli -g ## no sudo required
-```
-
-```sh
-$ avalanche-cli -h ## show help info
-```
-
-Further, `avalanche-cli` can be run *without installation* by simply invoking it via `npx`:
-
-```sh
-$ npx avalanche-cli -h
 ```
 
 ## Usage
@@ -128,9 +125,9 @@ $ avalanche-cli keystore delete-user -Y
 {"jsonrpc":"2.0","result":{"success":true},"id":31641}
 ```
 
-### JSON processing with `jq`
+### JSON processing with [`jq`]
 
-Since `avalance-cli` does not process the JSON reponses, it is recommended to use the excellent [`jq`] tool to handle them. For example:
+Since `avalance-cli` does not process any JSON reponses, it is recommended to use the excellent [`jq`] command line JSON processor to handle them. For example:
 
 ```sh
 $ avalanche-cli info peers -YS | jq .result.peers[0]
@@ -454,9 +451,32 @@ Now, *each* `application/json` response will be compactified and colorized by us
 $ AVA_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
+## FAQ
+
+### Can I install as a regular user instead as `root`?
+
+It is actually *recommended* to avoid an installion as `root` (or via `sudo`). Instead, setup [`npm`] to install packages globally (per user) *without* breaking out of the `$HOME` folder:
+
+```sh
+$ export PATH="$PATH:$HOME/.node/bin" ## *also* put this e.g. into ~/.bashrc
+$ echo 'prefix = ~/.node' >> ~/.npmrc ## use ~/.node for global npm packages
+```
+
+```sh
+$ npm install avalanche-cli -g ## no sudo required
+```
+
+```sh
+$ avalanche-cli -h ## show help info
+```
+
+While the recommendation above holds true for GNU/Linux users, it probably may be skipped for macOS users. Further, `zsh` users may also need to adjust the instructions accordingly (since they are for `bash` users).
+
 ## Copyright
 
-(c) 2020, Hasan Karahan, MSc in CS, ETH Zurich.
+(c) 2020, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
-[AVA]:https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
-[`jq`]:https://stedolan.github.io/jq/
+[AVA]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
+[`jq`]: https://stedolan.github.io/jq/
+[`npm`]: https://github.com/npm/cli
+[`npx`]: https://github.com/npm/npx
