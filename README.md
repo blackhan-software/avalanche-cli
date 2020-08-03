@@ -22,7 +22,7 @@ It is possible to run `avalanche-cli` *without any installation* whatsoever, by 
 $ npx avalanche-cli --help
 ```
 
-But, if you decide to permanently install it via [`npm`], then do so via:
+But, if you decide to permanently install it via [`npm`], then do so with:
 
 ```sh
 $ npm install avalanche-cli -g ## avoid `sudo` (see FAQ)
