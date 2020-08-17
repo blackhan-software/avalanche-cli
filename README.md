@@ -32,7 +32,7 @@ $ npm install avalanche-cli -g ## avoid `sudo` (see FAQ)
 $ avalanche-cli -h ## show help info
 ```
 
-Also, an installation via `npm` activates *command line completion* (i.e. hitting the TAB key after writing `avalanche-cli` should offer a list of available commands and options). Finally, for `avalanche-cli` to work properly your operating system needs to provide the following dependencies:
+Also, an installation via `npm` activates *command line completion* (i.e. hitting the TAB key after writing `avalanche-cli` should offer a list of available commands and options). Finally, for `avalanche-cli` to work properly your operating system needs to provide the dependencies below.
 
 ## Dependencies
 
