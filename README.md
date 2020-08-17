@@ -16,7 +16,7 @@ Usage: avalanche-cli [OPTIONS] COMMMAND
 
 ## Installation
 
-It is possible to run `avalanche-cli` *without any installation* whatsoever, by simply invoking it via [`npx`] (aka the [`npm`] package executor):
+First of all, it is possible to run `avalanche-cli` *without any installation* whatsoever, by simply invoking it via [`npx`] (aka the [`npm`] package executor):
 
 ```sh
 $ npx avalanche-cli --help
@@ -32,7 +32,7 @@ $ npm install avalanche-cli -g ## avoid `sudo` (see FAQ)
 $ avalanche-cli -h ## show help info
 ```
 
-Also, an installion via `npm` activates *command line completion* (i.e. hitting the TAB key after writing `avalanche-cli` should offer a list of available commands and options). Finally, for `avalanche-cli` to work properly your operating system needs to provide the following dependencies:
+Also, an installation via `npm` activates *command line completion* (i.e. hitting the TAB key after writing `avalanche-cli` should offer a list of available commands and options). Finally, for `avalanche-cli` to work properly your operating system needs to provide the following dependencies:
 
 ## Dependencies
 
