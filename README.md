@@ -176,7 +176,7 @@ avm create-fixed-cap-asset                        Create a new fixed-cap, fungib
 avm create-variable-cap-asset                     Create a new variable-cap, fungible asset. No units of the asset exist at initialization. Minters can mint units of this asset using 'create-mint-tx', 'sign-mint-tx' and 'issue-tx'. The asset can be sent with 'avm send'.
 avm create-mint-tx                                Create an unsigned transaction to mint more of a variable-cap asset (an asset created with 'avm create-variable-cap-asset').
 avm get-asset-description                         Get information about an asset.
-avm export-avax                                   Send AVAX from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-avax' method to complete the transfer.
+avm export-avax                                   Send AVAX from the X-Chain to an address on the P-Chain. After calling this method, you must call the P-Chain's 'import-avax' method to complete the transfer.
 avm import-avax                                   Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer.
 avm export-key                                    Get the private key that controls a given address. The returned private key can be added to a user with 'avm import-key'.
 avm import-key                                    Give a user control over an address by providing the private key that controls the address.
@@ -316,25 +316,25 @@ This API allows clients to interact with the P-Chain (Platform Chain), which mai
 ```
 platform create-blockchain                        Create a new blockchain. Currently only supports creation of new instances of the AVM and the Timestamp VM.
 platform get-blockchain-status                    Get the status of a blockchain.
-platform create-account                           The P-Chain uses an account model. This method creates an account.
+platform create-address                           Create a new address controlled by the given user.
 platform import-key                               Give a user control over an address by providing the private key that controls the address.
 platform export-key                               Get the private key that controls a given address. The returned private key can be added to a user with 'platform importKey'.
-platform get-account                              The P-Chain uses an account model. An account is identified by an address. This method returns the account with the given address.
-platform list-accounts                            List the accounts controlled by the specified user.
+platform get-balance                              Get the balance of AVAX controlled by a given address.
+platform list-addresses                           List the addresses controlled by the specified user.
 platform get-current-validators                   List the current validators of the given Subnet.
 platform get-pending-validators                   List the validators in the pending validator set of the specified Subnet. Each validator is not currently validating the Subnet but will in the future..
 platform sample-validators                        Sample validators from the specified Subnet.
 platform add-default-subnet-validator             Add a validator to the Default Subnet.
 platform add-non-default-subnet-validator         Add a validator to a Subnet other than the Default Subnet. The validator must validate the Default Subnet for the entire duration they validate this S..
 platform add-default-subnet-delegator             Add a delegator to the Default Subnet. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has..
-platform create-subnet                            Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the account paying the transaction fee...
+platform create-subnet                            Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the address paying the transaction fee...
 platform get-subnets                              Get all the Subnets that exist.
 platform validated-by                             Get the Subnet that validates a given blockchain.
 platform validates                                Get the IDs of the blockchains a Subnet validates.
 platform get-blockchains                          Get all the blockchains that exist (excluding the P-Chain).
-platform export-avax                              Send AVAX from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVAX is sent..
+platform export-avax                              Send AVAX from an address on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the address that the AVAX is sent..
 platform import-avax                              Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate ..
-platform sign                                     Sign an unsigned or partially signed transaction. Transactions to add non-default Subnets require signatures from control keys and from the account pa..
+platform sign                                     Sign an unsigned or partially signed transaction. Transactions to add non-default Subnets require signatures from control keys and from the address pa..
 platform issue-tx                                 Issue a transaction to the Platform Chain.
 ```
 
