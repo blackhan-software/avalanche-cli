@@ -28,23 +28,23 @@ function check {
 }
 
 function test_avm__get_balance_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS -a ASSET_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ ADDRESS -a ASSET_ID)" ;
 }
 
 function test_avm__get_balance_1b {
-    check "$(AVA_ID_RPC=1 AVA_ADDRESS=ADDRESS $(cmd) -a ASSET_ID)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ADDRESS=ADDRESS $(cmd) -a ASSET_ID)" ;
 }
 
 function test_avm__get_balance_1c {
-    check "$(AVA_ID_RPC=1 AVA_ASSET_ID=ASSET_ID $(cmd) -@ ADDRESS)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ASSET_ID=ASSET_ID $(cmd) -@ ADDRESS)" ;
 }
 
 function test_avm__get_balance_2a {
-    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS -a ASSET_ID -b BC_ID)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ ADDRESS -a ASSET_ID -b BC_ID)" BC_ID ;
 }
 
 function test_avm__get_balance_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -@ ADDRESS -a ASSET_ID)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) -@ ADDRESS -a ASSET_ID)" BC_ID ;
 }
 
 ###############################################################################

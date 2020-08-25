@@ -18,15 +18,15 @@ source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-#|--amount=\${AVA_AMOUNT}[E|P|T|G|M|K]]" ;
-    usage+=" [-a|--asset-id=\${AVA_ASSET_ID}]" ;
-    usage+=" [-@|--to=\${AVA_TO}]" ;
-    usage+=" [-m|--minter=\${AVA_MINTER_\$IDX}]*" ;
-    usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
+    usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
+    usage+=" [-@|--to=\${AVAX_TO}]" ;
+    usage+=" [-m|--minter=\${AVAX_MINTER_\$IDX}]*" ;
+    usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     source "$CMD_SCRIPT/../../cli/help.sh" ; # shellcheck disable=2046
     printf '%s\n\n%s\n' "$usage" "$(help_for $(command_fqn "${0}"))" ;
@@ -48,8 +48,8 @@ function cli_options {
 }
 
 function cli {
-    local -ag AVA_MINTERS=() ;
-    get_minters AVA_MINTERS ;
+    local -ag AVAX_MINTERS=() ;
+    get_minters AVAX_MINTERS ;
     while getopts ":hSVYN:#:a:@:m:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
@@ -61,53 +61,53 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
            \#|amount)
-                AVA_AMOUNT="${OPTARG}" ;;
+                AVAX_AMOUNT="${OPTARG}" ;;
             a|asset-id)
-                AVA_ASSET_ID="${OPTARG}" ;;
+                AVAX_ASSET_ID="${OPTARG}" ;;
             @|to)
-                AVA_TO="${OPTARG}" ;;
+                AVAX_TO="${OPTARG}" ;;
             m|minter)
-                local i; i="$(next_index AVA_MINTERS)" ;
-                AVA_MINTERS["$i"]="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_MINTERS)" ;
+                AVAX_MINTERS["$i"]="${OPTARG}" ;;
             b|blockchain-id)
-                AVA_BLOCKCHAIN_ID="${OPTARG}" ;;
+                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVA_AMOUNT" ] ; then
+    if [ -z "$AVAX_AMOUNT" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_ASSET_ID" ] ; then
+    if [ -z "$AVAX_ASSET_ID" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_TO" ] ; then
+    if [ -z "$AVAX_TO" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "${AVA_MINTERS[*]}" ] ; then
+    if [ -z "${AVAX_MINTERS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_BLOCKCHAIN_ID" ] ; then
-        AVA_BLOCKCHAIN_ID="X" ;
+    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
+        AVAX_BLOCKCHAIN_ID="X" ;
     fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
 
 function get_minters {
-    environ_vars "$1" "AVA_MINTER_([0-9]+)" "${!AVA_MINTER_@}" ;
+    environ_vars "$1" "AVAX_MINTER_([0-9]+)" "${!AVAX_MINTER_@}" ;
 }
 
 function rpc_method {
@@ -116,18 +116,18 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"amount":%s,' "$(si "$AVA_AMOUNT")" ;
-    printf '"assetID":"%s",' "$AVA_ASSET_ID" ;
-    printf '"to":"%s",' "$AVA_TO" ;
+    printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
+    printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
+    printf '"to":"%s",' "$AVAX_TO" ;
     printf '"minters":[' ;
     # shellcheck disable=SC2046
-    join_by ',' $(map_by '"%s" ' "${AVA_MINTERS[@]}") ;
+    join_by ',' $(map_by '"%s" ' "${AVAX_MINTERS[@]}") ;
     printf ']}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/bc/$AVA_BLOCKCHAIN_ID" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/bc/$AVAX_BLOCKCHAIN_ID" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

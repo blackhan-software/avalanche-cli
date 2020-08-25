@@ -28,15 +28,15 @@ function check {
 }
 
 function test_admin__alias_chain_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -b BLOCKCHAIN_ID -a ALIAS)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -b BLOCKCHAIN_ID -a ALIAS)" ;
 }
 
 function test_admin__alias_chain_1b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BLOCKCHAIN_ID $(cmd) -a ALIAS)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BLOCKCHAIN_ID $(cmd) -a ALIAS)" ;
 }
 
 function test_admin__alias_chain_1c {
-    check "$(AVA_ID_RPC=1 AVA_ALIAS=ALIAS $(cmd) -b BLOCKCHAIN_ID)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ALIAS=ALIAS $(cmd) -b BLOCKCHAIN_ID)" ;
 }
 
 ###############################################################################

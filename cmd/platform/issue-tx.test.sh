@@ -28,11 +28,11 @@ function check {
 }
 
 function test_platform__sign_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -t TX)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -t TX)" ;
 }
 
 function test_platform__sign_1b {
-    check "$(AVA_ID_RPC=1 AVA_TX=TX $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_TX=TX $(cmd))" ;
 }
 
 ###############################################################################

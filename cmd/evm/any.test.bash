@@ -35,26 +35,26 @@ function check {
 }
 
 function test_evm__any_0 {
-    cd "$EVM_TEST/../.." && check "$(AVA_ID_RPC=1 $(cmd))" ;
+    cd "$EVM_TEST/../.." && check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 function test_evm__any_1a {
-    cd "$EVM_TEST/../.." && check "$(AVA_ID_RPC=1 $(cmd) -P p1)" "p1" ;
+    cd "$EVM_TEST/../.." && check "$(AVAX_ID_RPC=1 $(cmd) -P p1)" "p1" ;
 }
 
 function test_evm__any_1b {
-    cd "$EVM_TEST/../.." && check "$(AVA_ID_RPC=1 \
-        AVA_PARAMETER_0=p1 $(cmd))" "p1" ;
+    cd "$EVM_TEST/../.." && check "$(AVAX_ID_RPC=1 \
+        AVAX_PARAMETER_0=p1 $(cmd))" "p1" ;
 }
 
 function test_evm__any_2a {
-    cd "$EVM_TEST/../.." && check "$(AVA_ID_RPC=1 \
+    cd "$EVM_TEST/../.." && check "$(AVAX_ID_RPC=1 \
         $(cmd) -P p1 -P p2)" "p1 p2" ;
 }
 
 function test_evm__any_2b {
-    cd "$EVM_TEST/../.." && check "$(AVA_ID_RPC=1 \
-        AVA_PARAMETER_0=p1 AVA_PARAMETER_1=p2 $(cmd))" "p1 p2" ;
+    cd "$EVM_TEST/../.." && check "$(AVAX_ID_RPC=1 \
+        AVAX_PARAMETER_0=p1 AVAX_PARAMETER_1=p2 $(cmd))" "p1 p2" ;
 }
 
 ###############################################################################

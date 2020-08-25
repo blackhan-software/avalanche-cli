@@ -17,13 +17,14 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-@|--control-key=\${AVA_CONTROL_KEY_\$IDX}]*" ;
-    usage+=" [-t|--threshold=\${AVA_THRESHOLD}]" ;
-    usage+=" [-%|--payer-nonce=\${AVA_PAYER_NONCE}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-@|--control-key=\${AVAX_CONTROL_KEY_\$IDX}]*" ;
+    usage+=" [-t|--threshold=\${AVAX_THRESHOLD}]" ;
+    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
+    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     source "$CMD_SCRIPT/../../cli/help.sh" ; # shellcheck disable=2046
     printf '%s\n\n%s\n' "$usage" "$(help_for $(command_fqn "${0}"))" ;
@@ -33,7 +34,8 @@ function cli_options {
     local -a options ;
     options+=( "-@" "--control-key=" ) ;
     options+=( "-t" "--threshold=" ) ;
-    options+=( "-%" "--payer-nonce=" ) ;
+    options+=( "-u" "--username=" ) ;
+    options+=( "-p" "--password=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -43,9 +45,9 @@ function cli_options {
 }
 
 function cli {
-    local -ag AVA_CONTROL_KEYS=() ;
-    get_control_keys AVA_CONTROL_KEYS ;
-    while getopts ":hSVYN:@:t:%:-:" OPT "$@"
+    local -ag AVAX_CONTROL_KEYS=() ;
+    get_control_keys AVAX_CONTROL_KEYS ;
+    while getopts ":hSVYN:@:t:u:p:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -56,43 +58,48 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             @|control-key)
-                local i; i="$(next_index AVA_CONTROL_KEYS)" ;
-                AVA_CONTROL_KEYS["$i"]="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_CONTROL_KEYS)" ;
+                AVAX_CONTROL_KEYS["$i"]="${OPTARG}" ;;
             t|threshold)
-                AVA_THRESHOLD="${OPTARG}" ;;
-            %|payer-nonce)
-                AVA_PAYER_NONCE="${OPTARG}" ;;
+                AVAX_THRESHOLD="${OPTARG}" ;;
+            u|username)
+                AVAX_USERNAME="${OPTARG}" ;;
+            p|password)
+                AVAX_PASSWORD="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "${AVA_CONTROL_KEYS[*]}" ] ; then
+    if [ -z "${AVAX_CONTROL_KEYS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_THRESHOLD" ] ; then
+    if [ -z "$AVAX_THRESHOLD" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PAYER_NONCE" ] ; then
+    if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_PASSWORD" ] ; then
+        cli_help && exit 1 ;
+    fi
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
 
 function get_control_keys {
-    environ_vars "$1" "AVA_CONTROL_KEY_([0-9]+)" "${!AVA_CONTROL_KEY_@}" ;
+    environ_vars "$1" "AVAX_CONTROL_KEY_([0-9]+)" "${!AVAX_CONTROL_KEY_@}" ;
 }
 
 function rpc_method {
@@ -102,16 +109,17 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"controlKeys":[' ; # shellcheck disable=SC2046
-    join_by ',' $(map_by '"%s" ' "${AVA_CONTROL_KEYS[@]}") ;
+    join_by ',' $(map_by '"%s" ' "${AVAX_CONTROL_KEYS[@]}") ;
     printf '],' ;
-    printf '"threshold":%s,' "$AVA_THRESHOLD" ;
-    printf '"payerNonce":%s' "$AVA_PAYER_NONCE" ;
+    printf '"threshold":%s,' "$AVAX_THRESHOLD" ;
+    printf '"username":"%s",' "$AVAX_USERNAME" ;
+    printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/P" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/P" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

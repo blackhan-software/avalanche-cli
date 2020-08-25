@@ -28,15 +28,15 @@ function check {
 }
 
 function test_keystore__export_user_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_keystore__export_user_1b {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
 }
 
 function test_keystore__export_user_1c {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
 }
 
 ###############################################################################

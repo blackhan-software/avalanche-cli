@@ -19,12 +19,13 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"platform.addNonDefaultSubnetValidator",' ;
     expect_d+='"params":{' ;
-    expect_d+='"id":"ID",' ;
+    expect_d+='"nodeID":"NODE_ID",' ;
     expect_d+='"subnetID":"SUBNET_ID",' ;
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
     expect_d+='"weight":1,' ;
-    expect_d+='"payerNonce":3' ;
+    expect_d+='"username":"USERNAME",' ;
+    expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -32,33 +33,39 @@ function check {
 }
 
 function test_platform__add_non_default_subnet_validator_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
-        -i ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_non_default_subnet_validator_1b {
-    check "$(AVA_ID_RPC=1 AVA_ID=ID $(cmd) \
-        -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
+        -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_non_default_subnet_validator_1c {
-    check "$(AVA_ID_RPC=1 AVA_START_TIME=2000000000 $(cmd) \
-        -i ID -s SUBNET_ID -e 3000000000 -w 1 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -e 3000000000 -w 1 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_non_default_subnet_validator_1d {
-    check "$(AVA_ID_RPC=1 AVA_END_TIME=3000000000 $(cmd) \
-        -i ID -s SUBNET_ID -b 2000000000 -w 1 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -w 1 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_non_default_subnet_validator_1e {
-    check "$(AVA_ID_RPC=1 AVA_WEIGHT=1 $(cmd) \
-        -i ID -s SUBNET_ID -b 2000000000 -e 3000000000 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_WEIGHT=1 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_non_default_subnet_validator_1f {
-    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) \
-        -i ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

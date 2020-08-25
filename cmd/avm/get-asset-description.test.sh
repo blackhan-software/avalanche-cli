@@ -28,19 +28,19 @@ function check {
 }
 
 function test_avm__get_asset_description_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -a ASSET_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -a ASSET_ID)" ;
 }
 
 function test_avm__get_asset_description_1b {
-    check "$(AVA_ID_RPC=1 AVA_ASSET_ID=ASSET_ID $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ASSET_ID=ASSET_ID $(cmd))" ;
 }
 
 function test_avm__get_asset_description_2a {
-    check "$(AVA_ID_RPC=1 $(cmd) -a ASSET_ID -b BC_ID)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -a ASSET_ID -b BC_ID)" BC_ID ;
 }
 
 function test_avm__get_asset_description_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) -a ASSET_ID)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) -a ASSET_ID)" BC_ID ;
 }
 
 ###############################################################################

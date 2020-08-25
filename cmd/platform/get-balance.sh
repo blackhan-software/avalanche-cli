@@ -15,12 +15,11 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-u|--username=\${AVA_USERNAME}]" ;
-    usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-@|--address=\${AVAX_ADDRESS}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     source "$CMD_SCRIPT/../../cli/help.sh" ; # shellcheck disable=2046
     printf '%s\n\n%s\n' "$usage" "$(help_for $(command_fqn "${0}"))" ;
@@ -28,8 +27,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-u" "--username=" ) ;
-    options+=( "-p" "--password=" ) ;
+    options+=( "-@" "--address=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -39,7 +37,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:u:p:-:" OPT "$@"
+    while getopts ":hSVYN:@:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -49,50 +47,44 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            u|username)
-                AVA_USERNAME="${OPTARG}" ;;
-            p|password)
-                AVA_PASSWORD="${OPTARG}" ;;
+            @|address)
+                AVAX_ADDRESS="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVA_USERNAME" ] ; then
+    if [ -z "$AVAX_ADDRESS" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PASSWORD" ] ; then
-        cli_help && exit 1 ;
-    fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
 
 function rpc_method {
-    printf "platform.listAccounts" ;
+    printf "platform.getBalance" ;
 }
 
 function rpc_params {
     printf '{' ;
-    printf '"username":"%s",' "$AVA_USERNAME" ;
-    printf '"password":"%s"' "$AVA_PASSWORD" ;
+    printf '"address":"%s"' "$AVAX_ADDRESS" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/P" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/P" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

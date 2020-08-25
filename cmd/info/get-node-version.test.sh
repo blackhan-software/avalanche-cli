@@ -27,7 +27,7 @@ function check {
 }
 
 function test_info__get_node_version {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

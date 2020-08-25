@@ -28,15 +28,15 @@ function check {
 }
 
 function test_platform__get_pending_validators_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -s SUBNET_ID)" SUBNET_ID ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -s SUBNET_ID)" SUBNET_ID ;
 }
 
 function test_platform__get_pending_validators_1b {
-    check "$(AVA_ID_RPC=1 AVA_SUBNET_ID=SUBNET_ID $(cmd))" SUBNET_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_SUBNET_ID=SUBNET_ID $(cmd))" SUBNET_ID ;
 }
 
 function test_platform__get_pending_validators_1c {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

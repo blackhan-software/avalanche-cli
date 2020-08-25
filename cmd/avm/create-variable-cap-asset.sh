@@ -17,18 +17,18 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-n|--name=\${AVA_NAME}]" ;
-    usage+=" [-s|--symbol=\${AVA_SYMBOL}]" ;
-    usage+=" [-d|--denomination=\${AVA_DENOMINATION}]" ;
-    usage+=" [-m|--minter=\${AVA_MINTERS_\$IDX}]*" ;
-    usage+=" [-t|--threshold=\${AVA_THRESHOLD_\$IDX}]*" ;
-    usage+=" [-u|--username=\${AVA_USERNAME}]" ;
-    usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
-    usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-n|--name=\${AVAX_NAME}]" ;
+    usage+=" [-s|--symbol=\${AVAX_SYMBOL}]" ;
+    usage+=" [-d|--denomination=\${AVAX_DENOMINATION}]" ;
+    usage+=" [-m|--minter=\${AVAX_MINTERS_\$IDX}]*" ;
+    usage+=" [-t|--threshold=\${AVAX_THRESHOLD_\$IDX}]*" ;
+    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
+    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     source "$CMD_SCRIPT/../../cli/help.sh" ; # shellcheck disable=2046
     printf '%s\n\n%s\n' "$usage" "$(help_for $(command_fqn "${0}"))" ;
@@ -53,10 +53,10 @@ function cli_options {
 }
 
 function cli {
-    local -ag AVA_MINTERS=() ;
-    get_minters AVA_MINTERS ;
-    local -ag AVA_THRESHOLDS=() ;
-    get_thresholds AVA_THRESHOLDS ;
+    local -ag AVAX_MINTERS=() ;
+    get_minters AVAX_MINTERS ;
+    local -ag AVAX_THRESHOLDS=() ;
+    get_thresholds AVAX_THRESHOLDS ;
     while getopts ":hSVYN:n:s:d:m:t:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
@@ -68,76 +68,76 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             n|name)
-                AVA_NAME="${OPTARG}" ;;
+                AVAX_NAME="${OPTARG}" ;;
             s|symbol)
-                AVA_SYMBOL="${OPTARG}" ;;
+                AVAX_SYMBOL="${OPTARG}" ;;
             d|denomination)
-                AVA_DENOMINATION="${OPTARG}" ;;
+                AVAX_DENOMINATION="${OPTARG}" ;;
             m|minters)
-                local i; i="$(next_index AVA_THRESHOLDS)" ;
-                AVA_MINTERS[$i]="${AVA_MINTERS[$i]} ${OPTARG}" ;;
+                local i; i="$(next_index AVAX_THRESHOLDS)" ;
+                AVAX_MINTERS[$i]="${AVAX_MINTERS[$i]} ${OPTARG}" ;;
             t|threshold)
-                local i; i="$(next_index AVA_THRESHOLDS)" ;
-                AVA_THRESHOLDS["$i"]="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_THRESHOLDS)" ;
+                AVAX_THRESHOLDS["$i"]="${OPTARG}" ;;
             u|username)
-                AVA_USERNAME="${OPTARG}" ;;
+                AVAX_USERNAME="${OPTARG}" ;;
             p|password)
-                AVA_PASSWORD="${OPTARG}" ;;
+                AVAX_PASSWORD="${OPTARG}" ;;
             b|blockchain-id)
-                AVA_BLOCKCHAIN_ID="${OPTARG}" ;;
+                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVA_NAME" ] ; then
+    if [ -z "$AVAX_NAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_SYMBOL" ] ; then
+    if [ -z "$AVAX_SYMBOL" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_DENOMINATION" ] ; then
-        AVA_DENOMINATION=0 ;
+    if [ -z "$AVAX_DENOMINATION" ] ; then
+        AVAX_DENOMINATION=0 ;
     fi
-    if [ -z "${AVA_THRESHOLDS[*]}" ] ; then
+    if [ -z "${AVAX_THRESHOLDS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "${AVA_MINTERS[*]}" ] ; then
+    if [ -z "${AVAX_MINTERS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if (( "${#AVA_MINTERS[@]}" != "${#AVA_THRESHOLDS[@]}" )) ; then
+    if (( "${#AVAX_MINTERS[@]}" != "${#AVAX_THRESHOLDS[@]}" )) ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_USERNAME" ] ; then
+    if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PASSWORD" ] ; then
+    if [ -z "$AVAX_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_BLOCKCHAIN_ID" ] ; then
-        AVA_BLOCKCHAIN_ID="X" ;
+    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
+        AVAX_BLOCKCHAIN_ID="X" ;
     fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
 
 function get_minters {
-    environ_vars "$1" "AVA_MINTERS_([0-9]+)" "${!AVA_MINTERS_@}" ;
+    environ_vars "$1" "AVAX_MINTERS_([0-9]+)" "${!AVAX_MINTERS_@}" ;
 }
 
 function get_thresholds {
-    environ_vars "$1" "AVA_THRESHOLD_([0-9]+)" "${!AVA_THRESHOLD_@}" ;
+    environ_vars "$1" "AVAX_THRESHOLD_([0-9]+)" "${!AVAX_THRESHOLD_@}" ;
 }
 
 function rpc_method {
@@ -146,29 +146,29 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"name":"%s",' "$AVA_NAME" ;
-    printf '"symbol":"%s",' "$AVA_SYMBOL" ;
-    printf '"denomination":%s,' "$AVA_DENOMINATION" ;
+    printf '"name":"%s",' "$AVAX_NAME" ;
+    printf '"symbol":"%s",' "$AVAX_SYMBOL" ;
+    printf '"denomination":%s,' "$AVAX_DENOMINATION" ;
     printf '"minterSets":[' ;
 
     # shellcheck disable=SC2046,SC2086
-    join_by ',' $(for T in "${!AVA_THRESHOLDS[@]}" ; do
+    join_by ',' $(for T in "${!AVAX_THRESHOLDS[@]}" ; do
         printf '{' ;
         printf '"minters":%s,' "[$( \
-            join_by ',' $(map_by '"%s" ' ${AVA_MINTERS[$T]}))]" ;
-        printf '"threshold":%s' "${AVA_THRESHOLDS[$T]}";
+            join_by ',' $(map_by '"%s" ' ${AVAX_MINTERS[$T]}))]" ;
+        printf '"threshold":%s' "${AVAX_THRESHOLDS[$T]}";
         printf '} ' ;
     done) ;
 
     printf '],' ;
-    printf '"username":"%s",' "$AVA_USERNAME" ;
-    printf '"password":"%s"' "$AVA_PASSWORD" ;
+    printf '"username":"%s",' "$AVAX_USERNAME" ;
+    printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/bc/$AVA_BLOCKCHAIN_ID" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/bc/$AVAX_BLOCKCHAIN_ID" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

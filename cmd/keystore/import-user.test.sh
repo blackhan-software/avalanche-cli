@@ -29,19 +29,19 @@ function check {
 }
 
 function test_keystore__import_user_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD -U USER)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD -U USER)" ;
 }
 
 function test_keystore__import_user_1b {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD -U USER)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -p PASSWORD -U USER)" ;
 }
 
 function test_keystore__import_user_1c {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME -U USER)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -u USERNAME -U USER)" ;
 }
 
 function test_keystore__import_user_1d {
-    check "$(AVA_ID_RPC=1 AVA_USER=USER $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USER=USER $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

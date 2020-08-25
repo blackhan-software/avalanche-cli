@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform import-ava" ;
+    printf "./avalanche-cli.sh platform import-avax" ;
 }
 
 function check {
@@ -17,10 +17,10 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.importAVA",' ;
+    expect_d+='"method":"platform.importAVAX",' ;
     expect_d+='"params":{' ;
     expect_d+='"to":"TO",' ;
-    expect_d+='"payerNonce":3,' ;
+    expect_d+='"sourceChain":"X",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -29,24 +29,24 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__import_ava_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -@ TO -% 3 -u USERNAME -p PASSWORD)" ;
+function test_platform__import_avax_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ TO -s X -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__import_ava_1b {
-    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) -% 3 -u USERNAME -p PASSWORD)" ;
+function test_platform__import_avax_1b {
+    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) -s X -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__import_ava_1c {
-    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+function test_platform__import_avax_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_SOURCE_CHAIN=X $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__import_ava_1d {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -@ TO -% 3 -p PASSWORD)" ;
+function test_platform__import_avax_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -@ TO -s X -p PASSWORD)" ;
 }
 
-function test_platform__import_ava_1e {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -@ TO -% 3 -u USERNAME)" ;
+function test_platform__import_avax_1e {
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -@ TO -s X -u USERNAME)" ;
 }
 
 ###############################################################################

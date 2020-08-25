@@ -27,7 +27,7 @@ function check {
 }
 
 function test_keystore__list_users {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

@@ -35,73 +35,73 @@ function check {
 }
 
 function test_avm__create_fixed_cap_asset_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
+    check "$(AVAX_ID_RPC=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1b {
-    check "$(AVA_ID_RPC=1 AVA_NAME=NAME $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_NAME=NAME $(cmd) \
         -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1c {
-    check "$(AVA_ID_RPC=1 AVA_SYMBOL=SYMBOL $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_SYMBOL=SYMBOL $(cmd) \
         -n NAME -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1d {
-    check "$(AVA_ID_RPC=1 AVA_DENOMINATION=0 $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_DENOMINATION=0 $(cmd) \
         -n NAME -s SYMBOL -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1e {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
         -n NAME -s SYMBOL -d 0 -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_1f {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME \
         -@ A1 -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_2a {
-    check "$(AVA_ID_RPC=1 AVA_ADDRESS_0=A1 $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_ADDRESS_0=A1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -# 1G -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_2b {
-    check "$(AVA_ID_RPC=1 AVA_ADDRESS_0=A1 AVA_ADDRESS_1=A2 $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_ADDRESS_0=A1 AVAX_ADDRESS_1=A2 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -# 1G -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_3a {
-    check "$(AVA_ID_RPC=1 AVA_AMOUNT_0=1G $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT_0=1G $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -@ A2 -# 2T)" ;
 }
 
 function test_avm__create_fixed_cap_asset_3b {
-    check "$(AVA_ID_RPC=1 AVA_AMOUNT_0=1G AVA_AMOUNT_1=2T $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT_0=1G AVAX_AMOUNT_1=2T $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -@ A2)" ;
 }
 
 function test_avm__create_fixed_cap_asset_4a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
+    check "$(AVAX_ID_RPC=1 $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T -b BC_ID)" BC_ID ;
 }
 
 function test_avm__create_fixed_cap_asset_4b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -n NAME -s SYMBOL -d 0 -u USERNAME -p PASSWORD \
         -@ A1 -# 1G -@ A2 -# 2T -b BC_ID)" BC_ID ;
 }

@@ -18,18 +18,18 @@ source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-n|--name=\${AVA_NAME}]" ;
-    usage+=" [-s|--symbol=\${AVA_SYMBOL}]" ;
-    usage+=" [-d|--denomination=\${AVA_DENOMINATION}]" ;
-    usage+=" [-@|--address|--initial-holder-address=\${AVA_ADDRESS_\$IDX}]*" ;
-    usage+=" [-#|--amount|--initial-holder-amount=\${AVA_AMOUNT_\$IDX}[E|P|T|G|M|K]]*" ;
-    usage+=" [-u|--username=\${AVA_USERNAME}]" ;
-    usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
-    usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-n|--name=\${AVAX_NAME}]" ;
+    usage+=" [-s|--symbol=\${AVAX_SYMBOL}]" ;
+    usage+=" [-d|--denomination=\${AVAX_DENOMINATION}]" ;
+    usage+=" [-@|--address|--initial-holder-address=\${AVAX_ADDRESS_\$IDX}]*" ;
+    usage+=" [-#|--amount|--initial-holder-amount=\${AVAX_AMOUNT_\$IDX}[E|P|T|G|M|K]]*" ;
+    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
+    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     source "$CMD_SCRIPT/../../cli/help.sh" ; # shellcheck disable=2046
     printf '%s\n\n%s\n' "$usage" "$(help_for $(command_fqn "${0}"))" ;
@@ -54,10 +54,10 @@ function cli_options {
 }
 
 function cli {
-    local -ag AVA_ADDRESSES=() ;
-    get_addresses AVA_ADDRESSES ;
-    local -ag AVA_AMOUNTS=() ;
-    get_amounts AVA_AMOUNTS ;
+    local -ag AVAX_ADDRESSES=() ;
+    get_addresses AVAX_ADDRESSES ;
+    local -ag AVAX_AMOUNTS=() ;
+    get_amounts AVAX_AMOUNTS ;
     while getopts ":hSVYH:n:s:d:@:#:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
@@ -69,76 +69,76 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             n|name)
-                AVA_NAME="${OPTARG}" ;;
+                AVAX_NAME="${OPTARG}" ;;
             s|symbol)
-                AVA_SYMBOL="${OPTARG}" ;;
+                AVAX_SYMBOL="${OPTARG}" ;;
             d|denomination)
-                AVA_DENOMINATION="${OPTARG}" ;;
+                AVAX_DENOMINATION="${OPTARG}" ;;
             @|address|initial-holder-address)
-                local i; i="$(next_index AVA_ADDRESSES)" ;
-                AVA_ADDRESSES["$i"]="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_ADDRESSES)" ;
+                AVAX_ADDRESSES["$i"]="${OPTARG}" ;;
            \#|amount|initial-holder-amount)
-                local i; i="$(next_index AVA_AMOUNTS)" ;
-                AVA_AMOUNTS["$i"]="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_AMOUNTS)" ;
+                AVAX_AMOUNTS["$i"]="${OPTARG}" ;;
             u|username)
-                AVA_USERNAME="${OPTARG}" ;;
+                AVAX_USERNAME="${OPTARG}" ;;
             p|password)
-                AVA_PASSWORD="${OPTARG}" ;;
+                AVAX_PASSWORD="${OPTARG}" ;;
             b|blockchain-id)
-                AVA_BLOCKCHAIN_ID="${OPTARG}" ;;
+                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVA_NAME" ] ; then
+    if [ -z "$AVAX_NAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_SYMBOL" ] ; then
+    if [ -z "$AVAX_SYMBOL" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_DENOMINATION" ] ; then
-        AVA_DENOMINATION=0 ;
+    if [ -z "$AVAX_DENOMINATION" ] ; then
+        AVAX_DENOMINATION=0 ;
     fi
-    if [ -z "${AVA_ADDRESSES[*]}" ] ; then
+    if [ -z "${AVAX_ADDRESSES[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "${AVA_AMOUNTS[*]}" ] ; then
+    if [ -z "${AVAX_AMOUNTS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if (( "${#AVA_ADDRESSES[@]}" != "${#AVA_AMOUNTS[@]}" )) ; then
+    if (( "${#AVAX_ADDRESSES[@]}" != "${#AVAX_AMOUNTS[@]}" )) ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_USERNAME" ] ; then
+    if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PASSWORD" ] ; then
+    if [ -z "$AVAX_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_BLOCKCHAIN_ID" ] ; then
-        AVA_BLOCKCHAIN_ID="X" ;
+    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
+        AVAX_BLOCKCHAIN_ID="X" ;
     fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
 
 function get_addresses {
-    environ_vars "$1" "AVA_ADDRESS_([0-9]+)" "${!AVA_ADDRESS_@}" ;
+    environ_vars "$1" "AVAX_ADDRESS_([0-9]+)" "${!AVAX_ADDRESS_@}" ;
 }
 
 function get_amounts {
-    environ_vars "$1" "AVA_AMOUNT_([0-9]+)" "${!AVA_AMOUNT_@}" ;
+    environ_vars "$1" "AVAX_AMOUNT_([0-9]+)" "${!AVAX_AMOUNT_@}" ;
 }
 
 function rpc_method {
@@ -146,27 +146,27 @@ function rpc_method {
 }
 
 function rpc_params {
-    local -a AVA_AMOUNTS_SI=( $(for n in "${AVA_AMOUNTS[@]}" ; do
+    local -a AVAX_AMOUNTS_SI=( $(for n in "${AVAX_AMOUNTS[@]}" ; do
         printf '%s ' "$(si "$n")" ;
     done) ) ;
     printf '{' ;
-    printf '"name":"%s",' "$AVA_NAME" ;
-    printf '"symbol":"%s",' "$AVA_SYMBOL" ;
-    printf '"denomination":%s,' "$AVA_DENOMINATION" ;
+    printf '"name":"%s",' "$AVAX_NAME" ;
+    printf '"symbol":"%s",' "$AVAX_SYMBOL" ;
+    printf '"denomination":%s,' "$AVAX_DENOMINATION" ;
     printf '"initialHolders":[' ;
     # shellcheck disable=SC2046
     join_by ',' $( \
         zip_by '{"address":"%s","amount":%s} ' \
-            "${AVA_ADDRESSES[@]}" "${AVA_AMOUNTS_SI[@]}") ;
+            "${AVAX_ADDRESSES[@]}" "${AVAX_AMOUNTS_SI[@]}") ;
     printf '],' ;
-    printf '"username":"%s",' "$AVA_USERNAME" ;
-    printf '"password":"%s"' "$AVA_PASSWORD" ;
+    printf '"username":"%s",' "$AVAX_USERNAME" ;
+    printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/bc/$AVA_BLOCKCHAIN_ID" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/bc/$AVAX_BLOCKCHAIN_ID" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

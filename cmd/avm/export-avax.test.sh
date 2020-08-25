@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh avm export-ava" ;
+    printf "./avalanche-cli.sh avm export-avax" ;
 }
 
 function check {
@@ -17,7 +17,7 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"avm.exportAVA",' ;
+    expect_d+='"method":"avm.exportAVAX",' ;
     expect_d+='"params":{' ;
     expect_d+='"to":"TO",' ;
     expect_d+='"amount":1000000000000000000,' ;
@@ -29,33 +29,33 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_avm__export_ava_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -# 1E -@ TO -u USERNAME -p PASSWORD)" ;
+function test_avm__export_avax_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -# 1E -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1b {
-    check "$(AVA_ID_RPC=1 AVA_AMOUNT=1E $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+function test_avm__export_avax_1b {
+    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1E $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1c {
-    check "$(AVA_ID_RPC=1 AVA_TO=TO $(cmd) -# 1E -u USERNAME -p PASSWORD)" ;
+function test_avm__export_avax_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) -# 1E -u USERNAME -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1d {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -# 1E -@ TO -p PASSWORD)" ;
+function test_avm__export_avax_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -# 1E -@ TO -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1e {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -# 1E -@ TO -u USERNAME)" ;
+function test_avm__export_avax_1e {
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -# 1E -@ TO -u USERNAME)" ;
 }
 
-function test_avm__export_ava_2a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
+function test_avm__export_avax_2a {
+    check "$(AVAX_ID_RPC=1 $(cmd) \
         -# 1E -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
-function test_avm__export_ava_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+function test_avm__export_avax_2b {
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -# 1E -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

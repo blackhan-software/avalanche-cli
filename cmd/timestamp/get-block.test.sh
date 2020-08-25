@@ -28,15 +28,15 @@ function check {
 }
 
 function test_timestamp__get_block_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -i ID)" ID ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -i ID)" ID ;
 }
 
 function test_timestamp__get_block_1b {
-    check "$(AVA_ID_RPC=1 AVA_ID=ID $(cmd))" ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_ID=ID $(cmd))" ID ;
 }
 
 function test_timestamp__get_block_1c {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

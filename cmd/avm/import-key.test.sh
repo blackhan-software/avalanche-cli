@@ -29,32 +29,32 @@ function check {
 }
 
 function test_avm__import_key_1a {
-    check "$(AVA_ID_RPC=1 \
+    check "$(AVAX_ID_RPC=1 \
         $(cmd) -k PRIVATE_KEY -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__import_key_1b {
-    check "$(AVA_ID_RPC=1 AVA_PRIVATE_KEY=PRIVATE_KEY \
+    check "$(AVAX_ID_RPC=1 AVAX_PRIVATE_KEY=PRIVATE_KEY \
         $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__import_key_1c {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME \
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME \
         $(cmd) -k PRIVATE_KEY -p PASSWORD)" ;
 }
 
 function test_avm__import_key_1d {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD \
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD \
         $(cmd) -k PRIVATE_KEY -u USERNAME)" ;
 }
 
 function test_avm__import_key_2a {
-    check "$(AVA_ID_RPC=1 \
+    check "$(AVAX_ID_RPC=1 \
         $(cmd) -k PRIVATE_KEY -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__import_key_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID \
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID \
         $(cmd) -k PRIVATE_KEY -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

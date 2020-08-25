@@ -28,24 +28,24 @@ function check {
 }
 
 function test_avm__list_addresses_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__list_addresses_1b {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -p PASSWORD)" ;
 }
 
 function test_avm__list_addresses_1c {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -u USERNAME)" ;
 }
 
 function test_avm__list_addresses_2a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
+    check "$(AVAX_ID_RPC=1 $(cmd) \
         -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__list_addresses_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -u USERNAME -p PASSWORD)" BC_ID ;
 }
 

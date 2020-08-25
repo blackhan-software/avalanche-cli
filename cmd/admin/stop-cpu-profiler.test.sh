@@ -27,7 +27,7 @@ function check {
 }
 
 function test_admin__stop_cpu_profiler {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

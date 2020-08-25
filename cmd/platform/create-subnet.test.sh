@@ -21,7 +21,8 @@ function check {
     expect_d+='"params":{' ;
     expect_d+='"controlKeys":["K1","K2","K3"],' ;
     expect_d+='"threshold":2,' ;
-    expect_d+='"payerNonce":3' ;
+    expect_d+='"username":"USERNAME",' ;
+    expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -29,27 +30,29 @@ function check {
 }
 
 function test_platform__create_subnet_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1b {
-    check "$(AVA_ID_RPC=1 \
-        AVA_CONTROL_KEY_0=K1 \
-        $(cmd) -@ K2 -@ K3 -t 2 -% 3)" ;
-    check "$(AVA_ID_RPC=1 \
-        AVA_CONTROL_KEY_0=K1 AVA_CONTROL_KEY_1=K2 \
-        $(cmd) -@ K3 -t 2 -% 3)" ;
-    check "$(AVA_ID_RPC=1 \
-        AVA_CONTROL_KEY_0=K1 AVA_CONTROL_KEY_1=K2 AVA_CONTROL_KEY_2=K3 \
-        $(cmd) -t 2 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_CONTROL_KEY_0=K1 \
+        $(cmd) -@ K2 -@ K3 -t 2 -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 \
+        $(cmd) -@ K3 -t 2 -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 AVAX_CONTROL_KEY_2=K3 \
+        $(cmd) -t 2 -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1c {
-    check "$(AVA_ID_RPC=1 AVA_THRESHOLD=2 $(cmd) -@ K1 -@ K2 -@ K3 -% 3)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_THRESHOLD=2 $(cmd) -@ K1 -@ K2 -@ K3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1d {
-    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) -@ K1 -@ K2 -@ K3 -t 2)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

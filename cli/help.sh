@@ -12,7 +12,7 @@ source "$CLI_HELP_SCRIPT/color.sh" ;
 function cli_help {
     printf "${BB}Usage:${NB} $(basename "$0") [OPTIONS] COMMMAND" ;
     printf "\n" ;
-    printf "\nA command line interface for AVA APIs" ;
+    printf "\nA command line interface for Avalanche APIs" ;
     printf "\n" ;
     printf "\n${BB}Options:${NB}" ;
     printf "\n" ;
@@ -185,7 +185,7 @@ CLI_HELP+=( "admin|memory-profile|Dump the current memory footprint of the node 
 CLI_HELP+=( "admin|lock-profile|Dump the mutex statistics of the node to the specified file." ) ;
 
 ## AVM (X-Chain) API:
-CLI_TEXT+=( "avm|The X-Chain, AVA's native platform for creating and trading assets, is an instance of the AVA Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.ava.network/v1.0/en/api/avm${NN}")
+CLI_TEXT+=( "avm|The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the AVAX Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.ava.network/v1.0/en/api/avm${NN}")
 CLI_HELP+=( "avm|create-address|Create a new address controlled by the given user." ) ;
 CLI_HELP+=( "avm|list-addresses|List addresses controlled by the given user." ) ;
 CLI_HELP+=( "avm|get-balance|Get the balance of an asset controlled by a given address." ) ;
@@ -200,14 +200,14 @@ CLI_HELP+=( "avm|create-fixed-cap-asset|Create a new fixed-cap, fungible asset. 
 CLI_HELP+=( "avm|create-variable-cap-asset|Create a new variable-cap, fungible asset. No units of the asset exist at initialization. Minters can mint units of this asset using 'create-mint-tx', 'sign-mint-tx' and 'issue-tx'. The asset can be sent with 'avm send'." ) ;
 CLI_HELP+=( "avm|create-mint-tx|Create an unsigned transaction to mint more of a variable-cap asset (an asset created with 'avm create-variable-cap-asset')." ) ;
 CLI_HELP+=( "avm|get-asset-description|Get information about an asset." ) ;
-CLI_HELP+=( "avm|export-ava|Send AVA from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-ava' method to complete the transfer." ) ;
-CLI_HELP+=( "avm|import-ava|Finalize a transfer of AVA from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-ava' method to initiate the transfer." ) ;
+CLI_HELP+=( "avm|export-avax|Send AVAX from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-avax' method to complete the transfer." ) ;
+CLI_HELP+=( "avm|import-avax|Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "avm|export-key|Get the private key that controls a given address. The returned private key can be added to a user with 'avm import-key'." ) ;
 CLI_HELP+=( "avm|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
 CLI_HELP+=( "avm|build-genesis|Given a JSON representation of this Virtual Machine's genesis state, create the byte representation of that state." ) ;
 
 ## EVM API:
-CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVA's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.ava.network/v1.0/en/api/evm${NN}")
+CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.ava.network/v1.0/en/api/evm${NN}")
 CLI_HELP+=( "evm|web3-client-version|Returns the current client version. See: ${LK}https://eth.wiki/json-rpc/API#web3_clientversion${NN}" ) ;
 CLI_HELP+=( "evm|web3-sha3|Returns Keccak-256 (not the standardized SHA3-256) of the given data. See: ${LK}https://eth.wiki/json-rpc/API#web3_sha3${NN}" ) ;
 CLI_HELP+=( "evm|net-version|Returns the current network id. See: ${LK}https://eth.wiki/json-rpc/API#net_version${NN}" ) ;
@@ -301,7 +301,7 @@ CLI_TEXT+=( "metrics|The API allows clients to get statistics about a node's hea
 CLI_HELP+=( "metrics|get-prometheus|Get Prometheus compatible metrics." ) ;
 
 ## Platform API:
-CLI_TEXT+=( "platform|This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVA's validator set and handles blockchain creation. See: ${LK}https://docs.ava.network/v1.0/en/api/platform${NN}")
+CLI_TEXT+=( "platform|This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVAX's validator set and handles blockchain creation. See: ${LK}https://docs.ava.network/v1.0/en/api/platform${NN}")
 CLI_HELP+=( "platform|create-blockchain|Create a new blockchain. Currently only supports creation of new instances of the AVM and the Timestamp VM." ) ;
 CLI_HELP+=( "platform|get-blockchain-status|Get the status of a blockchain." ) ;
 CLI_HELP+=( "platform|create-account|The P-Chain uses an account model. This method creates an account." ) ;
@@ -314,14 +314,14 @@ CLI_HELP+=( "platform|get-pending-validators|List the validators in the pending 
 CLI_HELP+=( "platform|sample-validators|Sample validators from the specified Subnet." ) ;
 CLI_HELP+=( "platform|add-default-subnet-validator|Add a validator to the Default Subnet." ) ;
 CLI_HELP+=( "platform|add-non-default-subnet-validator|Add a validator to a Subnet other than the Default Subnet. The validator must validate the Default Subnet for the entire duration they validate this Subnet." ) ;
-CLI_HELP+=( "platform|add-default-subnet-delegator|Add a delegator to the Default Subnet. A delegator stakes AVA and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator's validation reward (if any). The delegation period must be a subset of the period that the delegatee validates the Default Subnet." ) ;
+CLI_HELP+=( "platform|add-default-subnet-delegator|Add a delegator to the Default Subnet. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator's validation reward (if any). The delegation period must be a subset of the period that the delegatee validates the Default Subnet." ) ;
 CLI_HELP+=( "platform|create-subnet|Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the account paying the transaction fee. The Subnet's ID is the ID of the transaction that creates it (i.e. the response from 'issue-tx' when issuing the signed transaction)." ) ;
 CLI_HELP+=( "platform|get-subnets|Get all the Subnets that exist." ) ;
 CLI_HELP+=( "platform|validated-by|Get the Subnet that validates a given blockchain." ) ;
 CLI_HELP+=( "platform|validates|Get the IDs of the blockchains a Subnet validates." ) ;
 CLI_HELP+=( "platform|get-blockchains|Get all the blockchains that exist (excluding the P-Chain)." ) ;
-CLI_HELP+=( "platform|export-ava|Send AVA from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVA is sent from and which pays the transaction fee. After issuing this transaction, you must call the X-Chain's 'import-ava' method to complete the transfer." ) ;
-CLI_HELP+=( "platform|import-ava|Complete a transfer of AVA from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-ava' method to initiate the transfer." ) ;
+CLI_HELP+=( "platform|export-avax|Send AVAX from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVAX is sent from and which pays the transaction fee. After issuing this transaction, you must call the X-Chain's 'import-avax' method to complete the transfer." ) ;
+CLI_HELP+=( "platform|import-avax|Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "platform|sign|Sign an unsigned or partially signed transaction. Transactions to add non-default Subnets require signatures from control keys and from the account paying the transaction fee. If 'signer' is a control key and the transaction needs more signatures from control keys, 'sign' will provide a control signature. Otherwise, 'signer' will sign to pay the transaction fee." ) ;
 CLI_HELP+=( "platform|issue-tx|Issue a transaction to the Platform Chain." ) ;
 

@@ -31,7 +31,7 @@ for script in $(find "$CLI_TEST_SCRIPT/cli" -name '*.test.sh' | sort) ; do
 done
 
 for script in $(find "$CLI_TEST_SCRIPT/cmd" -name '*.test.sh' | sort) ; do
-    AVA_DEBUG_RPC=1 run "$script" ;
+    AVAX_DEBUG_RPC=1 run "$script" ;
 done
 
 ###############################################################################

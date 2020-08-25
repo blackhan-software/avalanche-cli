@@ -27,7 +27,7 @@ function check {
 }
 
 function test_platform__get_subnets {
-    check "$(AVA_ID_RPC=1 $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

@@ -29,19 +29,19 @@ function check {
 }
 
 function test_platform__sample_validators_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -n 3 -s SUBNET_ID)" SUBNET_ID ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -n 3 -s SUBNET_ID)" SUBNET_ID ;
 }
 
 function test_platform__sample_validators_1b {
-    check "$(AVA_ID_RPC=1 AVA_SIZE=3 $(cmd) -s SUBNET_ID)" SUBNET_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_SIZE=3 $(cmd) -s SUBNET_ID)" SUBNET_ID ;
 }
 
 function test_platform__sample_validators_1c {
-    check "$(AVA_ID_RPC=1 AVA_SUBNET_ID=SUBNET_ID $(cmd) -n 3)" SUBNET_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_SUBNET_ID=SUBNET_ID $(cmd) -n 3)" SUBNET_ID ;
 }
 
 function test_platform__sample_validators_1d {
-    check "$(AVA_ID_RPC=1 $(cmd) -n 3)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -n 3)" ;
 }
 
 ###############################################################################

@@ -28,11 +28,11 @@ function check {
 }
 
 function test_platform__get_blockchain_status_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -b BC_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -b BC_ID)" ;
 }
 
 function test_platform__get_blockchain_status_1b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd))" ;
 }
 
 ###############################################################################

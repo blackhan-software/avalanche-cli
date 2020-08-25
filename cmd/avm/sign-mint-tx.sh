@@ -35,15 +35,15 @@ function cli_options {
 function cli {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-t|--tx=\${AVA_TX}]" ;
-    usage+=" [-m|--minter=\${AVA_MINTER}]" ;
-    usage+=" [-u|--username=\${AVA_USERNAME}]" ;
-    usage+=" [-p|--password=\${AVA_PASSWORD}]" ;
-    usage+=" [-b|--blockchain-id=\${AVA_BLOCKCHAIN_ID-X}]" ;
-    usage+=" [-N|--node=\${AVA_NODE-127.0.0.1:9650}]" ;
-    usage+=" [-S|--silent-rpc|\${AVA_SILENT_RPC}]" ;
-    usage+=" [-V|--verbose-rpc|\${AVA_VERBOSE_RPC}]" ;
-    usage+=" [-Y|--yes-run-rpc|\${AVA_YES_RUN_RPC}]" ;
+    usage+=" [-t|--tx=\${AVAX_TX}]" ;
+    usage+=" [-m|--minter=\${AVAX_MINTER}]" ;
+    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
+    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
+    usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
+    usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
     usage+=" [-h|--help]" ;
     while getopts ":hSVYN:t:m:u:p:b:-:" OPT "$@"
     do
@@ -56,46 +56,46 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             t|tx)
-                AVA_TX="${OPTARG}" ;;
+                AVAX_TX="${OPTARG}" ;;
             m|minter)
-                AVA_MINTER="${OPTARG}" ;;
+                AVAX_MINTER="${OPTARG}" ;;
             u|username)
-                AVA_USERNAME="${OPTARG}" ;;
+                AVAX_USERNAME="${OPTARG}" ;;
             p|password)
-                AVA_PASSWORD="${OPTARG}" ;;
+                AVAX_PASSWORD="${OPTARG}" ;;
             b|blockchain-id)
-                AVA_BLOCKCHAIN_ID="${OPTARG}" ;;
+                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
-                AVA_NODE="${OPTARG}" ;;
+                AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
-                export AVA_SILENT_RPC=1 ;;
+                export AVAX_SILENT_RPC=1 ;;
             V|verbose-rpc)
-                export AVA_VERBOSE_RPC=1 ;;
+                export AVAX_VERBOSE_RPC=1 ;;
             Y|yes-run-rpc)
-                export AVA_YES_RUN_RPC=1 ;;
+                export AVAX_YES_RUN_RPC=1 ;;
             h|help)
                 cli_help && exit 0 ;;
             :|*)
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVA_TX" ] ; then
+    if [ -z "$AVAX_TX" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_MINTER" ] ; then
+    if [ -z "$AVAX_MINTER" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_USERNAME" ] ; then
+    if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_PASSWORD" ] ; then
+    if [ -z "$AVAX_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVA_BLOCKCHAIN_ID" ] ; then
-        AVA_BLOCKCHAIN_ID="X" ;
+    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
+        AVAX_BLOCKCHAIN_ID="X" ;
     fi
-    if [ -z "$AVA_NODE" ] ; then
-        AVA_NODE="127.0.0.1:9650" ;
+    if [ -z "$AVAX_NODE" ] ; then
+        AVAX_NODE="127.0.0.1:9650" ;
     fi
     shift $((OPTIND-1)) ;
 }
@@ -106,16 +106,16 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"tx":"%s",' "$AVA_TX" ;
-    printf '"minter":"%s",' "$AVA_MINTER" ;
-    printf '"username":"%s",' "$AVA_USERNAME" ;
-    printf '"password":"%s"' "$AVA_PASSWORD" ;
+    printf '"tx":"%s",' "$AVAX_TX" ;
+    printf '"minter":"%s",' "$AVAX_MINTER" ;
+    printf '"username":"%s",' "$AVAX_USERNAME" ;
+    printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVA_NODE/ext/bc/$AVA_BLOCKCHAIN_ID" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/bc/$AVAX_BLOCKCHAIN_ID" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

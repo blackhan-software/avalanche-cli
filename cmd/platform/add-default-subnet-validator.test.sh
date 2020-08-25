@@ -19,13 +19,14 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"platform.addDefaultSubnetValidator",' ;
     expect_d+='"params":{' ;
-    expect_d+='"id":"ID",' ;
+    expect_d+='"nodeID":"NODE_ID",' ;
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
     expect_d+='"stakeAmount":1000,' ;
-    expect_d+='"delegationFeeRate":100000,' ; ## 10%
-    expect_d+='"destination":"DESTINATION",' ;
-    expect_d+='"payerNonce":3' ;
+    expect_d+='"delegationFeeRate":10.0000,' ; ## 10.0000%
+    expect_d+='"rewardAddress":"REWARD_ADDRESS",' ;
+    expect_d+='"username":"USERNAME",' ;
+    expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -33,63 +34,69 @@ function check {
 }
 
 function test_platform__add_default_subnet_validator_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1b {
-    check "$(AVA_ID_RPC=1 AVA_ID=ID $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
         -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1c {
-    check "$(AVA_ID_RPC=1 AVA_START_TIME=2000000000 $(cmd) \
-        -i ID -e 3000000000 \
-        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
+        -i NODE_ID -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1d {
-    check "$(AVA_ID_RPC=1 AVA_END_TIME=3000000000 $(cmd) \
-        -i ID -b 2000000000 \
-        -# 1K -% 3 -@ DESTINATION -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
+        -i NODE_ID -b 2000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1e {
-    check "$(AVA_ID_RPC=1 AVA_STAKE_AMOUNT=1K $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -% 3 -@ DESTINATION -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_STAKE_AMOUNT=1K $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -@ REWARD_ADDRESS -r 10 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1f {
-    check "$(AVA_ID_RPC=1 AVA_PAYER_NONCE=3 $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ DESTINATION -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1g {
-    check "$(AVA_ID_RPC=1 AVA_DESTINATION=DESTINATION $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -r 100000)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -r 10 -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1h {
-    check "$(AVA_ID_RPC=1 AVA_DELEGATION_FEE_RATE=100000 $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -@ DESTINATION)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=100000 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1i {
-    check "$(AVA_ID_RPC=1 AVA_DESTINATION=DESTINATION $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -r 10.0%)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -r 10.0% -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_default_subnet_validator_1h {
-    check "$(AVA_ID_RPC=1 AVA_DELEGATION_FEE_RATE=10.0% $(cmd) \
-        -i ID -b 2000000000 -e 3000000000 \
-        -# 1K -% 3 -@ DESTINATION)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=10.0% $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

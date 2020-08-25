@@ -28,11 +28,11 @@ function check {
 }
 
 function test_admin__lock_profile_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -f FILE_NAME)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -f FILE_NAME)" ;
 }
 
 function test_admin__lock_profile_1b {
-    check "$(AVA_ID_RPC=1 AVA_FILE_NAME=FILE_NAME $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_FILE_NAME=FILE_NAME $(cmd))" ;
 }
 
 ###############################################################################

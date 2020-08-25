@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2091
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform create-account" ;
+    printf "./avalanche-cli.sh platform get-balance" ;
 }
 
 function check {
@@ -17,40 +18,21 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.createAccount",' ;
+    expect_d+='"method":"platform.getBalance",' ;
     expect_d+='"params":{' ;
-    expect_d+='"privateKey":'"$([ -n "$2" ] && echo "\"$2\"" || echo null)," ;
-    expect_d+='"username":"USERNAME",' ;
-    expect_d+='"password":"PASSWORD"' ;
+    expect_d+='"address":"ADDRESS"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__create_account_1a {
-    check "$(AVA_ID_RPC=1 \
-        $(cmd) -k PRIVATE_KEY -u USERNAME -p PASSWORD)" PRIVATE_KEY ;
+function test_platform__get_balance_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ ADDRESS)" ;
 }
 
-function test_platform__create_account_1b {
-    check "$(AVA_ID_RPC=1 AVA_PRIVATE_KEY=PRIVATE_KEY \
-        $(cmd) -u USERNAME -p PASSWORD)" PRIVATE_KEY ;
-}
-
-function test_platform__create_account_1c {
-    check "$(AVA_ID_RPC=1 \
-        $(cmd) -u USERNAME -p PASSWORD)" ;
-}
-
-function test_platform__create_account_1d {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME \
-        $(cmd) -k PRIVATE_KEY -p PASSWORD)" PRIVATE_KEY ;
-}
-
-function test_platform__create_account_1e {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD \
-        $(cmd) -k PRIVATE_KEY -u USERNAME)" PRIVATE_KEY ;
+function test_platform__get_balance_1b {
+    check "$(AVAX_ID_RPC=1 AVAX_ADDRESS=ADDRESS $(cmd))" ;
 }
 
 ###############################################################################

@@ -28,11 +28,11 @@ function check {
 }
 
 function test_info__is_bootstrapped_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -b BLOCKCHAIN_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -b BLOCKCHAIN_ID)" ;
 }
 
 function test_info__is_bootstrapped_1b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BLOCKCHAIN_ID $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BLOCKCHAIN_ID $(cmd))" ;
 }
 
 ###############################################################################

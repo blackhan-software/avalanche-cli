@@ -28,11 +28,11 @@ function check {
 }
 
 function test_platform__validates_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -s SUBNET_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -s SUBNET_ID)" ;
 }
 
 function test_platform__validates_1b {
-    check "$(AVA_ID_RPC=1 AVA_SUBNET_ID=SUBNET_ID $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_SUBNET_ID=SUBNET_ID $(cmd))" ;
 }
 
 ###############################################################################

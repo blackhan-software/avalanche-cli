@@ -30,27 +30,27 @@ function check {
 }
 
 function test_platform__sign_1a {
-    check "$(AVA_ID_RPC=1 \
+    check "$(AVAX_ID_RPC=1 \
         $(cmd) -t TX -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__sign_1b {
-    check "$(AVA_ID_RPC=1 AVA_TX=TX \
+    check "$(AVAX_ID_RPC=1 AVAX_TX=TX \
         $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__sign_1c {
-    check "$(AVA_ID_RPC=1 AVA_SIGNER=ADDRESS \
+    check "$(AVAX_ID_RPC=1 AVAX_SIGNER=ADDRESS \
         $(cmd) -t TX -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__sign_1d {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME \
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME \
         $(cmd) -t TX -@ ADDRESS -p PASSWORD)" ;
 }
 
 function test_platform__sign_1e {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD \
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD \
         $(cmd) -t TX -@ ADDRESS -u USERNAME)" ;
 }
 

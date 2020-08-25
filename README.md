@@ -71,7 +71,7 @@ Description     : A package manager
 
 ## Usage
 
-All CLI options of the `avalanche-cli` tool can also be set via environment variables. It assumes by default an [AVA] node available at `127.0.0.1:9650` &ndash; although this can be changed by setting and exporting the `AVA_NODE` variable *or* by using the corresponding `--node` (`-N`) option.
+All CLI options of the `avalanche-cli` tool can also be set via environment variables. It assumes by default an [AVAX] node available at `127.0.0.1:9650` &ndash; although this can be changed by setting and exporting the `AVAX_NODE` variable *or* by using the corresponding `--node` (`-N`) option.
 
 ### User creation
 
@@ -81,7 +81,7 @@ Let's see how a new `keystore` user is created:
 $ avalanche-cli keystore create-user -h
 ```
 ```
-Usage: keystore create-user [-u|--username=${AVA_USERNAME}] [-p|--password=${AVA_PASSWORD}] [-N|--node=${AVA_NODE-127.0.0.1:9650}] [-S|--silent-rpc|${AVA_SILENT_RPC}] [-V|--verbose-rpc|${AVA_VERBOSE_RPC}] [-Y|--yes-run-rpc|${AVA_YES_RUN_RPC}] [-h|--help]
+Usage: keystore create-user [-u|--username=${AVAX_USERNAME}] [-p|--password=${AVAX_PASSWORD}] [-N|--node=${AVAX_NODE-127.0.0.1:9650}] [-S|--silent-rpc|${AVAX_SILENT_RPC}] [-V|--verbose-rpc|${AVAX_VERBOSE_RPC}] [-Y|--yes-run-rpc|${AVAX_YES_RUN_RPC}] [-h|--help]
 ```
 
 ```sh
@@ -102,10 +102,10 @@ $ {"jsonrpc":"2.0","result":{"success":true},"id":21265}
 Since most of the commands expect a username and a password, let's export them as environment variables, so they can be re-used:
 
 ```sh
-$  export AVA_USERNAME=MyUser AVA_PASSWORD=MySecret-1453
+$  export AVAX_USERNAME=MyUser AVAX_PASSWORD=MySecret-1453
 ```
 
-Please note, that the line above starts with an *empty space* (`$__export AVA_..`) to avoid the variables getting cached in the `bash` history! In general this is good practice when handling credentials via the CLI (but otherwise it is not required).
+Please note, that the line above starts with an *empty space* (`$__export AVAX_..`) to avoid the variables getting cached in the `bash` history! In general this is good practice when handling credentials via the CLI (but otherwise it is not required).
 
 ### User deletion
 
@@ -159,7 +159,7 @@ admin lock-profile                                Dump the mutex statistics of t
 
 ## [AVM (X-Chain) API](https://docs.ava.network/v1.0/en/api/avm)
 
-The X-Chain, AVA's native platform for creating and trading assets, is an instance of the AVA Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
+The X-Chain, AVAX's native platform for creating and trading assets, is an instance of the AVAX Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
 
 ```
 avm create-address                                Create a new address controlled by the given user.
@@ -176,8 +176,8 @@ avm create-fixed-cap-asset                        Create a new fixed-cap, fungib
 avm create-variable-cap-asset                     Create a new variable-cap, fungible asset. No units of the asset exist at initialization. Minters can mint units of this asset using 'create-mint-tx', 'sign-mint-tx' and 'issue-tx'. The asset can be sent with 'avm send'.
 avm create-mint-tx                                Create an unsigned transaction to mint more of a variable-cap asset (an asset created with 'avm create-variable-cap-asset').
 avm get-asset-description                         Get information about an asset.
-avm export-ava                                    Send AVA from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-ava' method to complete the transfer.
-avm import-ava                                    Finalize a transfer of AVA from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-ava' method to initiate the transfer.
+avm export-avax                                   Send AVAX from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-avax' method to complete the transfer.
+avm import-avax                                   Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer.
 avm export-key                                    Get the private key that controls a given address. The returned private key can be added to a user with 'avm import-key'.
 avm import-key                                    Give a user control over an address by providing the private key that controls the address.
 avm build-genesis                                 Given a JSON representation of this Virtual Machine's genesis state, create the byte representation of that state.
@@ -185,7 +185,7 @@ avm build-genesis                                 Given a JSON representation of
 
 ## [EVM API](https://docs.ava.network/v1.0/en/api/evm)
 
-This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). **Note:** Ethereum has its own notion of `networkID` and `chainID`. The C-Chain uses `1` and `43110` for these values, respectively. These have no relationship to AVA's view of `networkID` and `chainID`, and are purely internal to the C-Chain.
+This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). **Note:** Ethereum has its own notion of `networkID` and `chainID`. The C-Chain uses `1` and `43110` for these values, respectively. These have no relationship to AVAX's view of `networkID` and `chainID`, and are purely internal to the C-Chain.
 
 ```
 evm web3-client-version                           Returns the current client version. See: https://eth.wiki/json-rpc/API#web3_clientversion
@@ -311,7 +311,7 @@ metrics get-prometheus                            Get Prometheus compatible metr
 
 ## [Platform API](https://docs.ava.network/v1.0/en/api/platform)
 
-This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVA's validator set and handles blockchain creation.
+This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVAX's validator set and handles blockchain creation.
 
 ```
 platform create-blockchain                        Create a new blockchain. Currently only supports creation of new instances of the AVM and the Timestamp VM.
@@ -326,14 +326,14 @@ platform get-pending-validators                   List the validators in the pen
 platform sample-validators                        Sample validators from the specified Subnet.
 platform add-default-subnet-validator             Add a validator to the Default Subnet.
 platform add-non-default-subnet-validator         Add a validator to a Subnet other than the Default Subnet. The validator must validate the Default Subnet for the entire duration they validate this S..
-platform add-default-subnet-delegator             Add a delegator to the Default Subnet. A delegator stakes AVA and specifies a validator (the delegatee) to validate on their behalf. The delegatee has..
+platform add-default-subnet-delegator             Add a delegator to the Default Subnet. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has..
 platform create-subnet                            Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the account paying the transaction fee...
 platform get-subnets                              Get all the Subnets that exist.
 platform validated-by                             Get the Subnet that validates a given blockchain.
 platform validates                                Get the IDs of the blockchains a Subnet validates.
 platform get-blockchains                          Get all the blockchains that exist (excluding the P-Chain).
-platform export-ava                               Send AVA from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVA is sent..
-platform import-ava                               Complete a transfer of AVA from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-ava' method to initiate ..
+platform export-avax                              Send AVAX from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVAX is sent..
+platform import-avax                              Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate ..
 platform sign                                     Sign an unsigned or partially signed transaction. Transactions to add non-default Subnets require signatures from control keys and from the account pa..
 platform issue-tx                                 Issue a transaction to the Platform Chain.
 ```
@@ -351,9 +351,9 @@ timestamp propose-block                           Propose the creation of a new 
 
 All commands share the following options and corresponding environment variables:
 
-### `${AVA_NODE-127.0.0.1:9650}` or `--node` (`-N`)
+### `${AVAX_NODE-127.0.0.1:9650}` or `--node` (`-N`)
 
-Can be used to set the [AVA] node which the `avalanche-cli` tool will be communicating with &ndash; where the default is `127.0.0.1:9650`. For example:
+Can be used to set the [AVAX] node which the `avalanche-cli` tool will be communicating with &ndash; where the default is `127.0.0.1:9650`. For example:
 
 ```sh
 $ avalanche-cli info peers -N=127.0.0.1:9650
@@ -364,10 +364,10 @@ $ avalanche-cli info peers --node=127.0.0.1:9650
 ```
 
 ```
-$ AVA_NODE=127.0.0.1:9650 avalanche-cli info peers
+$ AVAX_NODE=127.0.0.1:9650 avalanche-cli info peers
 ```
 
-### `${AVA_YES_RUN_RPC}` or `--yes-run-rpc` (`-Y`)
+### `${AVAX_YES_RUN_RPC}` or `--yes-run-rpc` (`-Y`)
 
 Can be used to actually execute the `curl` request the `avalanche-cli` tool puts together &ndash; where by default this is *off*, i.e. the corresponding `curl` request will only be shown but *not* executed. For example:
 
@@ -380,10 +380,10 @@ $ avalanche-cli info peers --yes-run-rpc
 ```
 
 ```sh
-$ AVA_YES_RUN_RPC=1 avalanche-cli info peers
+$ AVAX_YES_RUN_RPC=1 avalanche-cli info peers
 ```
 
-### `${AVA_SILENT_RPC}` or `--silent-rpc` (`-S`)
+### `${AVAX_SILENT_RPC}` or `--silent-rpc` (`-S`)
 
 Can be used to make a `curl` request with its corresponding *silent* flag on &ndash; where by default it is *off*. However when *on*, this will *not* silence the actual response (if there is any):
 
@@ -396,10 +396,10 @@ $ avalanche-cli info peers -Y --silent-rpc
 ```
 
 ```sh
-$ AVA_SILENT_RPC=1 avalanche-cli info peers -Y
+$ AVAX_SILENT_RPC=1 avalanche-cli info peers -Y
 ```
 
-### `${AVA_VERBOSE_RPC}` or `--verbose-rpc` (`-V`)
+### `${AVAX_VERBOSE_RPC}` or `--verbose-rpc` (`-V`)
 
 Can be used to make a `curl` request with its corresponding *verbose* flag on &ndash; where by default it is *off*. This is useful, if one wants to get a detailed view of an ongoing request:
 
@@ -412,19 +412,19 @@ $ avalanche-cli info peers -Y --verbose-rpc
 ```
 
 ```sh
-$ AVA_VERBOSE_RPC=1 avalanche-cli info peers -Y
+$ AVAX_VERBOSE_RPC=1 avalanche-cli info peers -Y
 ```
 
 ## Common Variables
 
 Further, all commands share the following two &ndash; very general &ndash; environment variables:
 
-### `${AVA_ARGS_RPC}`
+### `${AVAX_ARGS_RPC}`
 
 Can be used to make a `curl` request with a corresponding argument (or arguments). This is useful, since it allows to access all of `curl`'s capabilities. For example:
 
 ```sh
-$ export AVA_ARGS_RPC="--no-progress-meter" ## if supported by curl implementation
+$ export AVAX_ARGS_RPC="--no-progress-meter" ## if supported by curl implementation
 ```
 
 ```sh
@@ -433,22 +433,22 @@ $ avalanche-cli info peers -Y
 
 Now, *each* request will be performed without a progress meter (which can be distracting in case one chooses to pipe a response through another command).
 
-### `${AVA_PIPE_RPC}`
+### `${AVAX_PIPE_RPC}`
 
-Can be used to pipe a `curl` response through a command, where `AVA_PIPE_RPC` needs to be an (implicit) associative array with content types as keys and corresponding commands as value entries. For example:
+Can be used to pipe a `curl` response through a command, where `AVAX_PIPE_RPC` needs to be an (implicit) associative array with content types as keys and corresponding commands as value entries. For example:
 
 ```sh
-$ export AVA_PIPE_RPC="declare -A AVA_PIPE_RPC=([content-type:application/json]='jq -c')"
+$ export AVAX_PIPE_RPC="declare -A AVAX_PIPE_RPC=([content-type:application/json]='jq -c')"
 ```
 
 ```sh
 $ avalanche-cli info peers -Y
 ```
 
-Now, *each* `application/json` response will be compactified and colorized by using the [`jq`] command line JSON processor. Further, to temporarily omit piping through any command, (unset or) set `AVA_PIPE_RPC` to an empty string:
+Now, *each* `application/json` response will be compactified and colorized by using the [`jq`] command line JSON processor. Further, to temporarily omit piping through any command, (unset or) set `AVAX_PIPE_RPC` to an empty string:
 
 ```
-$ AVA_PIPE_RPC='' avalanche-cli info peers -Y
+$ AVAX_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
 ## FAQ
@@ -476,7 +476,7 @@ While the recommendation above holds true for GNU/Linux users, it probably may b
 
 (c) 2020, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
-[AVA]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
+[AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
 [`npm`]: https://github.com/npm/cli
 [`npx`]: https://github.com/npm/npx

@@ -28,29 +28,29 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_avm__export_ava_1a {
-    check "$(AVA_ID_RPC=1 $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
+function test_avm__export_avax_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -@ ADDRESS -u USERNAME -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1b {
-    check "$(AVA_ID_RPC=1 AVA_ADDRESS=ADDRESS $(cmd) -u USERNAME -p PASSWORD)" ;
+function test_avm__export_avax_1b {
+    check "$(AVAX_ID_RPC=1 AVAX_ADDRESS=ADDRESS $(cmd) -u USERNAME -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1c {
-    check "$(AVA_ID_RPC=1 AVA_USERNAME=USERNAME $(cmd) -@ ADDRESS -p PASSWORD)" ;
+function test_avm__export_avax_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -@ ADDRESS -p PASSWORD)" ;
 }
 
-function test_avm__export_ava_1d {
-    check "$(AVA_ID_RPC=1 AVA_PASSWORD=PASSWORD $(cmd) -@ ADDRESS -u USERNAME)" ;
+function test_avm__export_avax_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -@ ADDRESS -u USERNAME)" ;
 }
 
-function test_avm__export_ava_2a {
-    check "$(AVA_ID_RPC=1 $(cmd) \
+function test_avm__export_avax_2a {
+    check "$(AVAX_ID_RPC=1 $(cmd) \
         -@ ADDRESS -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
-function test_avm__export_ava_2b {
-    check "$(AVA_ID_RPC=1 AVA_BLOCKCHAIN_ID=BC_ID $(cmd) \
+function test_avm__export_avax_2b {
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
         -@ ADDRESS -u USERNAME -p PASSWORD)" BC_ID ;
 }
 
