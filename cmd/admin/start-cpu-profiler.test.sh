@@ -19,20 +19,15 @@ function check {
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
     expect_d+='"method":"admin.startCPUProfiler",' ;
-    expect_d+='"params":{' ;
-    expect_d+='"fileName":"FILE_NAME"' ;
-    expect_d+="}}'" ;
+    expect_d+='"params":{}' ;
+    expect_d+="}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
-function test_admin__start_cpu_profiler_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -f FILE_NAME)" ;
-}
-
-function test_admin__start_cpu_profiler_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_FILE_NAME=FILE_NAME $(cmd))" ;
+function test_admin__start_cpu_profiler_1 {
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

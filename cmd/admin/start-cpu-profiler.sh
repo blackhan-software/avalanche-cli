@@ -15,7 +15,6 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-f|--file-name=\${AVAX_ALIAS}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -27,7 +26,6 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-f" "--file-name=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -37,7 +35,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:f:-:" OPT "$@"
+    while getopts ":hSVYN:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -47,8 +45,6 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            f|file-name)
-                AVAX_FILE_NAME="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -63,9 +59,6 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_FILE_NAME" ] ; then
-        cli_help && exit 1 ;
-    fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="127.0.0.1:9650" ;
     fi
@@ -77,9 +70,7 @@ function rpc_method {
 }
 
 function rpc_params {
-    printf '{' ;
-    printf '"fileName":"%s"' "$AVAX_FILE_NAME" ;
-    printf '}' ;
+    printf '{}' ;
 }
 
 ###############################################################################
