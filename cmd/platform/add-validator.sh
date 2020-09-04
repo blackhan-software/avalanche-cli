@@ -123,7 +123,7 @@ function cli {
 }
 
 function rpc_method {
-    printf "platform.addDefaultSubnetValidator" ;
+    printf "platform.addValidator" ;
 }
 
 function rpc_params {

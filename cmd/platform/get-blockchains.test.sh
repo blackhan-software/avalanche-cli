@@ -26,7 +26,7 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__get_subnets {
+function test_platform__get_blockchains {
     check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 

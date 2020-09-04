@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2214
+# shellcheck disable=SC1090,SC2046,SC2214,SC2153
 ###############################################################################
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
 
+source "$CMD_SCRIPT/../../cli/array.sh" ;
 source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
+source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 
@@ -15,6 +17,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
+    usage+=" [-i|--id|--subnet-id=\${AVAX_SUBNET_ID_\$IDX}]*" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -26,6 +29,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
+    options+=( "-i" "--id=" "--subnet-id=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -35,7 +39,9 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:-:" OPT "$@"
+    local -ag AVAX_SUBNET_IDS=() ;
+    get_subnet_ids AVAX_SUBNET_IDS ;
+    while getopts ":hSVYN:i:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -45,6 +51,9 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
+            i|id|subnet-id)
+                local i; i="$(next_index AVAX_SUBNET_IDS)" ;
+                AVAX_SUBNET_IDS["$i"]="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -65,12 +74,22 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_subnet_ids {
+    environ_vars "$1" "AVAX_SUBNET_ID_([0-9]+)" "${!AVAX_SUBNET_ID_@}" ;
+}
+
 function rpc_method {
     printf "platform.getSubnets" ;
 }
 
 function rpc_params {
-    printf "{}" ;
+    printf "{" ;
+    if [ -n "${AVAX_SUBNET_IDS[*]}" ] ; then
+        printf '"ids":[' ;
+        join_by ',' $(map_by '"%s" ' "${AVAX_SUBNET_IDS[@]}") ;
+        printf ']' ;
+    fi
+    printf "}" ;
 }
 
 ###############################################################################

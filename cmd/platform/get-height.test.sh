@@ -3,11 +3,11 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform issue-tx" ;
+    printf "./avalanche-cli.sh platform get-height" ;
 }
 
 function check {
-    local result="$1";
+    local result="$1" ;
     local result_u ; result_u=$(printf '%s' "$result" | cut -d' ' -f3) ;
     local result_h ; result_h=$(printf '%s' "$result" | cut -d' ' -f5) ;
     local result_d ; result_d=$(printf '%s' "$result" | cut -d' ' -f7) ;
@@ -18,21 +18,16 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.issueTx",' ;
+    expect_d+='"method":"platform.getHeight",' ;
     expect_d+='"params":{' ;
-    expect_d+='"tx":"TX"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__sign_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -t TX)" ;
-}
-
-function test_platform__sign_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_TX=TX $(cmd))" ;
+function test_platform__get_height {
+    check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
 ###############################################################################

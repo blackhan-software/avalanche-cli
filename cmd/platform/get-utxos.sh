@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2214
+# shellcheck disable=SC1090,SC2046,SC2214,SC2153
 ###############################################################################
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
 
+source "$CMD_SCRIPT/../../cli/array.sh" ;
 source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
+source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 
@@ -15,10 +17,10 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-t|--tx=\${AVAX_TO}]" ;
-    usage+=" [-@|--signer=\${AVAX_SIGNER}]" ;
-    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
-    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-@|--address=\${AVAX_ADDRESS_\$IDX}]*" ;
+    usage+=" [-l|--limit=\${AVAX_LIMIT-1024}]" ;
+    usage+=" [--start-index-address=\${AVAX_START_INDEX_ADDRESS}]" ;
+    usage+=" [--start-index-utxo=\${AVAX_START_INDEX_UTXO}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -30,10 +32,10 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-t" "--tx=" ) ;
-    options+=( "-@" "--signer=" ) ;
-    options+=( "-u" "--username=" ) ;
-    options+=( "-p" "--password=" ) ;
+    options+=( "-@" "--address=" ) ;
+    options+=( "-l" "--limit=" ) ;
+    options+=( "--start-index-address=" ) ;
+    options+=( "--start-index-utxo=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -43,7 +45,9 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:t:@:u:p:-:" OPT "$@"
+    local -ag AVAX_ADDRESSES=() ;
+    get_addresses AVAX_ADDRESSES ;
+    while getopts ":hSVYN:@:l:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -53,14 +57,15 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            t|tx)
-                AVAX_TX="${OPTARG}" ;;
-            @|signer)
-                AVAX_SIGNER="${OPTARG}" ;;
-            u|username)
-                AVAX_USERNAME="${OPTARG}" ;;
-            p|password)
-                AVAX_PASSWORD="${OPTARG}" ;;
+            @|address)
+                local i; i="$(next_index AVAX_ADDRESSES)" ;
+                AVAX_ADDRESSES["$i"]="${OPTARG}" ;;
+            l|limit)
+                AVAX_LIMIT="${OPTARG}" ;;
+            start-index-address)
+                AVAX_START_INDEX_ADDRESS="${OPTARG}" ;;
+            start-index-utxo)
+                AVAX_START_INDEX_UTXO="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -75,17 +80,21 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_TX" ] ; then
+    if [ -z "${AVAX_ADDRESSES[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_SIGNER" ] ; then
-        cli_help && exit 1 ;
+    if [ -z "$AVAX_LIMIT" ] ; then
+        AVAX_LIMIT="1024" ;
     fi
-    if [ -z "$AVAX_USERNAME" ] ; then
-        cli_help && exit 1 ;
+    if [ -n "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -z "$AVAX_START_INDEX_UTXO" ] ; then
+            cli_help && exit 1 ;
+        fi
     fi
-    if [ -z "$AVAX_PASSWORD" ] ; then
-        cli_help && exit 1 ;
+    if [ -z "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -n "$AVAX_START_INDEX_UTXO" ] ; then
+            cli_help && exit 1 ;
+        fi
     fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="127.0.0.1:9650" ;
@@ -93,17 +102,33 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_addresses {
+    environ_vars "$1" "AVAX_ADDRESS_([0-9]+)" "${!AVAX_ADDRESS_@}" ;
+}
+
 function rpc_method {
-    printf "platform.sign" ;
+    printf "platform.getUTXOs" ;
 }
 
 function rpc_params {
-    printf '{' ;
-    printf '"tx":"%s",' "$AVAX_TX" ;
-    printf '"signer":"%s",' "$AVAX_SIGNER" ;
-    printf '"username":"%s",' "$AVAX_USERNAME" ;
-    printf '"password":"%s"' "$AVAX_PASSWORD" ;
-    printf '}' ;
+    printf "{" ;
+    printf '"addresses":[' ;
+    join_by ',' $(map_by '"%s" ' "${AVAX_ADDRESSES[@]}") ;
+    printf ']' ;
+    if [ -n "$AVAX_LIMIT" ] ; then
+        printf ',' ;
+        printf '"limit":%s' "$AVAX_LIMIT" ;
+    fi
+    if [ -n "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -n "$AVAX_START_INDEX_UTXO" ] ; then
+            printf ','
+            printf '"startIndex":{'
+            printf '"address":"%s",' "$AVAX_START_INDEX_ADDRESS"
+            printf '"utxo":"%s"' "$AVAX_START_INDEX_UTXO"
+            printf '}'
+        fi
+    fi
+    printf "}" ;
 }
 
 ###############################################################################

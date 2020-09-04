@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform add-default-subnet-validator" ;
+    printf "./avalanche-cli.sh platform add-delegator" ;
 }
 
 function check {
@@ -17,13 +17,12 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.addDefaultSubnetValidator",' ;
+    expect_d+='"method":"platform.addDelegator",' ;
     expect_d+='"params":{' ;
     expect_d+='"nodeID":"NODE_ID",' ;
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
     expect_d+='"stakeAmount":1000,' ;
-    expect_d+='"delegationFeeRate":10.0000,' ; ## 10.0000%
     expect_d+='"rewardAddress":"REWARD_ADDRESS",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
@@ -33,70 +32,48 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__add_default_subnet_validator_1a {
+function test_platform__add_delegator_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -# 1K -@ REWARD_ADDRESS \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1b {
+function test_platform__add_delegator_1b {
     check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
         -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -# 1K -@ REWARD_ADDRESS \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1c {
+function test_platform__add_delegator_1c {
     check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
-        -i NODE_ID -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -i NODE_ID -e 3000000000 -# 1K -@ REWARD_ADDRESS \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1d {
+function test_platform__add_delegator_1d {
     check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
-        -i NODE_ID -b 2000000000 \
-        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -i NODE_ID -b 2000000000 -# 1K -@ REWARD_ADDRESS \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1e {
+function test_platform__add_delegator_1e {
     check "$(AVAX_ID_RPC=1 AVAX_STAKE_AMOUNT=1K $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -@ REWARD_ADDRESS -r 10 \
+        -i NODE_ID -b 2000000000 -e 3000000000 -@ REWARD_ADDRESS \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1f {
-    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -r 10 \
-        -p PASSWORD)" ;
+function test_platform__add_delegator_1f {
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 -# 1K -@ REWARD_ADDRESS \
+        -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_validator_1g {
+function test_platform__add_delegator_1g {
     check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -r 10 -u USERNAME -p PASSWORD)" ;
-}
-
-function test_platform__add_default_subnet_validator_1h {
-    check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=100000 $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
-}
-
-function test_platform__add_default_subnet_validator_1i {
-    check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -r 10.0% -u USERNAME -p PASSWORD)" ;
-}
-
-function test_platform__add_default_subnet_validator_1h {
-    check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=10.0% $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
+        -i NODE_ID -b 2000000000 -e 3000000000 -# 1K \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

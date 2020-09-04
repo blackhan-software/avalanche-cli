@@ -312,18 +312,17 @@ CLI_HELP+=( "platform|list-addresses|List the addresses controlled by the specif
 CLI_HELP+=( "platform|get-current-validators|List the current validators of the given Subnet." ) ;
 CLI_HELP+=( "platform|get-pending-validators|List the validators in the pending validator set of the specified Subnet. Each validator is not currently validating the Subnet but will in the future." ) ;
 CLI_HELP+=( "platform|sample-validators|Sample validators from the specified Subnet." ) ;
-CLI_HELP+=( "platform|add-default-subnet-validator|Add a validator to the Default Subnet." ) ;
-CLI_HELP+=( "platform|add-non-default-subnet-validator|Add a validator to a Subnet other than the Default Subnet. The validator must validate the Default Subnet for the entire duration they validate this Subnet." ) ;
-CLI_HELP+=( "platform|add-default-subnet-delegator|Add a delegator to the Default Subnet. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator's validation reward (if any). The delegation period must be a subset of the period that the delegatee validates the Default Subnet." ) ;
+CLI_HELP+=( "platform|add-validator|Add a validator to the primary network." ) ;
+CLI_HELP+=( "platform|add-subnet-validator|Add a validator to a subnet other than the primary network. The validator must validate the primary network for the entire duration they validate this subnet." ) ;
+CLI_HELP+=( "platform|add-delegator|Add a delegator to the primary network. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator’s validation reward (if any). The delegation period must be a subset of the perdiod that the delegatee validates the primary network." ) ;
 CLI_HELP+=( "platform|create-subnet|Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the account paying the transaction fee. The Subnet's ID is the ID of the transaction that creates it (i.e. the response from 'issue-tx' when issuing the signed transaction)." ) ;
 CLI_HELP+=( "platform|get-subnets|Get all the Subnets that exist." ) ;
+CLI_HELP+=( "platform|get-height|Returns the height of the last accepted block." ) ;
 CLI_HELP+=( "platform|validated-by|Get the Subnet that validates a given blockchain." ) ;
 CLI_HELP+=( "platform|validates|Get the IDs of the blockchains a Subnet validates." ) ;
 CLI_HELP+=( "platform|get-blockchains|Get all the blockchains that exist (excluding the P-Chain)." ) ;
 CLI_HELP+=( "platform|export-avax|Send AVAX from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVAX is sent from and which pays the transaction fee. After issuing this transaction, you must call the X-Chain's 'import-avax' method to complete the transfer." ) ;
 CLI_HELP+=( "platform|import-avax|Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate the transfer." ) ;
-CLI_HELP+=( "platform|sign|Sign an unsigned or partially signed transaction. Transactions to add non-default Subnets require signatures from control keys and from the account paying the transaction fee. If 'signer' is a control key and the transaction needs more signatures from control keys, 'sign' will provide a control signature. Otherwise, 'signer' will sign to pay the transaction fee." ) ;
-CLI_HELP+=( "platform|issue-tx|Issue a transaction to the Platform Chain." ) ;
 
 ## Timestamp API:
 CLI_TEXT+=( "timestamp|This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The genesis data for a new instance of the Timestamp Chain is the genesis block's 32 byte payload. See: ${LK}https://docs.ava.network/v1.0/en/api/timestamp${NN}" ) ;

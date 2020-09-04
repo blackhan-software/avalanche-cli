@@ -20,14 +20,20 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"platform.getSubnets",' ;
     expect_d+='"params":{' ;
+    expect_d+='"ids":["SN1","SN2","SN3"]' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__get_subnets {
-    check "$(AVAX_ID_RPC=1 $(cmd))" ;
+function test_platform__get_subnets_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -iSN1 -iSN2 -iSN3)" ;
+}
+
+function test_platform__get_subnets_1b {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_SUBNET_ID_0=SN1 AVAX_SUBNET_ID_1=SN2 AVAX_SUBNET_ID_2=SN3 $(cmd))" ;
 }
 
 ###############################################################################

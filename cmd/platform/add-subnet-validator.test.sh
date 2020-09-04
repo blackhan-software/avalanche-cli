@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform add-default-subnet-delegator" ;
+    printf "./avalanche-cli.sh platform add-subnet-validator" ;
 }
 
 function check {
@@ -17,13 +17,13 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.addDefaultSubnetDelegator",' ;
+    expect_d+='"method":"platform.addSubnetValidator",' ;
     expect_d+='"params":{' ;
     expect_d+='"nodeID":"NODE_ID",' ;
+    expect_d+='"subnetID":"SUBNET_ID",' ;
     expect_d+='"startTime":2000000000,' ;
     expect_d+='"endTime":3000000000,' ;
-    expect_d+='"stakeAmount":1000,' ;
-    expect_d+='"rewardAddress":"REWARD_ADDRESS",' ;
+    expect_d+='"weight":1,' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -32,47 +32,39 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__add_default_subnet_delegator_1a {
+function test_platform__add_subnet_validator_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_delegator_1b {
+function test_platform__add_subnet_validator_1b {
     check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
-        -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS \
+        -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_delegator_1c {
+function test_platform__add_subnet_validator_1c {
     check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
-        -i NODE_ID -e 3000000000 -# 1K -@ REWARD_ADDRESS \
+        -i NODE_ID -s SUBNET_ID -e 3000000000 -w 1 \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_delegator_1d {
+function test_platform__add_subnet_validator_1d {
     check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
-        -i NODE_ID -b 2000000000 -# 1K -@ REWARD_ADDRESS \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -w 1 \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_delegator_1e {
-    check "$(AVAX_ID_RPC=1 AVAX_STAKE_AMOUNT=1K $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 -@ REWARD_ADDRESS \
+function test_platform__add_subnet_validator_1e {
+    check "$(AVAX_ID_RPC=1 AVAX_WEIGHT=1 $(cmd) \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 \
         -u USERNAME -p PASSWORD)" ;
 }
 
-function test_platform__add_default_subnet_delegator_1f {
+function test_platform__add_subnet_validator_1f {
     check "$(AVAX_ID_RPC=1 $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 -# 1K -@ REWARD_ADDRESS \
-        -u USERNAME -p PASSWORD)" ;
-}
-
-function test_platform__add_default_subnet_delegator_1g {
-    check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
-        -i NODE_ID -b 2000000000 -e 3000000000 -# 1K \
+        -i NODE_ID -s SUBNET_ID -b 2000000000 -e 3000000000 -w 1 \
         -u USERNAME -p PASSWORD)" ;
 }
 

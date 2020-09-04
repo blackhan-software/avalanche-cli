@@ -15,7 +15,6 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-k|--private-key=\${AVAX_PRIVATE_KEY-''}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
@@ -29,7 +28,6 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-k" "--private-key=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-N" "--node=" ) ;
@@ -41,7 +39,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:k:u:p:-:" OPT "$@"
+    while getopts ":hSVYN:u:p:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -51,8 +49,6 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            k|private-key)
-                AVAX_PRIVATE_KEY="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -71,9 +67,6 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_PRIVATE_KEY" ] ; then
-        AVAX_PRIVATE_KEY="" ;
-    fi
     if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
@@ -92,11 +85,6 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    if [ -n "$AVAX_PRIVATE_KEY" ] ; then
-        printf '"privateKey":"%s",' "$AVAX_PRIVATE_KEY" ;
-    else
-        printf '"privateKey":null,' ;
-    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

@@ -115,7 +115,7 @@ function cli {
 }
 
 function rpc_method {
-    printf "platform.addNonDefaultSubnetValidator" ;
+    printf "platform.addSubnetValidator" ;
 }
 
 function rpc_params {

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2091
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform create-address" ;
+    printf "./avalanche-cli.sh platform get-utxos" ;
 }
 
 function check {
@@ -17,34 +18,38 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.createAddress",' ;
+    expect_d+='"method":"platform.getUTXOs",' ;
     expect_d+='"params":{' ;
-    expect_d+='"username":"USERNAME",' ;
-    expect_d+='"password":"PASSWORD"' ;
-    expect_d+="}}'" ;
+    expect_d+='"addresses":["P1","P2","P3"],' ;
+    expect_d+='"limit":1024,' ;
+    expect_d+='"startIndex":{' ;
+    expect_d+='"address":"SI_P0",' ;
+    expect_d+='"utxo":"SI_UTXO"' ;
+    expect_d+="}}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__create_address_1a {
+function test_platform__get_utxos_1a {
+    check "$(AVAX_ID_RPC=1 $(cmd) -@P1 -@P2 -@P3 -l 1024 \
+        --start-index-address=SI_P0 --start-index-utxo=SI_UTXO)" ;
+}
+
+function test_platform__get_utxos_1b {
     check "$(AVAX_ID_RPC=1 \
-        $(cmd) -u USERNAME -p PASSWORD)" ;
+        AVAX_ADDRESS_0=P1 AVAX_ADDRESS_1=P2 AVAX_ADDRESS_2=P3 $(cmd) -l 1024 \
+        --start-index-address=SI_P0 --start-index-utxo=SI_UTXO)" ;
 }
 
-function test_platform__create_address_1b {
-    check "$(AVAX_ID_RPC=1 \
-        $(cmd) -u USERNAME -p PASSWORD)" ;
+function test_platform__get_utxos_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_ADDRESS=SI_P0 \
+        $(cmd) -@P1 -@P2 -@P3 -l 1024 --start-index-utxo=SI_UTXO)" ;
 }
 
-function test_platform__create_address_1c {
-    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME \
-        $(cmd) -p PASSWORD)" ;
-}
-
-function test_platform__create_address_1e {
-    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD \
-        $(cmd) -u USERNAME)" ;
+function test_platform__get_utxos_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_UTXO=SI_UTXO \
+        $(cmd) -@P1 -@P2 -@P3 -l 1024 --start-index-address=SI_P0)" ;
 }
 
 ###############################################################################
