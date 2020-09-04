@@ -22,7 +22,8 @@ function check {
     expect_d+='"amount":1000000000000000,' ;
     expect_d+='"assetID":"ASSET_ID",' ;
     expect_d+='"to":"TO",' ;
-    expect_d+='"minters":["M1","M2","M3"]' ;
+    expect_d+='"username":"USERNAME",' ;
+    expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -31,51 +32,33 @@ function check {
 
 function test_avm__create_mint_tx_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
-        -# 1P -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" ;
+        -# 1P -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__create_mint_tx_1b {
     check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1P $(cmd) \
-        -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" ;
+        -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__create_mint_tx_1c {
     check "$(AVAX_ID_RPC=1 AVAX_ASSET_ID=ASSET_ID $(cmd) \
-        -# 1P -@ TO -m M1 -m M2 -m M3)" ;
+        -# 1P -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__create_mint_tx_1d {
     check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) \
-        -# 1P -a ASSET_ID -m M1 -m M2 -m M3)" ;
-}
-
-function test_avm__create_mint_tx_2a {
-    check "$(AVAX_ID_RPC=1 \
-        AVAX_MINTER_0=M1 $(cmd) \
-        -# 1P -a ASSET_ID -@ TO -m M2 -m M3)" ;
-}
-
-function test_avm__create_mint_tx_2b {
-    check "$(AVAX_ID_RPC=1 \
-        AVAX_MINTER_0=M1 AVAX_MINTER_1=M2 $(cmd) \
-        -# 1P -a ASSET_ID -@ TO -m M3)" ;
-}
-
-function test_avm__create_mint_tx_2c {
-    check "$(AVAX_ID_RPC=1 \
-        AVAX_MINTER_0=M1 AVAX_MINTER_1=M2 AVAX_MINTER_2=M3 $(cmd) \
-        -# 1P -a ASSET_ID -@ TO)" ;
+        -# 1P -a ASSET_ID -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__create_mint_tx_3a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -# 1P -a ASSET_ID -@ TO \
-        -m M1 -m M2 -m M3 -b BC_ID)" BC_ID ;
+        -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__create_mint_tx_3b {
     check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
-        -# 1P -a ASSET_ID -@ TO -m M1 -m M2 -m M3)" BC_ID ;
+        -# 1P -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 
 ###############################################################################

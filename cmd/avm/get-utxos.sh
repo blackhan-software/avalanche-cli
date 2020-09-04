@@ -18,6 +18,9 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-@|--address=\${AVAX_ADDRESS_\$IDX}]*" ;
+    usage+=" [-l|--limit=\${AVAX_LIMIT-1024}]" ;
+    usage+=" [--start-index-address=\${AVAX_START_INDEX_ADDRESS}]" ;
+    usage+=" [--start-index-utxo=\${AVAX_START_INDEX_UTXO}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
@@ -31,6 +34,9 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-@" "--address=" ) ;
+    options+=( "-l" "--limit=" ) ;
+    options+=( "--start-index-address=" ) ;
+    options+=( "--start-index-utxo=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
@@ -43,7 +49,7 @@ function cli_options {
 function cli {
     local -ag AVAX_ADDRESSES=() ;
     get_addresses AVAX_ADDRESSES ;
-    while getopts ":hSVYN:@:b:-:" OPT "$@"
+    while getopts ":hSVYN:@:l:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -53,9 +59,15 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            @|address|initial-holder-address)
+            @|address)
                 local i; i="$(next_index AVAX_ADDRESSES)" ;
                 AVAX_ADDRESSES["$i"]="${OPTARG}" ;;
+            l|limit)
+                AVAX_LIMIT="${OPTARG}" ;;
+            start-index-address)
+                AVAX_START_INDEX_ADDRESS="${OPTARG}" ;;
+            start-index-utxo)
+                AVAX_START_INDEX_UTXO="${OPTARG}" ;;
             b|blockchain-id)
                 AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
@@ -75,6 +87,19 @@ function cli {
     if [ -z "${AVAX_ADDRESSES[*]}" ] ; then
         cli_help && exit 1 ;
     fi
+    if [ -z "$AVAX_LIMIT" ] ; then
+        AVAX_LIMIT="1024" ;
+    fi
+    if [ -n "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -z "$AVAX_START_INDEX_UTXO" ] ; then
+            cli_help && exit 1 ;
+        fi
+    fi
+    if [ -z "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -n "$AVAX_START_INDEX_UTXO" ] ; then
+            cli_help && exit 1 ;
+        fi
+    fi
     if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
         AVAX_BLOCKCHAIN_ID="X" ;
     fi
@@ -93,9 +118,24 @@ function rpc_method {
 }
 
 function rpc_params {
-    printf '{"addresses":[' ; # shellcheck disable=SC2046
+    printf '{' ;
+    printf '"addresses":[' ; # shellcheck disable=SC2046
     join_by ',' $(map_by '"%s" ' "${AVAX_ADDRESSES[@]}") ;
-    printf ']}' ;
+    printf ']' ;
+    if [ -n "$AVAX_LIMIT" ] ; then
+        printf ',' ;
+        printf '"limit":%s' "$AVAX_LIMIT" ;
+    fi
+    if [ -n "$AVAX_START_INDEX_ADDRESS" ] ; then
+        if [ -n "$AVAX_START_INDEX_UTXO" ] ; then
+            printf ',' ;
+            printf '"startIndex":{' ;
+            printf '"address":"%s",' "$AVAX_START_INDEX_ADDRESS" ;
+            printf '"utxo":"%s"' "$AVAX_START_INDEX_UTXO" ;
+            printf '}' ;
+        fi
+    fi
+    printf '}' ;
 }
 
 ###############################################################################

@@ -21,7 +21,8 @@ function cli_help {
     usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
-    usage+=" [-m|--minter=\${AVAX_MINTER_\$IDX}]*" ;
+    usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
+    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
@@ -37,7 +38,8 @@ function cli_options {
     options+=( "-#" "--amount=" ) ;
     options+=( "-a" "--asset-id=" ) ;
     options+=( "-@" "--to=" ) ;
-    options+=( "-m" "--minter=" ) ;
+    options+=( "-u" "--username=" ) ;
+    options+=( "-p" "--password=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
@@ -48,9 +50,7 @@ function cli_options {
 }
 
 function cli {
-    local -ag AVAX_MINTERS=() ;
-    get_minters AVAX_MINTERS ;
-    while getopts ":hSVYN:#:a:@:m:u:p:b:-:" OPT "$@"
+    while getopts ":hSVYN:#:a:@:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,9 +66,10 @@ function cli {
                 AVAX_ASSET_ID="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
-            m|minter)
-                local i; i="$(next_index AVAX_MINTERS)" ;
-                AVAX_MINTERS["$i"]="${OPTARG}" ;;
+            u|username)
+                AVAX_USERNAME="${OPTARG}" ;;
+            p|password)
+                AVAX_PASSWORD="${OPTARG}" ;;
             b|blockchain-id)
                 AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
@@ -94,7 +95,10 @@ function cli {
     if [ -z "$AVAX_TO" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "${AVAX_MINTERS[*]}" ] ; then
+    if [ -z "$AVAX_USERNAME" ] ; then
+        cli_help && exit 1 ;
+    fi
+    if [ -z "$AVAX_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
@@ -106,10 +110,6 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
-function get_minters {
-    environ_vars "$1" "AVAX_MINTER_([0-9]+)" "${!AVAX_MINTER_@}" ;
-}
-
 function rpc_method {
     printf "avm.createMintTx" ;
 }
@@ -119,10 +119,9 @@ function rpc_params {
     printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
     printf '"to":"%s",' "$AVAX_TO" ;
-    printf '"minters":[' ;
-    # shellcheck disable=SC2046
-    join_by ',' $(map_by '"%s" ' "${AVAX_MINTERS[@]}") ;
-    printf ']}' ;
+    printf '"username":"%s",' "$AVAX_USERNAME" ;
+    printf '"password":"%s"' "$AVAX_PASSWORD" ;
+    printf '}' ;
 }
 
 ###############################################################################

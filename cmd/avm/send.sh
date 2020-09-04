@@ -19,6 +19,7 @@ function cli_help {
     usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
+    usage+=" [-m|--memo=\${AVAX_MEMO-''}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
@@ -36,6 +37,7 @@ function cli_options {
     options+=( "-#" "--amount=" ) ;
     options+=( "-a" "--asset-id=" ) ;
     options+=( "-@" "--to=" ) ;
+    options+=( "-m" "--memo=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
@@ -48,7 +50,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:#:a:@:u:p:b:-:" OPT "$@"
+    while getopts ":hSVYN:#:a:@:m:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -64,6 +66,8 @@ function cli {
                 AVAX_ASSET_ID="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
+            m|memo)
+                AVAX_MEMO="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -93,6 +97,9 @@ function cli {
     if [ -z "$AVAX_TO" ] ; then
         cli_help && exit 1 ;
     fi
+    if [ -z "$AVAX_MEMO" ] ; then
+        AVAX_MEMO="" ;
+    fi
     if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
     fi
@@ -117,6 +124,7 @@ function rpc_params {
     printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
     printf '"to":"%s",' "$AVAX_TO" ;
+    printf '"memo":"%s",' "$AVAX_MEMO" ;
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

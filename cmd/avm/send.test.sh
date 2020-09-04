@@ -22,6 +22,7 @@ function check {
     expect_d+='"amount":1000,' ;
     expect_d+='"assetID":"ASSET_ID",' ;
     expect_d+='"to":"TO",' ;
+    expect_d+='"memo":"MEMO",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -32,37 +33,42 @@ function check {
 
 function test_avm__send_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
-        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
+        -# 1K -a ASSET_ID -@ TO -m MEMO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1b {
     check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1K $(cmd) \
-        -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
+        -a ASSET_ID -@ TO -m MEMO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1c {
     check "$(AVAX_ID_RPC=1 AVAX_ASSET_ID=ASSET_ID $(cmd) \
-        -# 1K -@ TO -u USERNAME -p PASSWORD)" ;
+        -# 1K -@ TO -m MEMO -u USERNAME -p PASSWORD)" ;
+}
+
+function test_avm__send_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_MEMO=MEMO $(cmd) \
+        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_1d {
     check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
-        -# 1K -a ASSET_ID -@ TO -p PASSWORD)" ;
+        -# 1K -a ASSET_ID -@ TO -m MEMO -p PASSWORD)" ;
 }
 
 function test_avm__send_1e {
     check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
-        -# 1K -a ASSET_ID -@ TO -u USERNAME)" ;
+        -# 1K -a ASSET_ID -@ TO -m MEMO -u USERNAME)" ;
 }
 
 function test_avm__send_2a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
-        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
+        -# 1K -a ASSET_ID -@ TO -m MEMO -u USERNAME -p PASSWORD -b BC_ID)" BC_ID ;
 }
 
 function test_avm__send_2b {
     check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) \
-        -# 1K -a ASSET_ID -@ TO -u USERNAME -p PASSWORD)" BC_ID ;
+        -# 1K -a ASSET_ID -@ TO -m MEMO -u USERNAME -p PASSWORD)" BC_ID ;
 }
 
 ###############################################################################

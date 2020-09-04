@@ -20,28 +20,53 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"avm.getUTXOs",' ;
     expect_d+='"params":{' ;
-    expect_d+='"addresses":["A1","A2","A3"]' ;
-    expect_d+="}}'" ;
+    expect_d+='"addresses":["X1","X2","X3"],' ;
+    expect_d+='"limit":1024,' ;
+    expect_d+='"startIndex":{' ;
+    expect_d+='"address":"SI_X0",' ;
+    expect_d+='"utxo":"SI_UTXO"' ;
+    expect_d+="}}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
     assertEquals "$expect" "$result" ;
 }
 
 function test_avm__get_utxos_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -@ A1 -@ A2 -@ A3)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -@X1 -@X2 -@X3 -l 1024 \
+        --start-index-address=SI_X0 --start-index-utxo=SI_UTXO)" ;
 }
 
 function test_avm__get_utxos_1b {
     check "$(AVAX_ID_RPC=1 \
-        AVAX_ADDRESS_0=A1 AVAX_ADDRESS_1=A2 AVAX_ADDRESS_2=A3 $(cmd))" ;
+        AVAX_ADDRESS_0=X1 AVAX_ADDRESS_1=X2 AVAX_ADDRESS_2=X3 $(cmd) -l 1024 \
+        --start-index-address=SI_X0 --start-index-utxo=SI_UTXO)" ;
+}
+
+function test_avm__get_utxos_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_LIMIT=1024 $(cmd) -@X1 -@X2 -@X3 \
+        --start-index-address=SI_X0 --start-index-utxo=SI_UTXO)" ;
+}
+
+function test_avm__get_utxos_1d {
+    check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_ADDRESS=SI_X0 \
+        $(cmd) -@X1 -@X2 -@X3 --limit=1024 --start-index-utxo=SI_UTXO)" ;
+}
+
+function test_avm__get_utxos_1e {
+    check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_UTXO=SI_UTXO \
+        $(cmd) -@X1 -@X2 -@X3 --limit=1024 --start-index-address=SI_X0)" ;
 }
 
 function test_avm__get_utxos_2a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -@ A1 -@ A2 -@ A3 -b BC_ID)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 \
+        $(cmd) -@X1 -@X2 -@X3 -b BC_ID \
+        --start-index-address=SI_X0 --start-index-utxo=SI_UTXO)" BC_ID ;
 }
 
 function test_avm__get_utxos_2b {
-    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID $(cmd) -@ A1 -@ A2 -@ A3)" BC_ID ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BC_ID \
+        $(cmd) -@X1 -@X2 -@X3 \
+        --start-index-address=SI_X0 --start-index-utxo=SI_UTXO)" BC_ID ;
 }
 
 ###############################################################################
