@@ -3,7 +3,12 @@
 
 function rpc_post {
     local mime="${3-content-type:application/json}" ;
-    local args="--url '${1}' --header '${mime}' --data '${2}'" ;
+    local args="--url '${1}' --header '${mime}'" ;
+    if [ -n "$AVAX_AUTHORIZATION" ] ; then
+        args="${args} --header '${AVAX_AUTHORIZATION}' --data '${2}'" ;
+    else
+        args="${args} --data '${2}'" ;
+    fi
     if (( ${#AVAX_ARGS_RPC} > 0 )) ; then
         args="${args} ${AVAX_ARGS_RPC[*]}" ;
     fi
