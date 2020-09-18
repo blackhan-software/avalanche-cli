@@ -473,26 +473,26 @@ Now, *each* `application/json` response will be compactified and colorized by us
 $ AVAX_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
-### [`${AVAX_AUTHORIZATION}`](https://docs.avax.network/v1.0/en/api/auth)
+### [`${AVAX_AUTH_HEADER}`](https://docs.avax.network/v1.0/en/api/auth)
 
 An authorization token provides access to one or more API endpoints. This is is useful for delegating access to a node's APIs. Tokens expire after 12 hours, but before that the token can be provided in the header of an API call. Specifically, the header `Authorization` should have the value `Bearer $TOKEN`. For example:
 
 ```sh
-TOKEN=$(avalanche-cli auth new-token -p "$PASSWORD" -e '*' -Y | jq -r .result.token)
+AVAX_AUTH_TOKEN=$(avalanche-cli auth new-token -p "$AVAX_AUTH_PASSWORD" -e '*' -Y | jq -r .result.token)
 ```
 
 ```sh
-export AVAX_AUTHORIZATION="Bearer $TOKEN"
+export AVAX_AUTH_HEADER="Bearer $AVAX_AUTH_TOKEN"
 ```
 
-Any subsequent requests will have the `Authorization` header set to `Bearer $TOKEN`, after which &ndash; if desired &ndash; the token can be revoked and unset with:
+Any subsequent requests will have the `Authorization` header set to `Bearer $AVAX_AUTH_TOKEN`, after which &ndash; if desired &ndash; the header variable can be unset and the token be revoked with:
 
 ```sh
-avalanche-cli auth revoke-token -p "$PASSWORD" -t "$TOKEN" -Y
+unset AVAX_AUTH_HEADER
 ```
 
 ```sh
-unset AVAX_AUTHORIZATION
+avalanche-cli auth revoke-token -p "$AVAX_AUTH_PASSWORD" -t "$AVAX_AUTH_TOKEN" -Y
 ```
 
 ## FAQ

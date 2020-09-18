@@ -32,7 +32,7 @@ function test_auth__revoke_token_1a {
 }
 
 function test_auth__revoke_token_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -t TOKEN)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_AUTH_PASSWORD=PASSWORD $(cmd) -t TOKEN)" ;
 }
 
 function test_auth__revoke_token_1c {

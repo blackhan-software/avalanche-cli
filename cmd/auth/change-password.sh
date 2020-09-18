@@ -17,8 +17,8 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-p|--old-password=\${AVAX_OLD_PASSWORD}]" ;
-    usage+=" [-n|--new-password=\${AVAX_NEW_PASSWORD}]" ;
+    usage+=" [-p|--old-password=\${AVAX_AUTH_OLD_PASSWORD}]" ;
+    usage+=" [-n|--new-password=\${AVAX_AUTH_NEW_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -52,9 +52,9 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             p|old-password)
-                AVAX_OLD_PASSWORD="${OPTARG}" ;;
+                AVAX_AUTH_OLD_PASSWORD="${OPTARG}" ;;
             n|new-password)
-                AVAX_NEW_PASSWORD="${OPTARG}" ;;
+                AVAX_AUTH_NEW_PASSWORD="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -69,10 +69,10 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_OLD_PASSWORD" ] ; then
+    if [ -z "$AVAX_AUTH_OLD_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_NEW_PASSWORD" ] ; then
+    if [ -z "$AVAX_AUTH_NEW_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
@@ -87,8 +87,8 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"oldPassword":"%s",' "$AVAX_OLD_PASSWORD" ;
-    printf '"newPassword":"%s"' "$AVAX_NEW_PASSWORD" ;
+    printf '"oldPassword":"%s",' "$AVAX_AUTH_OLD_PASSWORD" ;
+    printf '"newPassword":"%s"' "$AVAX_AUTH_NEW_PASSWORD" ;
     printf '}' ;
 }
 

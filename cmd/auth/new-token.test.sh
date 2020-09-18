@@ -35,7 +35,7 @@ function test_auth__new_token_1a {
 }
 
 function test_auth__new_token_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_AUTH_PASSWORD=PASSWORD $(cmd) \
         -e /ext/bc/X -e /ext/bc/C)" ;
 }
 

@@ -18,7 +18,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-e|--endpoint=\${AVAX_ENDPOINT_\$IDX}]*" ;
-    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-p|--password=\${AVAX_AUTH_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -57,7 +57,7 @@ function cli {
                 local i; i="$(next_index AVAX_ENDPOINTS)" ;
                 AVAX_ENDPOINTS["$i"]="${OPTARG}" ;;
             p|password)
-                AVAX_PASSWORD="${OPTARG}" ;;
+                AVAX_AUTH_PASSWORD="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -75,7 +75,7 @@ function cli {
     if [ -z "${AVAX_ENDPOINTS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_PASSWORD" ] ; then
+    if [ -z "$AVAX_AUTH_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
@@ -97,7 +97,7 @@ function rpc_params {
     printf '"endpoints":[' ; # shellcheck disable=SC2046
     join_by ',' $(map_by '"%s" ' "${AVAX_ENDPOINTS[@]}") ;
     printf '],' ;
-    printf '"password":"%s"' "$AVAX_PASSWORD" ;
+    printf '"password":"%s"' "$AVAX_AUTH_PASSWORD" ;
     printf '}' ;
 }
 

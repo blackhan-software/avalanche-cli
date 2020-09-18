@@ -34,12 +34,12 @@ function test_auth__change_password_1a {
 
 function test_auth__change_password_1b {
     check "$(AVAX_ID_RPC=1 \
-        AVAX_OLD_PASSWORD=OLD_PASSWORD $(cmd) -n NEW_PASSWORD)" ;
+        AVAX_AUTH_OLD_PASSWORD=OLD_PASSWORD $(cmd) -n NEW_PASSWORD)" ;
 }
 
 function test_auth__change_password_1c {
     check "$(AVAX_ID_RPC=1 \
-        AVAX_NEW_PASSWORD=NEW_PASSWORD $(cmd) -p OLD_PASSWORD)" ;
+        AVAX_AUTH_NEW_PASSWORD=NEW_PASSWORD $(cmd) -p OLD_PASSWORD)" ;
 }
 
 ###############################################################################

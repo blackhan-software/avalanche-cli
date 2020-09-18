@@ -17,7 +17,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
+    usage+=" [-p|--password=\${AVAX_AUTH_PASSWORD}]" ;
     usage+=" [-t|--token=\${AVAX_TOKEN}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
@@ -52,7 +52,7 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             p|password)
-                AVAX_PASSWORD="${OPTARG}" ;;
+                AVAX_AUTH_PASSWORD="${OPTARG}" ;;
             t|token)
                 AVAX_TOKEN="${OPTARG}" ;;
             N|node)
@@ -69,7 +69,7 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_PASSWORD" ] ; then
+    if [ -z "$AVAX_AUTH_PASSWORD" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_TOKEN" ] ; then
@@ -87,7 +87,7 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"password":"%s",' "$AVAX_PASSWORD" ;
+    printf '"password":"%s",' "$AVAX_AUTH_PASSWORD" ;
     printf '"token":"%s"' "$AVAX_TOKEN" ;
     printf '}' ;
 }
