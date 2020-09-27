@@ -15,7 +15,7 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-b|--blockchain-id=|--chain=\${AVAX_BLOCKCHAIN_ID}]" ;
+    usage+=" [-c|--chain=\${AVAX_CHAIN_ID}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -27,7 +27,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-b" "--blockchain-id=" "--chain=" ) ;
+    options+=( "-c" "--chain=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -37,7 +37,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:b:-:" OPT "$@"
+    while getopts ":hSVYN:c:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -47,8 +47,8 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            b|blockchain-id|chain)
-                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
+            c|chain)
+                AVAX_CHAIN_ID="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -63,7 +63,7 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
+    if [ -z "$AVAX_CHAIN_ID" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
@@ -78,7 +78,7 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"chain":"%s"' "$AVAX_BLOCKCHAIN_ID" ;
+    printf '"chain":"%s"' "$AVAX_CHAIN_ID" ;
     printf '}' ;
 }
 

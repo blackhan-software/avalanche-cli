@@ -20,7 +20,7 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"info.isBootstrapped",' ;
     expect_d+='"params":{' ;
-    expect_d+='"chain":"BLOCKCHAIN_ID"' ;
+    expect_d+='"chain":"CHAIN_ID"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -28,11 +28,11 @@ function check {
 }
 
 function test_info__is_bootstrapped_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -b BLOCKCHAIN_ID)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -c CHAIN_ID)" ;
 }
 
 function test_info__is_bootstrapped_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=BLOCKCHAIN_ID $(cmd))" ;
+    check "$(AVAX_ID_RPC=1 AVAX_CHAIN_ID=CHAIN_ID $(cmd))" ;
 }
 
 ###############################################################################
