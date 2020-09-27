@@ -21,6 +21,7 @@ function cli_help {
     usage+=" [-l|--limit=\${AVAX_LIMIT-1024}]" ;
     usage+=" [--start-index-address=\${AVAX_START_INDEX_ADDRESS}]" ;
     usage+=" [--start-index-utxo=\${AVAX_START_INDEX_UTXO}]" ;
+    usage+=" [-s|--source-chain=\${AVAX_SOURCE_CHAIN}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -36,6 +37,7 @@ function cli_options {
     options+=( "-l" "--limit=" ) ;
     options+=( "--start-index-address=" ) ;
     options+=( "--start-index-utxo=" ) ;
+    options+=( "-s" "--source-chain=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -47,7 +49,7 @@ function cli_options {
 function cli {
     local -ag AVAX_ADDRESSES=() ;
     get_addresses AVAX_ADDRESSES ;
-    while getopts ":hSVYN:@:l:-:" OPT "$@"
+    while getopts ":hSVYN:@:l:s:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,6 +68,8 @@ function cli {
                 AVAX_START_INDEX_ADDRESS="${OPTARG}" ;;
             start-index-utxo)
                 AVAX_START_INDEX_UTXO="${OPTARG}" ;;
+            s|source-chain)
+                AVAX_SOURCE_CHAIN="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -127,6 +131,10 @@ function rpc_params {
             printf '"utxo":"%s"' "$AVAX_START_INDEX_UTXO"
             printf '}'
         fi
+    fi
+    if [ -n "$AVAX_SOURCE_CHAIN" ] ; then
+        printf ',' ;
+        printf '"sourceChain":"%s"' "$AVAX_SOURCE_CHAIN" ;
     fi
     printf "}" ;
 }

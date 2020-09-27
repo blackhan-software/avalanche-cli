@@ -23,6 +23,8 @@ function check {
     expect_d+='"vmID":"VM_ID",' ;
     expect_d+='"name":"NAME",' ;
     expect_d+='"genesisData":"GENESIS_DATA",' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -34,36 +36,57 @@ function check {
 function test_platform__create_blockchain_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -s SUBNET_ID -v VM_ID -n NAME -g GENESIS_DATA \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_blockchain_1b {
     check "$(AVAX_ID_RPC=1 AVAX_SUBNET_ID=SUBNET_ID $(cmd) \
         -v VM_ID -n NAME -g GENESIS_DATA \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_blockchain_1c {
     check "$(AVAX_ID_RPC=1 AVAX_VM_ID=VM_ID $(cmd) \
         -s SUBNET_ID -n NAME -g GENESIS_DATA \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_blockchain_1d {
     check "$(AVAX_ID_RPC=1 AVAX_NAME=NAME $(cmd) \
         -s SUBNET_ID -v VM_ID -g GENESIS_DATA \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_blockchain_1e {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -s SUBNET_ID -v VM_ID -n NAME -g GENESIS_DATA \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_blockchain_1f {
     check "$(AVAX_ID_RPC=1 AVAX_GENESIS_DATA=GENESIS_DATA $(cmd) \
         -s SUBNET_ID -v VM_ID -n NAME \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__create_blockchain_1g {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -s SUBNET_ID -v VM_ID -n NAME -g GENESIS_DATA \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__create_blockchain_1h {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -s SUBNET_ID -v VM_ID -n NAME -g GENESIS_DATA \
+        -f P1 -f P2 \
         -u USERNAME -p PASSWORD)" ;
 }
 

@@ -24,6 +24,8 @@ function check {
     expect_d+='"endTime":3000000000,' ;
     expect_d+='"stakeAmount":1000,' ;
     expect_d+='"rewardAddress":"REWARD_ADDRESS",' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -36,6 +38,7 @@ function test_platform__add_delegator_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -43,36 +46,75 @@ function test_platform__add_delegator_1b {
     check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
         -b 2000000000 -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_delegator_1c {
     check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
         -i NODE_ID -e 3000000000 -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_delegator_1d {
     check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
         -i NODE_ID -b 2000000000 -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_delegator_1e {
     check "$(AVAX_ID_RPC=1 AVAX_STAKE_AMOUNT=1K $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_delegator_1f {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_delegator_1g {
     check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 -# 1K \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__add_delegator_1h {
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
+        -p PASSWORD)" ;
+}
+
+function test_platform__add_delegator_1i {
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME)" ;
+}
+
+function test_platform__add_delegator_1j {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__add_delegator_1k {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 \
         -u USERNAME -p PASSWORD)" ;
 }
 

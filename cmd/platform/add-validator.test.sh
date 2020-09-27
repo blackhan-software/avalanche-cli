@@ -25,6 +25,8 @@ function check {
     expect_d+='"stakeAmount":1000,' ;
     expect_d+='"delegationFeeRate":10.0000,' ; ## 10.0000%
     expect_d+='"rewardAddress":"REWARD_ADDRESS",' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -37,6 +39,7 @@ function test_platform__add_validator_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -44,6 +47,7 @@ function test_platform__add_validator_1b {
     check "$(AVAX_ID_RPC=1 AVAX_NODE_ID=NODE_ID $(cmd) \
         -b 2000000000 -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -51,6 +55,7 @@ function test_platform__add_validator_1c {
     check "$(AVAX_ID_RPC=1 AVAX_START_TIME=2000000000 $(cmd) \
         -i NODE_ID -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -58,6 +63,7 @@ function test_platform__add_validator_1d {
     check "$(AVAX_ID_RPC=1 AVAX_END_TIME=3000000000 $(cmd) \
         -i NODE_ID -b 2000000000 \
         -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -65,6 +71,7 @@ function test_platform__add_validator_1e {
     check "$(AVAX_ID_RPC=1 AVAX_STAKE_AMOUNT=1K $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
         -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
@@ -72,31 +79,57 @@ function test_platform__add_validator_1f {
     check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
         -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 -c A3 \
         -p PASSWORD)" ;
 }
 
 function test_platform__add_validator_1g {
     check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -r 10 -u USERNAME -p PASSWORD)" ;
+        -# 1K -r 10 \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_validator_1h {
     check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=100000 $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
+        -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_validator_1i {
     check "$(AVAX_ID_RPC=1 AVAX_REWARD_ADDRESS=REWARD_ADDRESS $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -r 10.0% -u USERNAME -p PASSWORD)" ;
+        -# 1K -r 10.0% \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__add_validator_1h {
     check "$(AVAX_ID_RPC=1 AVAX_DELEGATION_FEE_RATE=10.0% $(cmd) \
         -i NODE_ID -b 2000000000 -e 3000000000 \
-        -# 1K -@ REWARD_ADDRESS -u USERNAME -p PASSWORD)" ;
+        -# 1K -@ REWARD_ADDRESS \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__add_validator_1i {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__add_validator_1j {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -i NODE_ID -b 2000000000 -e 3000000000 \
+        -# 1K -@ REWARD_ADDRESS -r 10 \
+        -f P1 -f P2 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

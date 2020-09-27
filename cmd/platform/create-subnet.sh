@@ -19,6 +19,8 @@ function cli_help {
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-@|--control-key=\${AVAX_CONTROL_KEY_\$IDX}]*" ;
     usage+=" [-t|--threshold=\${AVAX_THRESHOLD}]" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
@@ -34,6 +36,8 @@ function cli_options {
     local -a options ;
     options+=( "-@" "--control-key=" ) ;
     options+=( "-t" "--threshold=" ) ;
+    options+=( "-f" "--from=" "--from-address=" ) ;
+    options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-N" "--node=" ) ;
@@ -47,7 +51,9 @@ function cli_options {
 function cli {
     local -ag AVAX_CONTROL_KEYS=() ;
     get_control_keys AVAX_CONTROL_KEYS ;
-    while getopts ":hSVYN:@:t:u:p:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYN:@:t:f:c:u:p:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -62,6 +68,11 @@ function cli {
                 AVAX_CONTROL_KEYS["$i"]="${OPTARG}" ;;
             t|threshold)
                 AVAX_THRESHOLD="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -102,6 +113,10 @@ function get_control_keys {
     environ_vars "$1" "AVAX_CONTROL_KEY_([0-9]+)" "${!AVAX_CONTROL_KEY_@}" ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
     printf "platform.createSubnet" ;
 }
@@ -112,6 +127,14 @@ function rpc_params {
     join_by ',' $(map_by '"%s" ' "${AVAX_CONTROL_KEYS[@]}") ;
     printf '],' ;
     printf '"threshold":%s,' "$AVAX_THRESHOLD" ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

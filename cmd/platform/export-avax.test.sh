@@ -21,6 +21,8 @@ function check {
     expect_d+='"params":{' ;
     expect_d+='"amount":1000000,' ;
     expect_d+='"to":"TO",' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -30,27 +32,60 @@ function check {
 }
 
 function test_platform__export_avax_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -# 1M -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -# 1M -@ TO \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_avax_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1M $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1M $(cmd) \
+        -@ TO \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_avax_1c {
-    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) -# 1M -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) \
+        -# 1M \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_avax_1d {
-    check "$(AVAX_ID_RPC=1 $(cmd) -# 1M -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -# 1M -@ TO \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__export_avax_1e {
-    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -# 1M -@ TO -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
+        -# 1M -@ TO \
+        -f P1 -f P2 -c A3 \
+        -p PASSWORD)" ;
 }
 
 function test_platform__export_avax_1f {
-    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -# 1M -@ TO -u USERNAME)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
+        -# 1M -@ TO \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME)" ;
+}
+
+function test_platform__export_avax_1g {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -# 1M -@ TO \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__export_avax_1h {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -# 1M -@ TO \
+        -f P1 -f P2 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

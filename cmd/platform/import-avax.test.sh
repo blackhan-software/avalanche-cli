@@ -21,6 +21,8 @@ function check {
     expect_d+='"params":{' ;
     expect_d+='"to":"TO",' ;
     expect_d+='"sourceChain":"X",' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -30,23 +32,53 @@ function check {
 }
 
 function test_platform__import_avax_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -@ TO -s X -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -@ TO -s X \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_avax_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) -s X -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) \
+        -s X \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_avax_1c {
-    check "$(AVAX_ID_RPC=1 AVAX_SOURCE_CHAIN=X $(cmd) -@ TO -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_SOURCE_CHAIN=X $(cmd) \
+        -@ TO \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__import_avax_1d {
-    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) -@ TO -s X -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_USERNAME=USERNAME $(cmd) \
+        -@ TO -s X \
+        -f P1 -f P2 -c A3 \
+        -p PASSWORD)" ;
 }
 
 function test_platform__import_avax_1e {
-    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) -@ TO -s X -u USERNAME)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_PASSWORD=PASSWORD $(cmd) \
+        -@ TO -s X \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME)" ;
+}
+
+function test_platform__import_avax_1f {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -@ TO -s X \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__import_avax_1g {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -@ TO -s X \
+        -f P1 -f P2 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 ###############################################################################

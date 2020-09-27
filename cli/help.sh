@@ -42,12 +42,6 @@ function cli_help {
         printf "\n" ;
         printf "$(line_for 'evm' "$2")" ;
     fi
-    if [[ -z "$1" || "$1" == "avax" ]] ; then
-        printf "\n" ;
-        printf "\n${BB}AVAX API:${NB}\n\n$(text_for 'avax')" ;
-        printf "\n" ;
-        printf "$(line_for 'avax' "$2")" ;
-    fi
     if [[ -z "$1" || "$1" == "health" ]] ; then
         printf "\n" ;
         printf "\n${BB}Health API:${NB}\n\n$(text_for 'health')" ;
@@ -198,7 +192,7 @@ CLI_HELP+=( "admin|stop-cpu-profiler|Stop the CPU profile that was previously st
 
 ## Auth API:
 CLI_TEXT+=( "auth|When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens. See: ${LK}https://docs.avax.network/v1.0/en/api/auth${NN}" ) ;
-CLI_HELP+=( "auth|change-password|Change this node’s authorization token password. Any authorization tokens created under an old password will become invalid." ) ;
+CLI_HELP+=( "auth|change-password|Change this node's authorization token password. Any authorization tokens created under an old password will become invalid." ) ;
 CLI_HELP+=( "auth|new-token|Creates a new authorization token that grants access to one or more API endpoints." ) ;
 CLI_HELP+=( "auth|revoke-token|Revoke a previously generated token. The given token will no longer grant access to any endpoint. If the token is invalid, does nothing." ) ;
 
@@ -269,7 +263,7 @@ CLI_HELP+=( "evm|eth-send-transaction|Creates new message call transaction or a 
 CLI_HELP+=( "evm|eth-submit-work|Used for submitting a proof-of-work solution. See: ${LK}https://eth.wiki/json-rpc/API#eth_submitwork${NN}" )
 CLI_HELP+=( "evm|eth-submit-hashrate|Used for submitting mining hashrate. See: ${LK}https://eth.wiki/json-rpc/API#eth_submithashrate${NN}" )
 CLI_HELP+=( "evm|eth-syncing|Returns an object with data about the sync status or 'false'. See: ${LK}https://eth.wiki/json-rpc/API#eth_syncing${NN}" )
-CLI_HELP+=( "evm|eth-uninstall-filter|Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additonally Filters timeout when they aren’t requested with 'eth_getFilterChanges' for a period of time. See: ${LK}https://eth.wiki/json-rpc/API#eth_uninstallfilter${NN}" )
+CLI_HELP+=( "evm|eth-uninstall-filter|Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additonally Filters timeout when they aren't requested with 'eth_getFilterChanges' for a period of time. See: ${LK}https://eth.wiki/json-rpc/API#eth_uninstallfilter${NN}" )
 CLI_HELP+=( "evm|personal-ec-recover|Returns the address associated with the private key that was used to calculate the signature in 'personal-sign'. See: ${LK}https://geth.ethereum.org/docs/rpc/ns-personal#personal_ecrecover${NN}") ;
 CLI_HELP+=( "evm|personal-import-raw-key|Imports the given unencrypted private key (hex string) into the key store, encrypting it with the passphrase. Returns the address of the new account. See: ${LK}https://geth.ethereum.org/docs/rpc/ns-personal#personal_importrawkey${NN}") ;
 CLI_HELP+=( "evm|personal-list-accounts|Returns all the Ethereum account addresses of all keys in the key store. See: ${LK}https://geth.ethereum.org/docs/rpc/ns-personal#personal_listaccounts${NN}") ;
@@ -292,7 +286,7 @@ CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}ht
 CLI_HELP+=( "health|get-liveness|Get health check on this node." ) ;
 
 ## Info API:
-CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/v1.0/en/api/info/${NN}" ) ;
+CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/v1.0/en/api/info${NN}" ) ;
 CLI_HELP+=( "info|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
 CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "info|get-network-name|Get the name of the network this node is running on." ) ;
@@ -321,28 +315,33 @@ CLI_HELP+=( "metrics|get-prometheus|Get Prometheus compatible metrics." ) ;
 
 ## Platform API:
 CLI_TEXT+=( "platform|This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVAX's validator set and handles blockchain creation. See: ${LK}https://docs.ava.network/v1.0/en/api/platform${NN}")
-CLI_HELP+=( "platform|add-delegator|Add a delegator to the primary network. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator’s validation reward (if any). The delegation period must be a subset of the perdiod that the delegatee validates the primary network." ) ;
+CLI_HELP+=( "platform|add-delegator|Add a delegator to the primary network. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator's validation reward (if any). The delegation period must be a subset of the period that the delegatee validates the primary network. Note that once you issue the transaction to add a node as a delegator, there is no way to change the parameters. You can't unstake early or change the stake amount, node ID or reward address. Please make sure you're using the correct values. If you're not sure, ask for help on Discord (see https://chat.avalabs.org). See https://docs.avax.network/v1.0/en/staking for staking parameters like the minimum amount that can be staked." ) ;
 CLI_HELP+=( "platform|add-subnet-validator|Add a validator to a subnet other than the primary network. The validator must validate the primary network for the entire duration they validate this subnet." ) ;
-CLI_HELP+=( "platform|add-validator|Add a validator to the primary network." ) ;
+CLI_HELP+=( "platform|add-validator|Add a validator to the Primary Network. You must stake AVAX to do this. If the node is sufficiently correct and responsive while validating, you recieve a reward when they are done validating. The validator's probability of being sampled during by other validators during consensus is in proportion to the amount of AVAX staked. The validator can charge a fee to delegators; the former receives a percentage of the delegator's validation reward (if any.) The minimum delegation fee is 2%. A transaction which adds a validator has no fee. The validation period must be between 2 weeks and 1 year. There is a maximum total weight imposed on validators. This means that no validator will ever have more AVAX staked and delegated to it than this value. This value will initially be set to min(5 * amount staked, 3M AVAX). The total value on a validator is 3 million AVAX. Note that once you issue the transaction to add a node as a validator, there is no way to change the parameters. You can't unstake early or change the stake amount, node ID or reward address. Please make sure you're using the correct values. If you're not sure, ask for help on Discord (see https://chat.avalabs.org). See https://docs.avax.network/v1.0/en/staking for staking parameters like the minimum amount that can be staked." ) ;
 CLI_HELP+=( "platform|create-address|Create a new address controlled by the given user." ) ;
 CLI_HELP+=( "platform|create-blockchain|Create a new blockchain. Currently only supports creation of new instances of the AVM and the Timestamp VM." ) ;
-CLI_HELP+=( "platform|create-subnet|Create an unsigned transaction to create a new Subnet. The unsigned transaction must be signed with the key of the account paying the transaction fee. The Subnet's ID is the ID of the transaction that creates it (i.e. the response from 'issue-tx' when issuing the signed transaction)." ) ;
+CLI_HELP+=( "platform|create-subnet|Create a new subnet. The subnet's ID is the same as this transaction's ID." ) ;
 CLI_HELP+=( "platform|export-avax|Send AVAX from an account on the P-Chain to an address on the X-Chain. This transaction must be signed with the key of the account that the AVAX is sent from and which pays the transaction fee. After issuing this transaction, you must call the X-Chain's 'import-avax' method to complete the transfer." ) ;
 CLI_HELP+=( "platform|export-key|Get the private key that controls a given address. The returned private key can be added to a user with 'platform importKey'." ) ;
 CLI_HELP+=( "platform|get-balance|Get the balance of AVAX controlled by a given address." ) ;
 CLI_HELP+=( "platform|get-blockchains|Get all the blockchains that exist (excluding the P-Chain)." ) ;
 CLI_HELP+=( "platform|get-blockchain-status|Get the status of a blockchain." ) ;
-CLI_HELP+=( "platform|get-current-validators|List the current validators of the given Subnet." ) ;
+CLI_HELP+=( "platform|get-current-validators|List the current validators of the given subnet." ) ;
 CLI_HELP+=( "platform|get-height|Returns the height of the last accepted block." ) ;
-CLI_HELP+=( "platform|get-min-stake|Get the minimum staking amount of the network." ) ;
-CLI_HELP+=( "platform|get-pending-validators|List the validators in the pending validator set of the specified Subnet. Each validator is not currently validating the Subnet but will in the future." ) ;
-CLI_HELP+=( "platform|get-subnets|Get all the Subnets that exist." ) ;
+CLI_HELP+=( "platform|get-min-stake|Get the minimum amount of AVAX required to validate the primary network and the minimum amount of AVAX that can be delegated." ) ;
+CLI_HELP+=( "platform|get-pending-validators|List the validators in the pending validator set of the specified subnet. Each validator is not currently validating the subnet but will in the future." ) ;
+CLI_HELP+=( "platform|get-stake|Get the amount of nAVAX staked by a set of addresses. The amount returned does not include staking rewards." ) ;
+CLI_HELP+=( "platform|get-staking-asset-id|Retrieve an assetID for a subnet's staking asset. Currently this always returns the primary network's staking assetID." ) ;
+CLI_HELP+=( "platform|get-subnets|Get all the subnets that exist." ) ;
+CLI_HELP+=( "platform|get-tx|Gets a transaction by its ID." ) ;
+CLI_HELP+=( "platform|get-tx-status|Gets a transaction's status by its ID." ) ;
+CLI_HELP+=( "platform|get-utxo|Gets the UTXOs that reference a given set address." ) ;
 CLI_HELP+=( "platform|import-avax|Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "platform|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
 CLI_HELP+=( "platform|list-addresses|List the addresses controlled by the specified user." ) ;
-CLI_HELP+=( "platform|sample-validators|Sample validators from the specified Subnet." ) ;
-CLI_HELP+=( "platform|validated-by|Get the Subnet that validates a given blockchain." ) ;
-CLI_HELP+=( "platform|validates|Get the IDs of the blockchains a Subnet validates." ) ;
+CLI_HELP+=( "platform|sample-validators|Sample validators from the specified subnet." ) ;
+CLI_HELP+=( "platform|validated-by|Get the subnet that validates a given blockchain." ) ;
+CLI_HELP+=( "platform|validates|Get the IDs of the blockchains a subnet validates." ) ;
 
 ## Timestamp API:
 CLI_TEXT+=( "timestamp|This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The genesis data for a new instance of the Timestamp Chain is the genesis block's 32 byte payload. See: ${LK}https://docs.ava.network/v1.0/en/api/timestamp${NN}" ) ;

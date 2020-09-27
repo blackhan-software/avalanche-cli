@@ -4,8 +4,10 @@
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
 
+source "$CMD_SCRIPT/../../cli/array.sh" ;
 source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
+source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 
@@ -20,6 +22,8 @@ function cli_help {
     usage+=" [-b|--start-time=\${AVAX_START_TIME}]" ;
     usage+=" [-e|--end-timer=\${AVAX_END_TIME}]" ;
     usage+=" [-w|--weight=\${AVAX_WEIGHT}]" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
@@ -38,6 +42,8 @@ function cli_options {
     options+=( "-b" "--start-time=" ) ;
     options+=( "-e" "--end-time=" ) ;
     options+=( "-w" "--weight=" ) ;
+    options+=( "-f" "--from=" "--from-address=" ) ;
+    options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-N" "--node=" ) ;
@@ -49,7 +55,9 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:i:s:b:e:w:u:p:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYN:i:s:b:e:w:f:c:u:p:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -69,6 +77,11 @@ function cli {
                 AVAX_END_TIME="${OPTARG}" ;;
             w|weight)
                 AVAX_WEIGHT="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -114,6 +127,10 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
     printf "platform.addSubnetValidator" ;
 }
@@ -125,6 +142,14 @@ function rpc_params {
     printf '"startTime":%s,' "$AVAX_START_TIME" ;
     printf '"endTime":%s,' "$AVAX_END_TIME" ;
     printf '"weight":%s,' "$AVAX_WEIGHT" ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

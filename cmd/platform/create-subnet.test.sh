@@ -21,6 +21,8 @@ function check {
     expect_d+='"params":{' ;
     expect_d+='"controlKeys":["K1","K2","K3"],' ;
     expect_d+='"threshold":2,' ;
+    expect_d+='"from":["P1","P2"],' ;
+    expect_d+='"changeAddr":"A3",' ;
     expect_d+='"username":"USERNAME",' ;
     expect_d+='"password":"PASSWORD"' ;
     expect_d+="}}'" ;
@@ -30,28 +32,55 @@ function check {
 }
 
 function test_platform__create_subnet_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 \
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -@ K1 -@ K2 -@ K3 -t 2 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1b {
-    check "$(AVAX_ID_RPC=1 AVAX_CONTROL_KEY_0=K1 \
-        $(cmd) -@ K2 -@ K3 -t 2 -u USERNAME -p PASSWORD)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_CONTROL_KEY_0=K1 $(cmd) \
+        -@ K2 -@ K3 -t 2 \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
     check "$(AVAX_ID_RPC=1 \
-        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 \
-        $(cmd) -@ K3 -t 2 -u USERNAME -p PASSWORD)" ;
+        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 $(cmd) \
+        -@ K3 -t 2 \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
     check "$(AVAX_ID_RPC=1 \
-        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 AVAX_CONTROL_KEY_2=K3 \
-        $(cmd) -t 2 -u USERNAME -p PASSWORD)" ;
+        AVAX_CONTROL_KEY_0=K1 AVAX_CONTROL_KEY_1=K2 AVAX_CONTROL_KEY_2=K3 $(cmd) \
+        -t 2 \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1c {
-    check "$(AVAX_ID_RPC=1 AVAX_THRESHOLD=2 $(cmd) -@ K1 -@ K2 -@ K3 \
+    check "$(AVAX_ID_RPC=1 AVAX_THRESHOLD=2 $(cmd) \
+        -@ K1 -@ K2 -@ K3 \
+        -f P1 -f P2 -c A3 \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_platform__create_subnet_1d {
-    check "$(AVAX_ID_RPC=1 $(cmd) -@ K1 -@ K2 -@ K3 -t 2 \
+    check "$(AVAX_ID_RPC=1 $(cmd) \
+        -@ K1 -@ K2 -@ K3 -t 2 \
+        -f P1 -f P2 -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__create_subnet_1e {
+    check "$(AVAX_ID_RPC=1 \
+        AVAX_FROM_ADDRESS_0=P1 AVAX_FROM_ADDRESS_1=P2 $(cmd) \
+        -@ K1 -@ K2 -@ K3 -t 2 \
+        -c A3 \
+        -u USERNAME -p PASSWORD)" ;
+}
+
+function test_platform__create_subnet_1f {
+    check "$(AVAX_ID_RPC=1 AVAX_CHANGE_ADDRESS=A3 $(cmd) \
+        -@ K1 -@ K2 -@ K3 -t 2 \
+        -f P1 -f P2 \
         -u USERNAME -p PASSWORD)" ;
 }
 
