@@ -149,11 +149,11 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
 This API can be used for measuring node health and debugging.
 
 ```
-admin alias                                       Assign an API an alias, a different endpoint for the API. The origina..
-admin alias-chain                                 Give a blockchain an alias, a different name that can be used any pla..
-admin lock-profile                                Dump the mutex statistics of the node to the specified file.
-admin memory-profile                              Dump the current memory footprint of the node to the specified file.
-admin start-cpu-profiler                          Start profiling the CPU utilization of the node. Will write the profi..
+admin alias                                       Assign an API an alias, a different endpoint for the API. T..
+admin alias-chain                                 Give a blockchain an alias, a different name that can be us..
+admin lock-profile                                Dump the mutex statistics of the node to the specified file..
+admin memory-profile                              Dump the current memory footprint of the node to the specif..
+admin start-cpu-profiler                          Start profiling the CPU utilization of the node. Will write..
 admin stop-cpu-profiler                           Stop the CPU profile that was previously started.
 ```
 
@@ -162,9 +162,9 @@ admin stop-cpu-profiler                           Stop the CPU profile that was 
 When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens. See: https://docs.avax.network/v1.0/en/api/auth
 
 ```
-auth change-password                              Change this node’s authorization token password. Any authorization to..
-auth new-token                                    Creates a new authorization token that grants access to one or more A..
-auth revoke-token                                 Revoke a previously generated token. The given token will no longer g..
+auth change-password                              Change this node's authorization token password. Any author..
+auth new-token                                    Creates a new authorization token that grants access to one..
+auth revoke-token                                 Revoke a previously generated token. The given token will n..
 ```
 
 ## [AVM (X-Chain) API](https://docs.ava.network/v1.0/en/api/avm)
@@ -172,25 +172,25 @@ auth revoke-token                                 Revoke a previously generated 
 The X-Chain, AVAX's native platform for creating and trading assets, is an instance of the AVAX Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
 
 ```
-avm build-genesis                                 Given a JSON representation of this Virtual Machine's genesis state, ..
+avm build-genesis                                 Given a JSON representation of this Virtual Machine's genes..
 avm create-address                                Create a new address controlled by the given user.
-avm create-fixed-cap-asset                        Create a new fixed-cap, fungible asset. A quantity of it is created a..
-avm create-mint-tx                                Create an unsigned transaction to mint more of a variable-cap asset (..
-avm create-variable-cap-asset                     Create a new variable-cap, fungible asset. No units of the asset exis..
-avm export-avax                                   Send AVAX from the X-Chain to an account on the P-Chain. After callin..
-avm export-key                                    Get the private key that controls a given address. The returned priva..
-avm get-all-balances                              Get the balances of all assets controlled by a given address.
+avm create-fixed-cap-asset                        Create a new fixed-cap, fungible asset. A quantity of it is..
+avm create-variable-cap-asset                     Create a new variable-cap, fungible asset. No units of the ..
+avm export-avax                                   Send AVAX from the X-Chain to an account on the P-Chain. Af..
+avm export-key                                    Get the private key that controls a given address. The retu..
+avm get-all-balances                              Get the balances of all assets controlled by a given addres..
 avm get-asset-description                         Get information about an asset.
 avm get-balance                                   Get the balance of an asset controlled by a given address.
 avm get-tx                                        Returns the specified transaction.
 avm get-tx-status                                 Get the status of a transaction sent to the network.
-avm get-utxos                                     Get the UTXOs that reference a given address.
-avm import-avax                                   Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before t..
-avm import-key                                    Give a user control over an address by providing the private key that..
+avm get-utxos                                     Get the UTXOs that reference a given address. If 'source-ch..
+avm import-avax                                   Finalize a transfer of AVAX from the P-Chain to the X-Chain..
+avm import-key                                    Give a user control over an address by providing the privat..
 avm issue-tx                                      Send a signed transaction to the network.
 avm list-addresses                                List addresses controlled by the given user.
+avm mint                                          Mint units of a variable-cap asset (an asset created with '..
 avm send                                          Send a quantity of an asset to an address.
-avm sign-mint-tx                                  Sign an unsigned or partially signed transaction.
+avm send-nft                                      Send a non-fungible token.
 ```
 
 ## [EVM API](https://docs.ava.network/v1.0/en/api/evm)
@@ -198,74 +198,74 @@ avm sign-mint-tx                                  Sign an unsigned or partially 
 This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). **Note:** Ethereum has its own notion of `networkID` and `chainID`. The C-Chain uses `1` and `43110` for these values, respectively. These have no relationship to AVAX's view of `networkID` and `chainID`, and are purely internal to the C-Chain.
 
 ```
-evm eth-accounts                                  Returns a list of addresses owned by client. See: https://eth.wi..
-evm eth-block-number                              Returns the number of most recent block. See: https://eth.wiki/j..
-evm eth-call                                      Executes a new message call immediately without creating a transactio..
-evm eth-compile-lll                               Returns compiled LLL code. See: https://eth.wiki/json-rpc/API#et..
-evm eth-compile-serpent                           Returns compiled serpent code. See: https://eth.wiki/json-rpc/AP..
-evm eth-compile-solidity                          Returns compiled solidity code. See: https://eth.wiki/json-rpc/A..
-evm eth-coinbase                                  Returns the client coinbase address. See: https://eth.wiki/json-..
-evm eth-estimate-gas                              Generates and returns an estimate of how much gas is necessary to all..
-evm eth-gas-price                                 Returns the current price per gas in wei. See: https://eth.wiki/..
-evm eth-get-balance                               Returns the balance of the account of given address. See: https:..
-evm eth-get-block-by-hash                         Returns information about a block by hash. See: https://eth.wiki..
-evm eth-get-block-by-number                       Returns information about a block by block number. See: https://..
-evm eth-get-block-transaction-count-by-hash       Returns the number of transactions in a block from a block matching t..
-evm eth-get-block-transaction-count-by-number     Returns the number of transactions in a block matching the given bloc..
-evm eth-get-code                                  Returns code at a given address. See: https://eth.wiki/json-rpc/..
-evm eth-get-compilers                             Returns a list of available compilers in the client. See: https:..
-evm eth-get-filter-changes                        Polling method for a filter, which returns an array of logs which occ..
-evm eth-get-filter-logs                           Returns an array of all logs matching filter with given id. See: ..
-evm eth-get-logs                                  Returns an array of all logs matching a given filter object. See: ..
-evm eth-get-storage-at                            Returns the value from a storage position at a given address. See: ..
-evm eth-get-transaction-count                     Returns the number of transactions sent from an address. See: ht..
-evm eth-get-transaction-by-hash                   Returns the information about a transaction requested by transaction ..
-evm eth-get-transaction-by-block-hash-and-index   Returns information about a transaction by block hash and transaction..
-evm eth-get-transaction-by-block-number-and-index Returns information about a transaction by block number and transacti..
-evm eth-get-transaction-receipt                   Returns the receipt of a transaction by transaction hash. See: h..
-evm eth-get-uncle-by-block-hash-and-index         Returns information about a uncle of a block by hash and uncle index ..
-evm eth-get-uncle-by-block-number-and-index       Returns information about a uncle of a block by number and uncle inde..
-evm eth-get-uncle-count-by-block-hash             Returns the number of uncles in a block from a block matching the giv..
-evm eth-get-uncle-count-by-block-number           Returns the number of uncles in a block from a block matching the giv..
-evm eth-get-work                                  Returns the hash of the current block, the seedHash, and the boundary..
-evm eth-hashrate                                  Returns the number of hashes per second that the node is mining with...
-evm eth-mining                                    Returns true if client is actively mining new blocks. See: https..
-evm eth-new-block-filter                          Creates a filter in the node, to notify when a new block arrives. To ..
-evm eth-new-filter                                Creates a filter object, based on filter options, to notify when the ..
-evm eth-new-pending-transaction-filter            Creates a filter in the node, to notify when new pending transactions..
-evm eth-protocol-version                          Returns the current ethereum protocol version. See: https://eth...
-evm eth-send-raw-transaction                      Creates new message call transaction or a contract creation for signe..
-evm eth-sign                                      The sign method calculates an Ethereum specific signature. See: ..
-evm eth-sign-transaction                          Signs a transaction that can be submitted to the network at a later t..
-evm eth-send-transaction                          Creates new message call transaction or a contract creation, if the d..
-evm eth-submit-work                               Used for submitting a proof-of-work solution. See: https://eth.w..
-evm eth-submit-hashrate                           Used for submitting mining hashrate. See: https://eth.wiki/json-..
-evm eth-syncing                                   Returns an object with data about the sync status or 'false'. See: ..
-evm eth-uninstall-filter                          Uninstalls a filter with given id. Should always be called when watch..
+evm eth-accounts                                  Returns a list of addresses owned by client. See: http..
+evm eth-block-number                              Returns the number of most recent block. See: https://..
+evm eth-call                                      Executes a new message call immediately without creating a ..
+evm eth-compile-lll                               Returns compiled LLL code. See: https://eth.wiki/json-..
+evm eth-compile-serpent                           Returns compiled serpent code. See: https://eth.wiki/j..
+evm eth-compile-solidity                          Returns compiled solidity code. See: https://eth.wiki/..
+evm eth-coinbase                                  Returns the client coinbase address. See: https://eth...
+evm eth-estimate-gas                              Generates and returns an estimate of how much gas is necess..
+evm eth-gas-price                                 Returns the current price per gas in wei. See: https:/..
+evm eth-get-balance                               Returns the balance of the account of given address. See: ..
+evm eth-get-block-by-hash                         Returns information about a block by hash. See: https:..
+evm eth-get-block-by-number                       Returns information about a block by block number. See: ..
+evm eth-get-block-transaction-count-by-hash       Returns the number of transactions in a block from a block ..
+evm eth-get-block-transaction-count-by-number     Returns the number of transactions in a block matching the ..
+evm eth-get-code                                  Returns code at a given address. See: https://eth.wiki..
+evm eth-get-compilers                             Returns a list of available compilers in the client. See: ..
+evm eth-get-filter-changes                        Polling method for a filter, which returns an array of logs..
+evm eth-get-filter-logs                           Returns an array of all logs matching filter with given id...
+evm eth-get-logs                                  Returns an array of all logs matching a given filter object..
+evm eth-get-storage-at                            Returns the value from a storage position at a given addres..
+evm eth-get-transaction-count                     Returns the number of transactions sent from an address. Se..
+evm eth-get-transaction-by-hash                   Returns the information about a transaction requested by tr..
+evm eth-get-transaction-by-block-hash-and-index   Returns information about a transaction by block hash and t..
+evm eth-get-transaction-by-block-number-and-index Returns information about a transaction by block number and..
+evm eth-get-transaction-receipt                   Returns the receipt of a transaction by transaction hash. S..
+evm eth-get-uncle-by-block-hash-and-index         Returns information about a uncle of a block by hash and un..
+evm eth-get-uncle-by-block-number-and-index       Returns information about a uncle of a block by number and ..
+evm eth-get-uncle-count-by-block-hash             Returns the number of uncles in a block from a block matchi..
+evm eth-get-uncle-count-by-block-number           Returns the number of uncles in a block from a block matchi..
+evm eth-get-work                                  Returns the hash of the current block, the seedHash, and th..
+evm eth-hashrate                                  Returns the number of hashes per second that the node is mi..
+evm eth-mining                                    Returns true if client is actively mining new blocks. See: ..
+evm eth-new-block-filter                          Creates a filter in the node, to notify when a new block ar..
+evm eth-new-filter                                Creates a filter object, based on filter options, to notify..
+evm eth-new-pending-transaction-filter            Creates a filter in the node, to notify when new pending tr..
+evm eth-protocol-version                          Returns the current ethereum protocol version. See: ht..
+evm eth-send-raw-transaction                      Creates new message call transaction or a contract creation..
+evm eth-sign                                      The sign method calculates an Ethereum specific signature. ..
+evm eth-sign-transaction                          Signs a transaction that can be submitted to the network at..
+evm eth-send-transaction                          Creates new message call transaction or a contract creation..
+evm eth-submit-work                               Used for submitting a proof-of-work solution. See: htt..
+evm eth-submit-hashrate                           Used for submitting mining hashrate. See: https://eth...
+evm eth-syncing                                   Returns an object with data about the sync status or 'false..
+evm eth-uninstall-filter                          Uninstalls a filter with given id. Should always be called ..
 ```
 ```
-evm personal-ec-recover                           Returns the address associated with the private key that was used to ..
-evm personal-import-raw-key                       Imports the given unencrypted private key (hex string) into the key s..
-evm personal-list-accounts                        Returns all the Ethereum account addresses of all keys in the key sto..
-evm personal-lock-account                         Removes the private key with given address from memory. The account c..
-evm personal-new-account                          Generates a new private key and stores it in the key store directory...
-evm personal-send-transaction                     Validate the given passphrase and submit transaction. The transaction..
-evm personal-sign                                 The sign method calculates an Ethereum specific signature. By adding ..
-evm personal-unlock-account                       Decrypts the key with the given address from the key store. Both pass..
+evm personal-ec-recover                           Returns the address associated with the private key that wa..
+evm personal-import-raw-key                       Imports the given unencrypted private key (hex string) into..
+evm personal-list-accounts                        Returns all the Ethereum account addresses of all keys in t..
+evm personal-lock-account                         Removes the private key with given address from memory. The..
+evm personal-new-account                          Generates a new private key and stores it in the key store ..
+evm personal-send-transaction                     Validate the given passphrase and submit transaction. The t..
+evm personal-sign                                 The sign method calculates an Ethereum specific signature. ..
+evm personal-unlock-account                       Decrypts the key with the given address from the key store...
 ```
 ```
-evm net-listening                                 Returns 'true' if client is actively listening for network connection..
-evm net-peer-count                                Returns number of peers currently connected to the client. See: ..
-evm net-version                                   Returns the current network id. See: https://eth.wiki/json-rpc/A..
+evm net-listening                                 Returns 'true' if client is actively listening for network ..
+evm net-peer-count                                Returns number of peers currently connected to the client. ..
+evm net-version                                   Returns the current network id. See: https://eth.wiki/..
 ```
 ```
-evm txpool-content                                The 'content' inspection property can be queried to list the exact de..
-evm txpool-inspect                                The 'inspect' inspection property can be queried to list a textual su..
-evm txpool-status                                 The 'status' inspection property can be queried for the number of tra..
+evm txpool-content                                The 'content' inspection property can be queried to list th..
+evm txpool-inspect                                The 'inspect' inspection property can be queried to list a ..
+evm txpool-status                                 The 'status' inspection property can be queried for the num..
 ```
 ```
-evm web3-client-version                           Returns the current client version. See: https://eth.wiki/json-r..
-evm web3-sha3                                     Returns Keccak-256 (not the standardized SHA3-256) of the given data...
+evm web3-client-version                           Returns the current client version. See: https://eth.w..
+evm web3-sha3                                     Returns Keccak-256 (not the standardized SHA3-256) of the g..
 ```
 
 ## [Health API](https://docs.ava.network/v1.0/en/api/health)
@@ -281,7 +281,7 @@ health get-liveness                               Get health check on this node.
 This API can be used to access basic information about the node.
 
 ```
-info get-blockchain-id                            Given a blockchain's alias, get its ID. (See 'avm alias-chain' for mo..
+info get-blockchain-id                            Given a blockchain's alias, get its ID. (See 'avm alias-cha..
 info get-network-id                               Get the ID of the network this node is participating in.
 info get-network-name                             Get the name of the network this node is running on.
 info get-node-id                                  Get the ID of this node.
@@ -296,8 +296,8 @@ info peers                                        Get description of peer connec
 The IPC API allows users to create a UNIX domain socket for a blockchain to publish to. When the blockchain accepts a vertex/block it will publish the vertex to the socket. A node will only expose this API if it is started with command-line argument `api-ipcs-enabled=true`.
 
 ```
-ipcs publish-blockchain                           Register a blockchain so it publishes accepted vertices to a Unix dom..
-ipcs unpublish-blockchain                         Deregister a blockchain so that it no longer publishes to a Unix doma..
+ipcs publish-blockchain                           Register a blockchain so it publishes accepted vertices to ..
+ipcs unpublish-blockchain                         Deregister a blockchain so that it no longer publishes to a..
 ```
 
 ## [Keystore API](https://docs.ava.network/v1.0/en/api/keystore)
@@ -306,10 +306,10 @@ Every node has a built-in keystore. Clients create users on the keystore, which 
 
 ```
 keystore create-user                              Create a new user with the specified username and password.
-keystore list-users                               List the users in this keystore.
 keystore delete-user                              Delete a user.
-keystore export-user                              Export a user. The user can be imported to another node with 'keystor..
-keystore import-user                              Import a user. 'password' must match the user's password. 'username' ..
+keystore export-user                              Export a user. The user can be imported to another node wit..
+keystore import-user                              Import a user. 'password' must match the user's password. '..
+keystore list-users                               List the users in this keystore.
 ```
 
 ## [Metrics API](https://docs.ava.network/v1.0/en/api/metrics)
@@ -325,28 +325,33 @@ metrics get-prometheus                            Get Prometheus compatible metr
 This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVAX's validator set and handles blockchain creation.
 
 ```
-platform add-delegator                            Add a delegator to the primary network. A delegator stakes AVAX and s..
-platform add-subnet-validator                     Add a validator to a subnet other than the primary network. The valid..
-platform add-validator                            Add a validator to the primary network.
+platform add-delegator                            Add a delegator to the primary network. A delegator stakes ..
+platform add-subnet-validator                     Add a validator to a subnet other than the primary network...
+platform add-validator                            Add a validator to the Primary Network. You must stake AVAX..
 platform create-address                           Create a new address controlled by the given user.
-platform create-blockchain                        Create a new blockchain. Currently only supports creation of new inst..
-platform create-subnet                            Create an unsigned transaction to create a new Subnet. The unsigned t..
-platform export-avax                              Send AVAX from an account on the P-Chain to an address on the X-Chain..
-platform export-key                               Get the private key that controls a given address. The returned priva..
+platform create-blockchain                        Create a new blockchain. Currently only supports creation o..
+platform create-subnet                            Create a new subnet. The subnet's ID is the same as this tr..
+platform export-avax                              Send AVAX from an account on the P-Chain to an address on t..
+platform export-key                               Get the private key that controls a given address. The retu..
 platform get-balance                              Get the balance of AVAX controlled by a given address.
 platform get-blockchains                          Get all the blockchains that exist (excluding the P-Chain).
 platform get-blockchain-status                    Get the status of a blockchain.
-platform get-current-validators                   List the current validators of the given Subnet.
+platform get-current-validators                   List the current validators of the given subnet.
 platform get-height                               Returns the height of the last accepted block.
-platform get-min-stake                            Get the minimum staking amount of the network.
-platform get-pending-validators                   List the validators in the pending validator set of the specified Sub..
-platform get-subnets                              Get all the Subnets that exist.
-platform import-avax                              Complete a transfer of AVAX from the X-Chain to the P-Chain. Before t..
-platform import-key                               Give a user control over an address by providing the private key that..
+platform get-min-stake                            Get the minimum amount of AVAX required to validate the pri..
+platform get-pending-validators                   List the validators in the pending validator set of the spe..
+platform get-stake                                Get the amount of nAVAX staked by a set of addresses. The a..
+platform get-staking-asset-id                     Retrieve an assetID for a subnet's staking asset. Currently..
+platform get-subnets                              Get all the subnets that exist.
+platform get-tx                                   Gets a transaction by its ID.
+platform get-tx-status                            Gets a transaction's status by its ID.
+platform get-utxo                                 Gets the UTXOs that reference a given set address.
+platform import-avax                              Complete a transfer of AVAX from the X-Chain to the P-Chain..
+platform import-key                               Give a user control over an address by providing the privat..
 platform list-addresses                           List the addresses controlled by the specified user.
-platform sample-validators                        Sample validators from the specified Subnet.
-platform validated-by                             Get the Subnet that validates a given blockchain.
-platform validates                                Get the IDs of the blockchains a Subnet validates.
+platform sample-validators                        Sample validators from the specified subnet.
+platform validated-by                             Get the subnet that validates a given blockchain.
+platform validates                                Get the IDs of the blockchains a subnet validates.
 ```
 
 ## [Timestamp API](https://docs.ava.network/v1.0/en/api/timestamp)
@@ -354,7 +359,7 @@ platform validates                                Get the IDs of the blockchains
 This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The genesis data for a new instance of the Timestamp Chain is the genesis block's 32 byte payload.
 
 ```
-timestamp get-block                               Get a block by its ID. If no ID is provided, get the latest block.
+timestamp get-block                               Get a block by its ID. If no ID is provided, get the latest..
 timestamp propose-block                           Propose the creation of a new block.
 ```
 
