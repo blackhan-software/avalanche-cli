@@ -22,6 +22,8 @@ function cli_help {
     usage+=" [-d|--denomination=\${AVAX_DENOMINATION}]" ;
     usage+=" [-m|--minter=\${AVAX_MINTERS_\$IDX}]*" ;
     usage+=" [-t|--threshold=\${AVAX_THRESHOLD_\$IDX}]*" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
@@ -41,6 +43,8 @@ function cli_options {
     options+=( "-d" "--denomination=" ) ;
     options+=( "-m" "--minter=" ) ;
     options+=( "-t" "--threshold=" ) ;
+    options+=( "-f" "--from=" "--from-address=" ) ;
+    options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
@@ -57,7 +61,9 @@ function cli {
     get_minters AVAX_MINTERS ;
     local -ag AVAX_THRESHOLDS=() ;
     get_thresholds AVAX_THRESHOLDS ;
-    while getopts ":hSVYN:n:s:d:m:t:u:p:b:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYN:n:s:d:m:t:f:c:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -79,6 +85,11 @@ function cli {
             t|threshold)
                 local i; i="$(next_index AVAX_THRESHOLDS)" ;
                 AVAX_THRESHOLDS["$i"]="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -140,6 +151,10 @@ function get_thresholds {
     environ_vars "$1" "AVAX_THRESHOLD_([0-9]+)" "${!AVAX_THRESHOLD_@}" ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
     printf "avm.createVariableCapAsset" ;
 }
@@ -150,7 +165,6 @@ function rpc_params {
     printf '"symbol":"%s",' "$AVAX_SYMBOL" ;
     printf '"denomination":%s,' "$AVAX_DENOMINATION" ;
     printf '"minterSets":[' ;
-
     # shellcheck disable=SC2046,SC2086
     join_by ',' $(for T in "${!AVAX_THRESHOLDS[@]}" ; do
         printf '{' ;
@@ -159,8 +173,15 @@ function rpc_params {
         printf '"threshold":%s' "${AVAX_THRESHOLDS[$T]}";
         printf '} ' ;
     done) ;
-
     printf '],' ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

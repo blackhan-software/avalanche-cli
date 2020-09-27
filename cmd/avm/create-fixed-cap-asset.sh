@@ -23,6 +23,8 @@ function cli_help {
     usage+=" [-d|--denomination=\${AVAX_DENOMINATION}]" ;
     usage+=" [-@|--address|--initial-holder-address=\${AVAX_ADDRESS_\$IDX}]*" ;
     usage+=" [-#|--amount|--initial-holder-amount=\${AVAX_AMOUNT_\$IDX}[E|P|T|G|M|K]]*" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
@@ -42,6 +44,8 @@ function cli_options {
     options+=( "-d" "--denomination=" ) ;
     options+=( "-@" "--address=" "--initial-holder-address=" ) ;
     options+=( "-#" "--amount=" "--initial-holder-amount=" ) ;
+    options+=( "-f" "--from=" "--from-address=" ) ;
+    options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
@@ -58,7 +62,9 @@ function cli {
     get_addresses AVAX_ADDRESSES ;
     local -ag AVAX_AMOUNTS=() ;
     get_amounts AVAX_AMOUNTS ;
-    while getopts ":hSVYH:n:s:d:@:#:u:p:b:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYH:n:s:d:@:#:f:c:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -80,6 +86,11 @@ function cli {
            \#|amount|initial-holder-amount)
                 local i; i="$(next_index AVAX_AMOUNTS)" ;
                 AVAX_AMOUNTS["$i"]="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -141,6 +152,10 @@ function get_amounts {
     environ_vars "$1" "AVAX_AMOUNT_([0-9]+)" "${!AVAX_AMOUNT_@}" ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
     printf "avm.createFixedCapAsset" ;
 }
@@ -159,6 +174,14 @@ function rpc_params {
         zip_by '{"address":"%s","amount":%s} ' \
             "${AVAX_ADDRESSES[@]}" "${AVAX_AMOUNTS_SI[@]}") ;
     printf '],' ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

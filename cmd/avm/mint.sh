@@ -21,6 +21,8 @@ function cli_help {
     usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS_\$IDX}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
@@ -50,7 +52,9 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:#:a:@:u:p:b:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYN:#:a:@:f:c:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,6 +70,11 @@ function cli {
                 AVAX_ASSET_ID="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             u|username)
                 AVAX_USERNAME="${OPTARG}" ;;
             p|password)
@@ -110,8 +119,12 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
-    printf "avm.createMintTx" ;
+    printf "avm.mint" ;
 }
 
 function rpc_params {
@@ -119,6 +132,14 @@ function rpc_params {
     printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
     printf '"to":"%s",' "$AVAX_TO" ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

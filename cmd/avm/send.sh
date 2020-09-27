@@ -4,8 +4,10 @@
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
 
+source "$CMD_SCRIPT/../../cli/array.sh" ;
 source "$CMD_SCRIPT/../../cli/color.sh" ;
 source "$CMD_SCRIPT/../../cli/command.sh" ;
+source "$CMD_SCRIPT/../../cli/environ.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/data.sh" ;
 source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
@@ -18,8 +20,9 @@ function cli_help {
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
-    usage+=" [-f|--from=\${AVAX_FROM}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
+    usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
+    usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-m|--memo=\${AVAX_MEMO-''}]" ;
     usage+=" [-u|--username=\${AVAX_USERNAME}]" ;
     usage+=" [-p|--password=\${AVAX_PASSWORD}]" ;
@@ -37,8 +40,9 @@ function cli_options {
     local -a options ;
     options+=( "-#" "--amount=" ) ;
     options+=( "-a" "--asset-id=" ) ;
-    options+=( "-f" "--from=" ) ;
     options+=( "-@" "--to=" ) ;
+    options+=( "-f" "--from=" "--from-address=" ) ;
+    options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-m" "--memo=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
@@ -52,7 +56,9 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:#:a:f:@:m:u:p:b:-:" OPT "$@"
+    local -ag AVAX_FROM_ADDRESSES=() ;
+    get_from_addresses AVAX_FROM_ADDRESSES ;
+    while getopts ":hSVYN:#:a:@:f:c:m:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,10 +72,13 @@ function cli {
                 AVAX_AMOUNT="${OPTARG}" ;;
             a|asset-id)
                 AVAX_ASSET_ID="${OPTARG}" ;;
-            f|from)
-                AVAX_FROM="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
+            f|from|from-address)
+                local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
+                AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
+            c|change|change-address)
+                AVAX_CHANGE_ADDRESS="${OPTARG}" ;;
             m|memo)
                 AVAX_MEMO="${OPTARG}" ;;
             u|username)
@@ -98,14 +107,8 @@ function cli {
     if [ -z "$AVAX_ASSET_ID" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_FROM" ] ; then
-        AVAX_FROM="" ;
-    fi
     if [ -z "$AVAX_TO" ] ; then
         cli_help && exit 1 ;
-    fi
-    if [ -z "$AVAX_MEMO" ] ; then
-        AVAX_MEMO="" ;
     fi
     if [ -z "$AVAX_USERNAME" ] ; then
         cli_help && exit 1 ;
@@ -122,6 +125,10 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_from_addresses {
+    environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
+}
+
 function rpc_method {
     printf "avm.send" ;
 }
@@ -130,11 +137,18 @@ function rpc_params {
     printf '{' ;
     printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
-    if [ -n "$AVAX_FROM" ] ; then
-        printf '"from":"%s",' "$AVAX_FROM" ;
-    fi
     printf '"to":"%s",' "$AVAX_TO" ;
-    printf '"memo":"%s",' "$AVAX_MEMO" ;
+    if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
+        printf '"from":[' ; # shellcheck disable=SC2046
+        join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
+        printf '],' ;
+    fi
+    if [ -n "$AVAX_CHANGE_ADDRESS" ] ; then
+        printf '"changeAddr":"%s",' "$AVAX_CHANGE_ADDRESS" ;
+    fi
+    if [ -n "$AVAX_MEMO" ] ; then
+        printf '"memo":"%s",' "$AVAX_MEMO" ;
+    fi
     printf '"username":"%s",' "$AVAX_USERNAME" ;
     printf '"password":"%s"' "$AVAX_PASSWORD" ;
     printf '}' ;

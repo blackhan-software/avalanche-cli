@@ -268,17 +268,6 @@ evm web3-client-version                           Returns the current client ver
 evm web3-sha3                                     Returns Keccak-256 (not the standardized SHA3-256) of the given data...
 ```
 
-## [AVAX API](https://docs.avax.network/v1.0/en/api/evm/#avax-rpc-endpoints)
-
-See: https://docs.avax.network/v1.0/en/api/evm/#avax-rpc-endpoints
-
-```
-avax export-avax                                  Send AVAX from the C-Chain to the X Chain. After calling this method,..
-avax export-key                                   Get the private key that controls a given address. The returned priva..
-avax import-avax                                  Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before t..
-avax import-key                                   Give a user control over an address by providing the private key that..
-```
-
 ## [Health API](https://docs.ava.network/v1.0/en/api/health)
 
 This API can be used for measuring node health.

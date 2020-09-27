@@ -206,9 +206,8 @@ CLI_HELP+=( "auth|revoke-token|Revoke a previously generated token. The given to
 CLI_TEXT+=( "avm|The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the AVAX Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.ava.network/v1.0/en/api/avm${NN}")
 CLI_HELP+=( "avm|build-genesis|Given a JSON representation of this Virtual Machine's genesis state, create the byte representation of that state." ) ;
 CLI_HELP+=( "avm|create-address|Create a new address controlled by the given user." ) ;
-CLI_HELP+=( "avm|create-fixed-cap-asset|Create a new fixed-cap, fungible asset. A quantity of it is created at initialization and then no more is ever created. The asset can be sent with 'avm send-fungible-asset'." ) ;
-CLI_HELP+=( "avm|create-mint-tx|Create an unsigned transaction to mint more of a variable-cap asset (an asset created with 'avm create-variable-cap-asset')." ) ;
-CLI_HELP+=( "avm|create-variable-cap-asset|Create a new variable-cap, fungible asset. No units of the asset exist at initialization. Minters can mint units of this asset using 'create-mint-tx', 'sign-mint-tx' and 'issue-tx'. The asset can be sent with 'avm send'." ) ;
+CLI_HELP+=( "avm|create-fixed-cap-asset|Create a new fixed-cap, fungible asset. A quantity of it is created at initialization and then no more is ever created. The asset can be sent with 'avm send'." ) ;
+CLI_HELP+=( "avm|create-variable-cap-asset|Create a new variable-cap, fungible asset. No units of the asset exist at initialization. Minters can mint units of this asset using 'avm mint'." ) ;
 CLI_HELP+=( "avm|export-avax|Send AVAX from the X-Chain to an account on the P-Chain. After calling this method, you must call the P-Chain's 'import-avax' method to complete the transfer." ) ;
 CLI_HELP+=( "avm|export-key|Get the private key that controls a given address. The returned private key can be added to a user with 'avm import-key'." ) ;
 CLI_HELP+=( "avm|get-all-balances|Get the balances of all assets controlled by a given address." ) ;
@@ -216,13 +215,14 @@ CLI_HELP+=( "avm|get-asset-description|Get information about an asset." ) ;
 CLI_HELP+=( "avm|get-balance|Get the balance of an asset controlled by a given address." ) ;
 CLI_HELP+=( "avm|get-tx|Returns the specified transaction." ) ;
 CLI_HELP+=( "avm|get-tx-status|Get the status of a transaction sent to the network." ) ;
-CLI_HELP+=( "avm|get-utxos|Get the UTXOs that reference a given address." ) ;
+CLI_HELP+=( "avm|get-utxos|Get the UTXOs that reference a given address. If 'source-chain' is specified, then it will retrieve the atomic UTXOs exported from that chain to the X chain." ) ;
 CLI_HELP+=( "avm|import-avax|Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "avm|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
 CLI_HELP+=( "avm|issue-tx|Send a signed transaction to the network." ) ;
 CLI_HELP+=( "avm|list-addresses|List addresses controlled by the given user." ) ;
+CLI_HELP+=( "avm|mint|Mint units of a variable-cap asset (an asset created with 'avm create-variable-cap-asset')." ) ;
 CLI_HELP+=( "avm|send|Send a quantity of an asset to an address." ) ;
-CLI_HELP+=( "avm|sign-mint-tx|Sign an unsigned or partially signed transaction." ) ;
+CLI_HELP+=( "avm|send-nft|Send a non-fungible token." ) ;
 
 ## EVM API:
 CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.ava.network/v1.0/en/api/evm${NN}")
@@ -286,13 +286,6 @@ CLI_HELP+=( "evm|txpool-inspect|The 'inspect' inspection property can be queried
 CLI_HELP+=( "evm|txpool-status|The 'status' inspection property can be queried for the number of transactions currently pending for inclusion in the next block(s), as well as the ones that are being scheduled for future execution only. The result is an object with two fields 'pending' and 'queued', each of which is a counter representing the number of transactions in that particular state. See: ${LK}https://geth.ethereum.org/docs/rpc/ns-txpool#txpool_status${NN}") ;
 CLI_HELP+=( "evm|web3-client-version|Returns the current client version. See: ${LK}https://eth.wiki/json-rpc/API#web3_clientversion${NN}" ) ;
 CLI_HELP+=( "evm|web3-sha3|Returns Keccak-256 (not the standardized SHA3-256) of the given data. See: ${LK}https://eth.wiki/json-rpc/API#web3_sha3${NN}" ) ;
-
-## AVAX (C-Chain) API:
-CLI_TEXT+=( "avax|See: ${LK}https://docs.avax.network/v1.0/en/api/evm/#avax-rpc-endpoints${NN}")
-CLI_HELP+=( "avax|export-avax|Send AVAX from the C-Chain to the X Chain. After calling this method, you must call importAVAX on the X Chain to complete the transfer." ) ;
-CLI_HELP+=( "avax|export-key|Get the private key that controls a given address. The returned private key can be added to a user with avax.importKey." ) ;
-CLI_HELP+=( "avax|import-avax|Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer." ) ;
-CLI_HELP+=( "avax|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
 
 ## Health API:
 CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}https://docs.ava.network/v1.0/en/api/health${NN}" ) ;
