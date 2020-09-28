@@ -200,6 +200,7 @@ avm issue-tx                                      Send a signed transaction to t
 avm list-addresses                                List addresses controlled by the given user.
 avm mint                                          Mint units of a variable-cap asset (an asset created with '..
 avm send                                          Send a quantity of an asset to an address.
+avm send-multiple                                 Sends an amount of assetID to an array of specified address..
 avm send-nft                                      Send a non-fungible token.
 ```
 
@@ -483,7 +484,7 @@ Now, *each* `application/json` response will be compactified and colorized by us
 $ AVAX_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
-### [`${AVAX_AUTH_HEADER}`](https://docs.avaxx.network/v1.0/en/api/auth)
+### [`${AVAX_AUTH_HEADER}`](https://docs.avax.network/v1.0/en/api/auth)
 
 An authorization token provides access to one or more API endpoints. This is is useful for delegating access to a node's APIs. Tokens expire after 12 hours, but before that the token can be provided in the header of an API call. Specifically, the header `Authorization` should have the value `Bearer $TOKEN`. For example:
 
@@ -530,7 +531,7 @@ While the recommendation above holds true for GNU/Linux users, it probably may b
 
 (c) 2020, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
-[AVAX]: https://docs.avaxx.network/v1.0/en/quickstart/ava-getting-started/
+[AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
 [`npm`]: https://github.com/npm/cli
 [`npx`]: https://github.com/npm/npx
