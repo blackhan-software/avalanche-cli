@@ -144,9 +144,9 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
 ```
 ..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
-## [Admin API](https://docs.ava.network/v1.0/en/api/admin)
+## [Admin API](https://docs.avax.network/v1.0/en/api/admin)
 
-This API can be used for measuring node health and debugging.
+This API can be used for measuring node health and debugging. Note that the Admin API is disabled by default for security reasons. To run a node with the Admin API enabled, use command line argument `--api-admin-enabled=true`.
 
 ```
 admin alias                                       Assign an API an alias, a different endpoint for the API. T..
@@ -157,9 +157,19 @@ admin start-cpu-profiler                          Start profiling the CPU utiliz
 admin stop-cpu-profiler                           Stop the CPU profile that was previously started.
 ```
 
-## [Authorization (Auth) API](https://docs.ava.network/v1.0/en/api/auth)
+## [Authorization (Auth) API](https://docs.avax.network/v1.0/en/api/auth)
 
-When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens. See: https://docs.avax.network/v1.0/en/api/auth
+When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens.
+
+An authorization token provides access to one or more API endpoints. This is is useful for delegating access to a node's APIs. Tokens expire after 12 hours.
+
+An authorization token is provided in the header of an API call. Specifically, the header `Authorization` should have value `Bearer $TOKEN` (where `$TOKEN` is replaced with the token, of course).
+
+This API is only reachable if the node is started with [command-line argument](https://docs.avax.network/v1.0/en/references/command-line-interface) `--api-auth-required`. If the node is started without this CLI, API calls do not require authorization tokens, so this API is not reachable. This API never requires an authorization token to be reached.
+
+Of course, authorization token creation must be permissioned. If you run your node with `--api-auth-required`, you must also specify an authorization token password with argument `--api-auth-password`. You must provide this password in order to create/revoke authorization tokens.
+
+Note that if you run your node with `--api-auth-required` then some tools like Metamask may not be able to make API calls to your node because they don't have an auth token.
 
 ```
 auth change-password                              Change this node's authorization token password. Any author..
@@ -167,9 +177,9 @@ auth new-token                                    Creates a new authorization to
 auth revoke-token                                 Revoke a previously generated token. The given token will n..
 ```
 
-## [AVM (X-Chain) API](https://docs.ava.network/v1.0/en/api/avm)
+## [AVM (X-Chain) API](https://docs.avax.network/v1.0/en/api/avm)
 
-The X-Chain, AVAX's native platform for creating and trading assets, is an instance of the AVAX Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
+The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the Avalanche Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
 
 ```
 avm build-genesis                                 Given a JSON representation of this Virtual Machine's genes..
@@ -193,9 +203,11 @@ avm send                                          Send a quantity of an asset to
 avm send-nft                                      Send a non-fungible token.
 ```
 
-## [EVM API](https://docs.ava.network/v1.0/en/api/evm)
+## [EVM API](https://docs.avax.network/v1.0/en/api/evm)
 
-This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). **Note:** Ethereum has its own notion of `networkID` and `chainID`. The C-Chain uses `1` and `43110` for these values, respectively. These have no relationship to AVAX's view of `networkID` and `chainID`, and are purely internal to the C-Chain.
+This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM).
+
+**Note:** Ethereum has its own notion of networkID and chainID. These have no relationship to Avalanche's view of `networkID` and `chainID`, and are purely internal to the C-Chain. On Mainnet, the C-Chain uses `1` and `43114` for these values. On the Fuji Testnet, it uses `1` and `43113` for these values. `networkID` and `chainID` can also be obtained using the `net_version` and `eth_chainId` methods shown below.
 
 ```
 evm eth-accounts                                  Returns a list of addresses owned by client. See: http..
@@ -268,7 +280,7 @@ evm web3-client-version                           Returns the current client ver
 evm web3-sha3                                     Returns Keccak-256 (not the standardized SHA3-256) of the g..
 ```
 
-## [Health API](https://docs.ava.network/v1.0/en/api/health)
+## [Health API](https://docs.avax.network/v1.0/en/api/health)
 
 This API can be used for measuring node health.
 
@@ -276,7 +288,7 @@ This API can be used for measuring node health.
 health get-liveness                               Get health check on this node.
 ```
 
-## [Info API](https://docs.ava.network/v1.0/en/api/info)
+## [Info API](https://docs.avax.network/v1.0/en/api/info)
 
 This API can be used to access basic information about the node.
 
@@ -291,18 +303,22 @@ info is-bootstrapped                              Check whether a given chain is
 info peers                                        Get description of peer connections.
 ```
 
-## [IPC API](https://docs.ava.network/v1.0/en/api/ipc)
+## [IPC API](https://docs.avax.network/v1.0/en/api/ipc)
 
-The IPC API allows users to create a UNIX domain socket for a blockchain to publish to. When the blockchain accepts a vertex/block it will publish the vertex to the socket. A node will only expose this API if it is started with command-line argument `api-ipcs-enabled=true`.
+The IPC API allows users to create UNIX domain sockets for blockchains to publish to. When the blockchain accepts a vertex/block it will publish it to a socket and the decisions contained inside will be published to another.
+
+A node will only expose this API if it is started with [command-line argument](https://docs.avax.network/v1.0/en/references/command-line-interface) `api-ipcs-enabled=true`.
 
 ```
 ipcs publish-blockchain                           Register a blockchain so it publishes accepted vertices to ..
 ipcs unpublish-blockchain                         Deregister a blockchain so that it no longer publishes to a..
 ```
 
-## [Keystore API](https://docs.ava.network/v1.0/en/api/keystore)
+## [Keystore API](https://docs.avax.network/v1.0/en/api/keystore)
 
-Every node has a built-in keystore. Clients create users on the keystore, which act as identities to be used when interacting with blockchains. A keystore exists at the node level, so if you create a user on a node it exists only on that node. However, users may be imported and exported using this API.
+Every node has a built-in keystore. Clients create users on the keystore, which act as identities to be used when interacting with blockchains. A keystore exists at the node level, so if you create a user on a node it exists *only* on that node. However, users may be imported and exported using this API.
+
+> You should only create a keystore user on a node that you operate, as the node operator has access to your plaintext password.
 
 ```
 keystore create-user                              Create a new user with the specified username and password.
@@ -312,7 +328,7 @@ keystore import-user                              Import a user. 'password' must
 keystore list-users                               List the users in this keystore.
 ```
 
-## [Metrics API](https://docs.ava.network/v1.0/en/api/metrics)
+## [Metrics API](https://docs.avax.network/v1.0/en/api/metrics)
 
 The API allows clients to get statistics about a node's health and performance.
 
@@ -320,9 +336,9 @@ The API allows clients to get statistics about a node's health and performance.
 metrics get-prometheus                            Get Prometheus compatible metrics.
 ```
 
-## [Platform API](https://docs.ava.network/v1.0/en/api/platform)
+## [Platform API](https://docs.avax.network/v1.0/en/api/platform)
 
-This API allows clients to interact with the P-Chain (Platform Chain), which maintains AVAX's validator set and handles blockchain creation.
+This API allows clients to interact with the P-Chain (Platform Chain), which maintains Avalanche's validator set and handles blockchain creation.
 
 ```
 platform add-delegator                            Add a delegator to the primary network. A delegator stakes ..
@@ -354,9 +370,9 @@ platform validated-by                             Get the subnet that validates 
 platform validates                                Get the IDs of the blockchains a subnet validates.
 ```
 
-## [Timestamp API](https://docs.ava.network/v1.0/en/api/timestamp)
+## [Timestamp API](https://docs.avax.network/v1.0/en/api/timestamp)
 
-This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The genesis data for a new instance of the Timestamp Chain is the genesis block's 32 byte payload.
+This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The [genesis data](https://docs.avax.network/v1.0/en/api/platform/#platfrombuildgenesis) for a new instance of the Timestamp Chain is the genesis block’s 32 byte payload.
 
 ```
 timestamp get-block                               Get a block by its ID. If no ID is provided, get the latest..
@@ -467,7 +483,7 @@ Now, *each* `application/json` response will be compactified and colorized by us
 $ AVAX_PIPE_RPC='' avalanche-cli info peers -Y
 ```
 
-### [`${AVAX_AUTH_HEADER}`](https://docs.avax.network/v1.0/en/api/auth)
+### [`${AVAX_AUTH_HEADER}`](https://docs.avaxx.network/v1.0/en/api/auth)
 
 An authorization token provides access to one or more API endpoints. This is is useful for delegating access to a node's APIs. Tokens expire after 12 hours, but before that the token can be provided in the header of an API call. Specifically, the header `Authorization` should have the value `Bearer $TOKEN`. For example:
 
@@ -514,7 +530,7 @@ While the recommendation above holds true for GNU/Linux users, it probably may b
 
 (c) 2020, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
-[AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
+[AVAX]: https://docs.avaxx.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
 [`npm`]: https://github.com/npm/cli
 [`npx`]: https://github.com/npm/npx
