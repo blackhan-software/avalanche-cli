@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh avm send" ;
+    printf "./avalanche-cli.sh avm send-multiple" ;
 }
 
 function check {
@@ -17,11 +17,13 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"avm.send",' ;
+    expect_d+='"method":"avm.sendMultiple",' ;
     expect_d+='"params":{' ;
+    expect_d+='"outputs":[{' ;
     expect_d+='"assetID":"ASSET_ID",' ;
     expect_d+='"amount":1000,' ;
-    expect_d+='"to":"TO",' ;
+    expect_d+='"to":"TO"' ;
+    expect_d+='}],' ;
     expect_d+='"from":["A1","A2"],' ;
     expect_d+='"changeAddr":"A3",' ;
     expect_d+='"memo":"MEMO",' ;
@@ -40,19 +42,19 @@ function test_avm__send_1 {
 }
 
 function test_avm__send_2a {
-    check "$(AVAX_ID_RPC=1 AVAX_ASSET_ID=ASSET_ID $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_OUTPUT_ASSET_ID_0=ASSET_ID $(cmd) \
         -# 1K -@ TO -f A1 -f A2 -c A3 -m MEMO \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_2b {
-    check "$(AVAX_ID_RPC=1 AVAX_AMOUNT=1K $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_OUTPUT_AMOUNT_0=1K $(cmd) \
         -a ASSET_ID -@ TO -f A1 -f A2 -c A3 -m MEMO \
         -u USERNAME -p PASSWORD)" ;
 }
 
 function test_avm__send_2c {
-    check "$(AVAX_ID_RPC=1 AVAX_TO=TO $(cmd) \
+    check "$(AVAX_ID_RPC=1 AVAX_OUTPUT_TO_0=TO $(cmd) \
         -a ASSET_ID -# 1K -f A1 -f A2 -c A3 -m MEMO \
         -u USERNAME -p PASSWORD)" ;
 }

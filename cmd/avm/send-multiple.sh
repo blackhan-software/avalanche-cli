@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2214
+# shellcheck disable=SC1090,SC2153,SC2214
 ###############################################################################
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
@@ -18,9 +18,9 @@ source "$CMD_SCRIPT/../../cli/si-suffix.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
-    usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]" ;
-    usage+=" [-@|--to=\${AVAX_TO}]" ;
+    usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]*" ;
+    usage+=" [-#|--amount=\${AVAX_AMOUNT}[E|P|T|G|M|K]]*" ;
+    usage+=" [-@|--to=\${AVAX_TO}]*" ;
     usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
     usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
     usage+=" [-m|--memo=\${AVAX_MEMO-''}]" ;
@@ -56,6 +56,12 @@ function cli_options {
 }
 
 function cli {
+    local -ag AVAX_OUTPUT_ASSET_IDS=() ;
+    get_output_asset_ids AVAX_OUTPUT_ASSET_IDS ;
+    local -ag AVAX_OUTPUT_AMOUNTS=() ;
+    get_output_amounts AVAX_OUTPUT_AMOUNTS ;
+    local -ag AVAX_OUTPUT_TOS=() ;
+    get_output_tos AVAX_OUTPUT_TOS ;
     local -ag AVAX_FROM_ADDRESSES=() ;
     get_from_addresses AVAX_FROM_ADDRESSES ;
     while getopts ":hSVYN:a:#:@:f:c:m:u:p:b:-:" OPT "$@"
@@ -69,11 +75,14 @@ function cli {
             list-options)
                 cli_options && exit 0 ;;
             a|asset-id)
-                AVAX_ASSET_ID="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_OUTPUT_ASSET_IDS)" ;
+                AVAX_OUTPUT_ASSET_IDS["$i"]="${OPTARG}" ;;
            \#|amount)
-                AVAX_AMOUNT="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_OUTPUT_AMOUNTS)" ;
+                AVAX_OUTPUT_AMOUNTS["$i"]="${OPTARG}" ;;
             @|to)
-                AVAX_TO="${OPTARG}" ;;
+                local i; i="$(next_index AVAX_OUTPUT_TOS)" ;
+                AVAX_OUTPUT_TOS["$i"]="${OPTARG}" ;;
             f|from|from-address)
                 local i; i="$(next_index AVAX_FROM_ADDRESSES)" ;
                 AVAX_FROM_ADDRESSES["$i"]="${OPTARG}" ;;
@@ -101,13 +110,13 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_AMOUNT" ] ; then
+    if [ -z "${AVAX_OUTPUT_AMOUNTS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_ASSET_ID" ] ; then
+    if [ -z "${AVAX_OUTPUT_ASSET_IDS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
-    if [ -z "$AVAX_TO" ] ; then
+    if [ -z "${AVAX_OUTPUT_TOS[*]}" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_USERNAME" ] ; then
@@ -125,19 +134,35 @@ function cli {
     shift $((OPTIND-1)) ;
 }
 
+function get_output_asset_ids {
+    environ_vars "$1" "AVAX_OUTPUT_ASSET_ID_([0-9]+)" "${!AVAX_OUTPUT_ASSET_ID_@}" ;
+}
+function get_output_amounts {
+    environ_vars "$1" "AVAX_OUTPUT_AMOUNT_([0-9]+)" "${!AVAX_OUTPUT_AMOUNT_@}" ;
+}
+function get_output_tos {
+    environ_vars "$1" "AVAX_OUTPUT_TO_([0-9]+)" "${!AVAX_OUTPUT_TO_@}" ;
+}
 function get_from_addresses {
     environ_vars "$1" "AVAX_FROM_ADDRESS_([0-9]+)" "${!AVAX_FROM_ADDRESS_@}" ;
 }
 
 function rpc_method {
-    printf "avm.send" ;
+    printf "avm.sendMultiple" ;
 }
 
 function rpc_params {
     printf '{' ;
-    printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
-    printf '"amount":%s,' "$(si "$AVAX_AMOUNT")" ;
-    printf '"to":"%s",' "$AVAX_TO" ;
+    printf '"outputs":[' ;
+    # shellcheck disable=SC2046
+    join_by ',' $(for I in "${!AVAX_OUTPUT_ASSET_IDS[@]}" ; do
+        printf '{' ;
+        printf '"assetID":"%s",' "${AVAX_OUTPUT_ASSET_IDS[$I]}";
+        printf '"amount":%s,' "$(si "${AVAX_OUTPUT_AMOUNTS[$I]}")";
+        printf '"to":"%s"' "${AVAX_OUTPUT_TOS[$I]}";
+        printf '} ' ;
+    done) ;
+    printf '],' ;
     if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
         printf '"from":[' ; # shellcheck disable=SC2046
         join_by ',' $(map_by '"%s" ' "${AVAX_FROM_ADDRESSES[@]}") ;
