@@ -66,11 +66,5 @@ function test_command_help_platform {
     assertNotContains "$text" "Timestamp API" ;
 }
 
-function test_command_help_timestamp {
-    local text; text="$(cli_help timestamp)" ;
-    assertContains "$text" "Timestamp API" ;
-    assertNotContains "$text" "Admin API" ;
-}
-
 ###############################################################################
 ###############################################################################

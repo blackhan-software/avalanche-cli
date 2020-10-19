@@ -345,11 +345,6 @@ CLI_HELP+=( "platform|sample-validators|Sample validators from the specified sub
 CLI_HELP+=( "platform|validated-by|Get the subnet that validates a given blockchain." ) ;
 CLI_HELP+=( "platform|validates|Get the IDs of the blockchains a subnet validates." ) ;
 
-## Timestamp API:
-CLI_TEXT+=( "timestamp|This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. See: ${LK}https://docs.avax.network/v1.0/en/api/timestamp${NN}" ) ;
-CLI_HELP+=( "timestamp|get-block|Get a block by its ID. If no ID is provided, get the latest block." ) ;
-CLI_HELP+=( "timestamp|propose-block|Propose the creation of a new block." ) ;
-
 ###############################################################################
 
 text_cached ;
