@@ -372,15 +372,6 @@ platform validated-by                             Get the subnet that validates 
 platform validates                                Get the IDs of the blockchains a subnet validates.
 ```
 
-## [Timestamp API](https://docs.avax.network/v1.0/en/api/timestamp)
-
-This API allows clients to interact with the Timestamp Chain. The Timestamp Chain is a timestamp server. Each block contains a 32 byte payload and the timestamp when the block was created. The [genesis data](https://docs.avax.network/v1.0/en/api/platform/#platfrombuildgenesis) for a new instance of the Timestamp Chain is the genesis block’s 32 byte payload.
-
-```
-timestamp get-block                               Get a block by its ID. If no ID is provided, get the latest..
-timestamp propose-block                           Propose the creation of a new block.
-```
-
 ## Common Options
 
 All commands share the following options and corresponding environment variables:
