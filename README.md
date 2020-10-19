@@ -360,6 +360,7 @@ platform get-pending-validators                   List the validators in the pen
 platform get-stake                                Get the amount of nAVAX staked by a set of addresses. The a..
 platform get-staking-asset-id                     Retrieve an assetID for a subnet's staking asset. Currently..
 platform get-subnets                              Get all the subnets that exist.
+platform get-total-stake                          Get the total amount of nAVAX staked on the primary network.
 platform get-tx                                   Gets a transaction by its ID.
 platform get-tx-status                            Gets a transaction's status by its ID.
 platform get-utxo                                 Gets the UTXOs that reference a given set address.
