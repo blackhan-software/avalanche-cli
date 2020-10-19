@@ -19,6 +19,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
+    usage+=" [-g|--group-id=\${AVAX_GROUP_ID}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
     usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
     usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS}]" ;
@@ -37,6 +38,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-a" "--asset-id=" ) ;
+    options+=( "-g" "--group-id=" ) ;
     options+=( "-@" "--to=" ) ;
     options+=( "-f" "--from=" "--from-address=" ) ;
     options+=( "-c" "--change=" "--change-address=" ) ;
@@ -54,7 +56,7 @@ function cli_options {
 function cli {
     local -ag AVAX_FROM_ADDRESSES=() ;
     get_from_addresses AVAX_FROM_ADDRESSES ;
-    while getopts ":hSVYN:a:@:f:c:u:p:b:-:" OPT "$@"
+    while getopts ":hSVYN:a:g:@:f:c:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,6 +68,8 @@ function cli {
                 cli_options && exit 0 ;;
             a|asset-id)
                 AVAX_ASSET_ID="${OPTARG}" ;;
+            g|group-id)
+                AVAX_GROUP_ID="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
             f|from|from-address)
@@ -94,6 +98,9 @@ function cli {
         esac
     done
     if [ -z "$AVAX_ASSET_ID" ] ; then
+        cli_help && exit 1 ;
+    fi
+    if [ -z "$AVAX_GROUP_ID" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_TO" ] ; then
@@ -125,6 +132,7 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
+    printf '"groupID":"%s",' "$AVAX_GROUP_ID" ;
     printf '"to":"%s",' "$AVAX_TO" ;
     if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
         printf '"from":[' ; # shellcheck disable=SC2046

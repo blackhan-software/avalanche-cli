@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090,SC2214,SC2153,SC2207
+# shellcheck disable=SC1090,SC2076,SC2214,SC2153,SC2207
 ##############################################################################
 CMD_SCRIPT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 ###############################################################################
@@ -19,6 +19,8 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
+    usage+=" [-P|--payload=\${AVAX_PAYLOAD}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
     usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
     usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS_\$IDX}]" ;
@@ -37,6 +39,8 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-a" "--asset-id=" ) ;
+    options+=( "-P" "--payload=" ) ;
+    options+=( "-e" "--encoding=" ) ;
     options+=( "-@" "--to=" ) ;
     options+=( "-f" "--from=" "--from-address=" ) ;
     options+=( "-c" "--change=" "--change-address=" ) ;
@@ -54,7 +58,7 @@ function cli_options {
 function cli {
     local -ag AVAX_FROM_ADDRESSES=() ;
     get_from_addresses AVAX_FROM_ADDRESSES ;
-    while getopts ":hSVYN:a:@:f:c:u:p:b:-:" OPT "$@"
+    while getopts ":hSVYN:a:P:e:@:f:c:u:p:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -66,6 +70,10 @@ function cli {
                 cli_options && exit 0 ;;
             a|asset-id)
                 AVAX_ASSET_ID="${OPTARG}" ;;
+            P|payload)
+                AVAX_PAYLOAD="${OPTARG}" ;;
+            e|encoding)
+                AVAX_ENCODING="${OPTARG}" ;;
             @|to)
                 AVAX_TO="${OPTARG}" ;;
             f|from|from-address)
@@ -96,6 +104,15 @@ function cli {
     if [ -z "$AVAX_ASSET_ID" ] ; then
         cli_help && exit 1 ;
     fi
+    if [ -z "$AVAX_PAYLOAD" ] ; then
+        cli_help && exit 1 ;
+    fi
+    if [ -n "$AVAX_ENCODING" ] ; then
+        local -a AVAX_ENCODINGS=( "cb58" "hex" ) ;
+        if [[ ! " ${AVAX_ENCODINGS[*]} " =~ " ${AVAX_ENCODING} " ]]; then
+            cli_help && exit 1 ;
+        fi
+    fi
     if [ -z "$AVAX_TO" ] ; then
         cli_help && exit 1 ;
     fi
@@ -125,6 +142,10 @@ function rpc_method {
 function rpc_params {
     printf '{' ;
     printf '"assetID":"%s",' "$AVAX_ASSET_ID" ;
+    printf '"payload":"%s",' "$AVAX_PAYLOAD" ;
+    if [ -n "$AVAX_ENCODING" ] ; then
+        printf '"encoding":"%s",' "$AVAX_ENCODING" ;
+    fi
     printf '"to":"%s",' "$AVAX_TO" ;
     if [ -n "${AVAX_FROM_ADDRESSES[*]}" ] ; then
         printf '"from":[' ; # shellcheck disable=SC2046
