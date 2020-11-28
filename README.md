@@ -186,6 +186,7 @@ avm build-genesis                                 Given a JSON representation of
 avm create-address                                Create a new address controlled by the given user.
 avm create-fixed-cap-asset                        Create a new fixed-cap, fungible asset. A quantity of it is..
 avm create-variable-cap-asset                     Create a new variable-cap, fungible asset. No units of the ..
+avm export                                        Send a non-AVAX from the X-Chain to the P-Chain or C-Chain...
 avm export-avax                                   Send AVAX from the X-Chain to an account on the P-Chain. Af..
 avm export-key                                    Get the private key that controls a given address. The retu..
 avm get-all-balances                              Get the balances of all assets controlled by a given addres..
@@ -194,6 +195,7 @@ avm get-balance                                   Get the balance of an asset co
 avm get-tx                                        Returns the specified transaction.
 avm get-tx-status                                 Get the status of a transaction sent to the network.
 avm get-utxos                                     Get the UTXOs that reference a given address. If 'source-ch..
+avm import                                        Finalize a transfer of AVAX from the P-Chain or C-Chain to ..
 avm import-avax                                   Finalize a transfer of AVAX from the P-Chain to the X-Chain..
 avm import-key                                    Give a user control over an address by providing the privat..
 avm issue-tx                                      Send a signed transaction to the network.
