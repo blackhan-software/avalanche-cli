@@ -38,34 +38,34 @@ Also, an installation via `npm` activates *command line completion* (i.e. hittin
 
 ```
 Name            : curl
-Version         : 7.70.0-1
+Version         : 7.73.0-1
 Description     : An URL retrieval utility and library
 ```
 
 ```
 Name            : zsh
-Version         : 5.7.1
+Version         : 5.8-1
 Description     : the Z shell
 ```
 
 Or instead of `zsh`:
 ```
 Name            : bash
-Version         : 5.0.017-1
+Version         : 5.0.018-1
 Description     : The GNU Bourne Again shell
 ```
 
 Optional:
 ```
 Name            : bash-completion
-Version         : 2.10-2
+Version         : 2.11-1
 Description     : Programmable completion for the bash shell
 ```
 
 Only for installation (and for [`npx`]):
 ```
 Name            : npm
-Version         : 6.14.5-1
+Version         : 6.14.8-2
 Description     : A package manager
 ```
 
