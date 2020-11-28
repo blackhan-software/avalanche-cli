@@ -26,21 +26,27 @@ function cli_help {
     fi
     if [[ -z "$1" || "$1" == "auth" ]] ; then
         printf "\n" ;
-        printf "\n${BB}Authorization (Auth) API:${NB}\n\n$(text_for 'auth')" ;
+        printf "\n${BB}Auth API:${NB}\n\n$(text_for 'auth')" ;
         printf "\n" ;
         printf "$(line_for 'auth' "$2")" ;
     fi
     if [[ -z "$1" || "$1" == "avm" ]] ; then
         printf "\n" ;
-        printf "\n${BB}AVM (X-Chain) API:${NB}\n\n$(text_for 'avm')" ;
+        printf "\n${BB}Exchange Chain (X-Chain) API:${NB}\n\n$(text_for 'avm')" ;
         printf "\n" ;
         printf "$(line_for 'avm' "$2")" ;
     fi
     if [[ -z "$1" || "$1" == "evm" ]] ; then
         printf "\n" ;
-        printf "\n${BB}EVM API:${NB}\n\n$(text_for 'evm')" ;
+        printf "\n${BB}Contract Chain (C-Chain) API:${NB}\n\n$(text_for 'evm')" ;
         printf "\n" ;
         printf "$(line_for 'evm' "$2")" ;
+    fi
+    if [[ -z "$1" || "$1" == "avax" ]] ; then
+        printf "\n" ;
+        printf "\n${BB}Contract Chain (C-Chain) AVAX API:${NB}" ;
+        printf "\n" ;
+        printf "$(line_for 'avax' "$2")" ;
     fi
     if [[ -z "$1" || "$1" == "health" ]] ; then
         printf "\n" ;
@@ -74,15 +80,9 @@ function cli_help {
     fi
     if [[ -z "$1" || "$1" == "platform" ]] ; then
         printf "\n" ;
-        printf "\n${BB}Platform API:${NB}\n\n$(text_for 'platform')" ;
+        printf "\n${BB}Platform Chain (P-Chain) API:${NB}\n\n$(text_for 'platform')" ;
         printf "\n" ;
         printf "$(line_for 'platform' "$2")" ;
-    fi
-    if [[ -z "$1" || "$1" == "timestamp" ]] ; then
-        printf "\n" ;
-        printf "\n${BB}Timestamp API:${NB}\n\n$(text_for 'timestamp')" ;
-        printf "\n" ;
-        printf "$(line_for 'timestamp' "$2")" ;
     fi
 }
 
@@ -113,6 +113,7 @@ function help_for {
             local cmd="${key:((${#1}+1))}" ;
             local txt="${CLI_HELP_CACHE[$api:$cmd]}" ;
             printf '%s\n' "$txt" ;
+            return ;
         fi
     done
 }
@@ -182,7 +183,7 @@ CLI_HELP+=( "-h|--help|Show help information and quit." ) ;
 CLI_HELP+=( "-v|--version|Print CLI version information and quit." ) ;
 
 ## Admin API:
-CLI_TEXT+=( "admin|This API can be used for measuring node health and debugging. Note that the Admin API is disabled by default for security reasons. To run a node with the Admin API enabled, use command line argument ${BB}--api-admin-enabled=true${NB}. See: ${LK}https://docs.avax.network/v1.0/en/api/admin${NN}" ) ;
+CLI_TEXT+=( "admin|This API can be used for measuring node health and debugging. Note that the Admin API is disabled by default for security reasons. To run a node with the Admin API enabled, use command line argument ${BB}--api-admin-enabled=true${NB}. See: ${LK}https://docs.avax.network/build/avalanchego-apis/admin-api${NN}" ) ;
 CLI_HELP+=( "admin|alias|Assign an API an alias, a different endpoint for the API. The original endpoint will still work. This change only affects this node; other nodes will not know about this alias." ) ;
 CLI_HELP+=( "admin|alias-chain|Give a blockchain an alias, a different name that can be used any place the blockchain's ID is used." ) ;
 CLI_HELP+=( "admin|lock-profile|Dump the mutex statistics of the node to the specified file." ) ;
@@ -191,13 +192,13 @@ CLI_HELP+=( "admin|start-cpu-profiler|Start profiling the CPU utilization of the
 CLI_HELP+=( "admin|stop-cpu-profiler|Stop the CPU profile that was previously started." ) ;
 
 ## Auth API:
-CLI_TEXT+=( "auth|When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens. See: ${LK}https://docs.avax.network/v1.0/en/api/auth${NN}" ) ;
+CLI_TEXT+=( "auth|When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens. See: ${LK}https://docs.avax.network/build/avalanchego-apis/auth-api${NN}" ) ;
 CLI_HELP+=( "auth|change-password|Change this node's authorization token password. Any authorization tokens created under an old password will become invalid." ) ;
 CLI_HELP+=( "auth|new-token|Creates a new authorization token that grants access to one or more API endpoints." ) ;
 CLI_HELP+=( "auth|revoke-token|Revoke a previously generated token. The given token will no longer grant access to any endpoint. If the token is invalid, does nothing." ) ;
 
-## AVM (X-Chain) API:
-CLI_TEXT+=( "avm|The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the Avalanche Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.avax.network/v1.0/en/api/avm${NN}")
+## Exchange Chain (X-Chain) API:
+CLI_TEXT+=( "avm|The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the Avalanche Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM. See: ${LK}https://docs.avax.network/build/avalanchego-apis/exchange-chain-x-chain-api${NN}")
 CLI_HELP+=( "avm|build-genesis|Given a JSON representation of this Virtual Machine's genesis state, create the byte representation of that state." ) ;
 CLI_HELP+=( "avm|create-address|Create a new address controlled by the given user." ) ;
 CLI_HELP+=( "avm|create-fixed-cap-asset|Create a new fixed-cap, fungible asset. A quantity of it is created at initialization and then no more is ever created. The asset can be sent with 'avm send'." ) ;
@@ -219,8 +220,8 @@ CLI_HELP+=( "avm|send|Send a quantity of an asset to an address." ) ;
 CLI_HELP+=( "avm|send-multiple|Sends an amount of assetID to an array of specified addresses from a list of owned of addresses." ) ;
 CLI_HELP+=( "avm|send-nft|Send a non-fungible token." ) ;
 
-## EVM API:
-CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.avax.network/v1.0/en/api/evm${NN}")
+## Contract Chain (C-Chain) API:
+CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.avax.network/build/avalanchego-apis/contract-chain-c-chain-api${NN}")
 CLI_HELP+=( "evm|eth-accounts|Returns a list of addresses owned by client. See: ${LK}https://eth.wiki/json-rpc/API#eth_accounts${NN}" )
 CLI_HELP+=( "evm|eth-block-number|Returns the number of most recent block. See: ${LK}https://eth.wiki/json-rpc/API#eth_blocknumber${NN}" )
 CLI_HELP+=( "evm|eth-call|Executes a new message call immediately without creating a transaction on the block chain. See: ${LK}https://eth.wiki/json-rpc/API#eth_call${NN}" )
@@ -282,12 +283,19 @@ CLI_HELP+=( "evm|txpool-status|The 'status' inspection property can be queried f
 CLI_HELP+=( "evm|web3-client-version|Returns the current client version. See: ${LK}https://eth.wiki/json-rpc/API#web3_clientversion${NN}" ) ;
 CLI_HELP+=( "evm|web3-sha3|Returns Keccak-256 (not the standardized SHA3-256) of the given data. See: ${LK}https://eth.wiki/json-rpc/API#web3_sha3${NN}" ) ;
 
+## Contract Chain (C-Chain) AVAX API:
+CLI_HELP+=( "avax|export|Export an asset from the C-Chain to the X-Chain. After calling this method, you must call 'import' on the X-Chain to complete the transfer." ) ;
+CLI_HELP+=( "avax|export-key|Get the private key that controls a given address. The returned private key can be added to a user with 'avax import-key'." ) ;
+CLI_HELP+=( "avax|get-utxos|Gets the UTXOs that reference a given address." ) ;
+CLI_HELP+=( "avax|import|Finalize the transfer of a non-AVAX or AVAX from the X-Chain to the C-Chain. Before this method is called, you must call the X-Chain's 'export' method to initiate the transfer." ) ;
+CLI_HELP+=( "avax|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
+
 ## Health API:
-CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}https://docs.avax.network/v1.0/en/api/health${NN}" ) ;
+CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}https://docs.avax.network/build/avalanchego-apis/health-api${NN}" ) ;
 CLI_HELP+=( "health|get-liveness|Get health check on this node." ) ;
 
 ## Info API:
-CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/v1.0/en/api/info${NN}" ) ;
+CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/build/avalanchego-apis/info-api${NN}" ) ;
 CLI_HELP+=( "info|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
 CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "info|get-network-name|Get the name of the network this node is running on." ) ;
@@ -298,12 +306,12 @@ CLI_HELP+=( "info|is-bootstrapped|Check whether a given chain is done bootstrapp
 CLI_HELP+=( "info|peers|Get description of peer connections." ) ;
 
 ## IPC API:
-CLI_TEXT+=( "ipcs|The IPC API allows users to create UNIX domain sockets for blockchains to publish to. When the blockchain accepts a vertex/block it will publish it to a socket and the decisions contained inside will be published to another. See: ${LK}https://docs.avax.network/v1.0/en/api/ipc${NN}" ) ;
+CLI_TEXT+=( "ipcs|The IPC API allows users to create UNIX domain sockets for blockchains to publish to. When the blockchain accepts a vertex/block it will publish it to a socket and the decisions contained inside will be published to another. See: ${LK}https://docs.avax.network/build/avalanchego-apis/ipc-api${NN}" ) ;
 CLI_HELP+=( "ipcs|publish-blockchain|Register a blockchain so it publishes accepted vertices to a Unix domain socket." ) ;
 CLI_HELP+=( "ipcs|unpublish-blockchain|Deregister a blockchain so that it no longer publishes to a Unix domain socket." ) ;
 
 ## Keystore API:
-CLI_TEXT+=( "keystore|Every node has a built-in keystore. Clients create users on the keystore, which act as identities to be used when interacting with blockchains. A keystore exists at the node level, so if you create a user on a node it exists *only* on that node. However, users may be imported and exported using this API. See: ${LK}https://docs.avax.network/v1.0/en/api/keystore${NN}")
+CLI_TEXT+=( "keystore|Every node has a built-in keystore. Clients create users on the keystore, which act as identities to be used when interacting with blockchains. A keystore exists at the node level, so if you create a user on a node it exists *only* on that node. However, users may be imported and exported using this API. See: ${LK}https://docs.avax.network/build/avalanchego-apis/keystore-api${NN}")
 CLI_HELP+=( "keystore|create-user|Create a new user with the specified username and password." ) ;
 CLI_HELP+=( "keystore|delete-user|Delete a user." ) ;
 CLI_HELP+=( "keystore|export-user|Export a user. The user can be imported to another node with 'keystore import-user'. The user's password remains encrypted." ) ;
@@ -311,11 +319,11 @@ CLI_HELP+=( "keystore|import-user|Import a user. 'password' must match the user'
 CLI_HELP+=( "keystore|list-users|List the users in this keystore." ) ;
 
 ## Metrics API:
-CLI_TEXT+=( "metrics|The API allows clients to get statistics about a node's health and performance. See: ${LK}https://docs.avax.network/v1.0/en/api/metrics${NN}" ) ;
+CLI_TEXT+=( "metrics|The API allows clients to get statistics about a node's health and performance. See: ${LK}https://docs.avax.network/build/avalanchego-apis/metrics-api${NN}" ) ;
 CLI_HELP+=( "metrics|get-prometheus|Get Prometheus compatible metrics." ) ;
 
-## Platform API:
-CLI_TEXT+=( "platform|This API allows clients to interact with the P-Chain (Platform Chain), which maintains Avalanche's validator set and handles blockchain creation. See: ${LK}https://docs.avax.network/v1.0/en/api/platform${NN}")
+## Platform Chain (P-Chain) API:
+CLI_TEXT+=( "platform|This API allows clients to interact with the P-Chain (Platform Chain), which maintains Avalanche's validator set and handles blockchain creation. See: ${LK}https://docs.avax.network/build/avalanchego-apis/platform-chain-p-chain-api${NN}")
 CLI_HELP+=( "platform|add-delegator|Add a delegator to the primary network. A delegator stakes AVAX and specifies a validator (the delegatee) to validate on their behalf. The delegatee has an increased probability of being sampled by other validators (weight) in proportion to the stake delegated to them. The delegatee charges a fee to the delegator; the former receives a percentage of the delegator's validation reward (if any). The delegation period must be a subset of the period that the delegatee validates the primary network. Note that once you issue the transaction to add a node as a delegator, there is no way to change the parameters. You can't unstake early or change the stake amount, node ID or reward address. Please make sure you're using the correct values. If you're not sure, ask for help on Discord (see https://chat.avalabs.org). See https://docs.avax.network/v1.0/en/staking for staking parameters like the minimum amount that can be staked." ) ;
 CLI_HELP+=( "platform|add-subnet-validator|Add a validator to a subnet other than the primary network. The validator must validate the primary network for the entire duration they validate this subnet." ) ;
 CLI_HELP+=( "platform|add-validator|Add a validator to the Primary Network. You must stake AVAX to do this. If the node is sufficiently correct and responsive while validating, you recieve a reward when they are done validating. The validator's probability of being sampled during by other validators during consensus is in proportion to the amount of AVAX staked. The validator can charge a fee to delegators; the former receives a percentage of the delegator's validation reward (if any.) The minimum delegation fee is 2%. A transaction which adds a validator has no fee. The validation period must be between 2 weeks and 1 year. There is a maximum total weight imposed on validators. This means that no validator will ever have more AVAX staked and delegated to it than this value. This value will initially be set to min(5 * amount staked, 3M AVAX). The total value on a validator is 3 million AVAX. Note that once you issue the transaction to add a node as a validator, there is no way to change the parameters. You can't unstake early or change the stake amount, node ID or reward address. Please make sure you're using the correct values. If you're not sure, ask for help on Discord (see https://chat.avalabs.org). See https://docs.avax.network/v1.0/en/staking for staking parameters like the minimum amount that can be staked." ) ;

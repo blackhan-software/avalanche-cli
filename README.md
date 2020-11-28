@@ -144,7 +144,7 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
 ```
 ..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
-## [Admin API](https://docs.avax.network/v1.0/en/api/admin)
+## [Admin API](https://docs.avax.network/build/avalanchego-apis/admin-api)
 
 This API can be used for measuring node health and debugging. Note that the Admin API is disabled by default for security reasons. To run a node with the Admin API enabled, use command line argument `--api-admin-enabled=true`.
 
@@ -157,7 +157,7 @@ admin start-cpu-profiler                          Start profiling the CPU utiliz
 admin stop-cpu-profiler                           Stop the CPU profile that was previously started.
 ```
 
-## [Authorization (Auth) API](https://docs.avax.network/v1.0/en/api/auth)
+## [Auth API](https://docs.avax.network/build/avalanchego-apis/auth-api)
 
 When you run a node, you can require that API calls have an authorization token attached. This API manages the creation and revocation of authorization tokens.
 
@@ -177,7 +177,7 @@ auth new-token                                    Creates a new authorization to
 auth revoke-token                                 Revoke a previously generated token. The given token will n..
 ```
 
-## [AVM (X-Chain) API](https://docs.avax.network/v1.0/en/api/avm)
+## [AVM (X-Chain) API](https://docs.avax.network/build/avalanchego-apis/exchange-chain-x-chain-api)
 
 The X-Chain, Avalanche's native platform for creating and trading assets, is an instance of the Avalanche Virtual Machine (AVM). This API allows clients to create and trade assets on the X-Chain and other instances of the AVM.
 
@@ -204,7 +204,7 @@ avm send-multiple                                 Sends an amount of assetID to 
 avm send-nft                                      Send a non-fungible token.
 ```
 
-## [EVM API](https://docs.avax.network/v1.0/en/api/evm)
+## [Contract Chain (C-Chain) API](https://docs.avax.network/build/avalanchego-apis/contract-chain-c-chain-api)
 
 This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM).
 
@@ -281,7 +281,16 @@ evm web3-client-version                           Returns the current client ver
 evm web3-sha3                                     Returns Keccak-256 (not the standardized SHA3-256) of the g..
 ```
 
-## [Health API](https://docs.avax.network/v1.0/en/api/health)
+## [Contract Chain (C-Chain) AVAX API](https://docs.avax.network/build/avalanchego-apis/contract-chain-c-chain-api#avax-rpc-endpoints)
+
+```
+avax export-key                                   Get the private key that controls a given address. The retu..
+avax get-utxos                                    Gets the UTXOs that reference a given address.
+avax import                                       Finalize the transfer of a non-AVAX or AVAX from the X-Chai..
+avax import-key                                   Give a user control over an address by providing the privat..
+```
+
+## [Health API](https://docs.avax.network/build/avalanchego-apis/health-api)
 
 This API can be used for measuring node health.
 
@@ -289,7 +298,7 @@ This API can be used for measuring node health.
 health get-liveness                               Get health check on this node.
 ```
 
-## [Info API](https://docs.avax.network/v1.0/en/api/info)
+## [Info API](https://docs.avax.network/build/avalanchego-apis/info-api)
 
 This API can be used to access basic information about the node.
 
@@ -304,7 +313,7 @@ info is-bootstrapped                              Check whether a given chain is
 info peers                                        Get description of peer connections.
 ```
 
-## [IPC API](https://docs.avax.network/v1.0/en/api/ipc)
+## [IPC API](https://docs.avax.network/build/avalanchego-apis/ipc-api)
 
 The IPC API allows users to create UNIX domain sockets for blockchains to publish to. When the blockchain accepts a vertex/block it will publish it to a socket and the decisions contained inside will be published to another.
 
@@ -315,7 +324,7 @@ ipcs publish-blockchain                           Register a blockchain so it pu
 ipcs unpublish-blockchain                         Deregister a blockchain so that it no longer publishes to a..
 ```
 
-## [Keystore API](https://docs.avax.network/v1.0/en/api/keystore)
+## [Keystore API](https://docs.avax.network/build/avalanchego-apis/keystore-api)
 
 Every node has a built-in keystore. Clients create users on the keystore, which act as identities to be used when interacting with blockchains. A keystore exists at the node level, so if you create a user on a node it exists *only* on that node. However, users may be imported and exported using this API.
 
@@ -329,7 +338,7 @@ keystore import-user                              Import a user. 'password' must
 keystore list-users                               List the users in this keystore.
 ```
 
-## [Metrics API](https://docs.avax.network/v1.0/en/api/metrics)
+## [Metrics API](https://docs.avax.network/build/avalanchego-apis/metrics-api)
 
 The API allows clients to get statistics about a node's health and performance.
 
@@ -337,7 +346,7 @@ The API allows clients to get statistics about a node's health and performance.
 metrics get-prometheus                            Get Prometheus compatible metrics.
 ```
 
-## [Platform API](https://docs.avax.network/v1.0/en/api/platform)
+## [Platform Chain (P-Chain) API](https://docs.avax.network/build/avalanchego-apis/platform-chain-p-chain-api)
 
 This API allows clients to interact with the P-Chain (Platform Chain), which maintains Avalanche's validator set and handles blockchain creation.
 
