@@ -16,6 +16,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-t|--tx=\${AVAX_TX}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
@@ -29,6 +30,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-t" "--tx=" ) ;
+    options+=( "-e" "--encoding=" ) ;
     options+=( "-b" "--blockchain-id=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
@@ -39,7 +41,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:t:b:-:" OPT "$@"
+    while getopts ":hSVYN:t:e:b:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -51,6 +53,8 @@ function cli {
                 cli_options && exit 0 ;;
             t|tx)
                 AVAX_TX="${OPTARG}" ;;
+            e|encoding)
+                AVAX_ENCODING="${OPTARG}" ;;
             b|blockchain-id)
                 AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
@@ -70,6 +74,9 @@ function cli {
     if [ -z "$AVAX_TX" ] ; then
         cli_help && exit 1 ;
     fi
+    if [ -z "$AVAX_ENCODING" ] ; then
+        AVAX_ENCODING="cb58" ;
+    fi
     if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
         AVAX_BLOCKCHAIN_ID="X" ;
     fi
@@ -86,7 +93,8 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"tx":"%s"' "$AVAX_TX" ;
+    printf '"tx":"%s",' "$AVAX_TX" ;
+    printf '"encoding":"%s"' "$AVAX_ENCODING" ;
     printf '}' ;
 }
 

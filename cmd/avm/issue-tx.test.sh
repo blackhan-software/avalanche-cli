@@ -20,7 +20,8 @@ function check {
     expect_d+='"id":1,' ;
     expect_d+='"method":"avm.issueTx",' ;
     expect_d+='"params":{' ;
-    expect_d+='"tx":"TX"' ;
+    expect_d+='"tx":"TX",' ;
+    expect_d+='"encoding":"cb58"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -28,11 +29,15 @@ function check {
 }
 
 function test_avm__issue_tx_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -t TX)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -t TX -e cb58)" ;
 }
 
 function test_avm__issue_tx_1b {
     check "$(AVAX_ID_RPC=1 AVAX_TX=TX $(cmd))" ;
+}
+
+function test_avm__issue_tx_1c {
+    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=cb58 $(cmd) -t TX)" ;
 }
 
 function test_avm__issue_tx_2a {
