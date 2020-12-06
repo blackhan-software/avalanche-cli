@@ -36,6 +36,12 @@ function cli_help {
         printf "\n" ;
         printf "$(line_for 'avm' "$2")" ;
     fi
+    if [[ -z "$1" || "$1" == "wallet" ]] ; then
+        printf "\n" ;
+        printf "\n${BB}Exchange Chain (X-Chain) Wallet API:${NB}" ;
+        printf "\n" ;
+        printf "$(line_for 'wallet' "$2")" ;
+    fi
     if [[ -z "$1" || "$1" == "evm" ]] ; then
         printf "\n" ;
         printf "\n${BB}Contract Chain (C-Chain) API:${NB}\n\n$(text_for 'evm')" ;
@@ -223,6 +229,11 @@ CLI_HELP+=( "avm|mint-nft|Mint non-fungible tokens which were created with 'avm 
 CLI_HELP+=( "avm|send|Send a quantity of an asset to an address." ) ;
 CLI_HELP+=( "avm|send-multiple|Sends multiple transfers of 'amount' of 'assetID', to a specified address from a list of owned addresses." ) ;
 CLI_HELP+=( "avm|send-nft|Send a non-fungible token." ) ;
+
+## Exchange Chain (X-Chain) Wallet API:
+CLI_HELP+=( "wallet|send|Send a quantity of an asset to an address and assume the tx will be accepted so that future calls can use the modified UTXO set." ) ;
+CLI_HELP+=( "wallet|send-multiple|Send multiple transfers of 'amount' of 'assetID', to a specified address from a list of owned of addresses and assume the tx will be accepted so that future calls can use the modified UTXO set." ) ;
+CLI_HELP+=( "wallet|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Can be either 'cb58' or 'hex'. Defaults to 'cb58'." ) ;
 
 ## Contract Chain (C-Chain) API:
 CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.avax.network/build/avalanchego-apis/contract-chain-c-chain-api${NN}")
