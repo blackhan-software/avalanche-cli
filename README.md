@@ -10,8 +10,8 @@ Usage: avalanche-cli [OPTIONS] COMMMAND
 ## Options
 
 ```
--h --help                                         Show help information and quit.
--v --version                                      Print CLI version information and quit.
+-h --help         Show help information and quit.
+-v --version      Print CLI version information and quit.
 ```
 
 ## Installation
@@ -293,7 +293,7 @@ While the recommendation above holds true for GNU/Linux users, it probably may b
 
 ## Copyright
 
-(c) 2020, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
+(c) 2021, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
 [AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
