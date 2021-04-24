@@ -26,13 +26,20 @@ function run {
 
 ###############################################################################
 
-for script in $(find "$CLI_TEST_SCRIPT/cli" -name '*.test.sh' | sort) ; do
-    run "$script" ;
-done
-
-for script in $(find "$CLI_TEST_SCRIPT/cmd" -name '*.test.sh' | sort) ; do
-    AVAX_DEBUG_RPC=1 AVAX_ARGS_RPC="" AVAX_PIPE_RPC="" run "$script" ;
-done
+if [ -z "${1}" ] ; then
+    for script in $(find "$CLI_TEST_SCRIPT/cli" -name '*.test.sh' | sort) ; do
+        run "$script" ;
+    done
+    for script in $(find "$CLI_TEST_SCRIPT/cmd" -name '*.test.sh' | sort) ; do
+        AVAX_DEBUG_RPC=1 AVAX_ARGS_RPC="" AVAX_PIPE_RPC="" AVAX_NODE="" \
+            run "$script" ;
+    done
+else
+    for script in $(find "$CLI_TEST_SCRIPT/${1}" -name '*.test.sh' | sort) ; do
+        AVAX_DEBUG_RPC=1 AVAX_ARGS_RPC="" AVAX_PIPE_RPC="" AVAX_NODE="" \
+            run "$script" ;
+    done
+fi
 
 ###############################################################################
 ###############################################################################
