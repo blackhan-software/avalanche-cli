@@ -60,6 +60,12 @@ function cli_help {
         printf "\n" ;
         printf "$(line_for 'health' "$2")" ;
     fi
+    if [[ -z "$1" || "$1" == "index" ]] ; then
+        printf "\n" ;
+        printf "\n${BB}Index API:${NB}\n\n$(text_for 'index')" ;
+        printf "\n" ;
+        printf "$(line_for 'index' "$2")" ;
+    fi
     if [[ -z "$1" || "$1" == "info" ]] ; then
         printf "\n" ;
         printf "\n${BB}Info API:${NB}\n\n$(text_for 'info')" ;
@@ -309,12 +315,21 @@ CLI_HELP+=( "avax|import-key|Give a user control over an address by providing th
 CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}https://docs.avax.network/build/avalanchego-apis/health-api${NN}" ) ;
 CLI_HELP+=( "health|get-liveness|Get health check on this node." ) ;
 
+## Index API:
+CLI_TEXT+=( "index|AvalancheGo can be configured to run with an indexer. That is, it saves (indexes) every container (a block, vertex or transaction) it accepts on the X-Chain, P-Chain and C-Chain. To run AvalancheGo with indexing enabled, use command line flag ${BB}--index-enabled${NB}. AvalancheGo will only index containers that are accepted when running with ${BB}--index-enabled${NB}. To ensure your node has a complete index, run a node with a fresh database and ${BB}--index-enabled${NB}. The node will accept every block, vertex and transaction in the network history during bootstrapping, ensuring your index is complete. It is OK to turn off your node if it is running with indexing enabled. If it restarts with indexing still enabled, it will accept all containers that were accepted while it was offline. The indexer should never fail to index an accepted block, vertex or transaction. Indexed containers (that is, accepted blocks, vertices and transactions) are timestamped with the time at which the node accepted that container. Note that if the container was indexed during bootstrapping, other nodes may have accepted the container much earlier. Every container indexed during bootstrapping will be timestamped with the time at which the node bootstrapped, not when it was first accepted by the network. Note that for DAGs (including the X-Chain), nodes may accept vertices and transactions in a different order from one another. This document shows how to query data from AvalancheGo's Index API. The Index API is only available when running with ${BB}--index-enabled${NB}. See: ${LK}https://docs.avax.network/build/avalanchego-apis/index-api${NN}" ) ;
+CLI_HELP+=( "index|get-container-by-index|Get container by index. The first container accepted is at index 0, the second is at index 1, etc." ) ;
+CLI_HELP+=( "index|get-container-by-range|Returns containers with indices in [${BB}startIndex${NB}, ${BB}startIndex+1${NB}, ... , ${BB}startIndex${NB} + ${BB}numToFetch - 1${NB}]. ${BB}numToFetch${NB} must be in [${BB}0${NB},${BB}1024${NB}]." ) ;
+CLI_HELP+=( "index|get-index|Get a container's index." ) ;
+CLI_HELP+=( "index|get-last-accepted|Get the most recently accepted container." ) ;
+CLI_HELP+=( "index|is-accepted|Returns true if the container is in this index." ) ;
+
 ## Info API:
 CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/build/avalanchego-apis/info-api${NN}" ) ;
 CLI_HELP+=( "info|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
 CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "info|get-network-name|Get the name of the network this node is running on." ) ;
 CLI_HELP+=( "info|get-node-id|Get the ID of this node." ) ;
+CLI_HELP+=( "info|get-node-ip|Get the IP of this node." ) ;
 CLI_HELP+=( "info|get-node-version|Get the version of this node." ) ;
 CLI_HELP+=( "info|get-tx-fee|Get the transaction fee of the network." ) ;
 CLI_HELP+=( "info|is-bootstrapped|Check whether a given chain is done bootstrapping." ) ;
