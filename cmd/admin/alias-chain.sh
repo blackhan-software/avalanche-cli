@@ -28,7 +28,7 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-b" "--blockchain-id=" "--chain=" ) ;
+    options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-a" "--alias=" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;

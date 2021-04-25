@@ -44,7 +44,7 @@ function cli_options {
     options+=( "-c" "--change=" "--change-address=" ) ;
     options+=( "-u" "--username=" ) ;
     options+=( "-p" "--password=" ) ;
-    options+=( "-b" "--blockchain-id=" ) ;
+    options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;

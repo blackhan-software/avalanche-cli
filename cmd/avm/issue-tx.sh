@@ -31,7 +31,7 @@ function cli_options {
     local -a options ;
     options+=( "-t" "--tx=" ) ;
     options+=( "-e" "--encoding=" ) ;
-    options+=( "-b" "--blockchain-id=" ) ;
+    options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
