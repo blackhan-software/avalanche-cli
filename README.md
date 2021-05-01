@@ -71,59 +71,7 @@ Description     : A package manager
 
 ## Usage
 
-All CLI options of the `avalanche-cli` tool can also be set via environment variables. It assumes by default an [AVAX] node available at `127.0.0.1:9650` &ndash; although this can be changed by setting and exporting the `AVAX_NODE` variable *or* by using the corresponding `--node` (`-N`) option.
-
-### User creation
-
-Let's see how a new `keystore` user is created:
-
-```sh
-$ avalanche-cli keystore create-user -h
-```
-```
-Usage: keystore create-user [-u|--username=${AVAX_USERNAME}] [-p|--password=${AVAX_PASSWORD}] [-N|--node=${AVAX_NODE-127.0.0.1:9650}] [-S|--silent-rpc|${AVAX_SILENT_RPC}] [-V|--verbose-rpc|${AVAX_VERBOSE_RPC}] [-Y|--yes-run-rpc|${AVAX_YES_RUN_RPC}] [-h|--help]
-```
-
-```sh
-$ avalanche-cli keystore create-user -u MyUser -p MySecret-1453
-```
-```
-curl --url '127.0.0.1:9650/ext/keystore' --header 'content-type:application/json' --data '{"jsonrpc":"2.0","id":3411,"method":"keystore.createUser","params":{"username":"MyUser","password":"…"}}'
-```
-By default, `avalanche-cli` does *not* run the command, but simply shows the corresponding `curl` request (without the `password`). If some parameter had been missing or unexpected, then the *usage* string would have been re-shown. To actually invoke the command the `-Y` option needs to be appended:
-
-```sh
-$ avalanche-cli keystore create-user -u MyUser -p MySecret-1453 -Y
-```
-```json
-$ {"jsonrpc":"2.0","result":{"success":true},"id":21265}
-```
-
-Since most of the commands expect a username and a password, let's export them as environment variables, so they can be re-used:
-
-```sh
-$  export AVAX_USERNAME=MyUser AVAX_PASSWORD=MySecret-1453
-```
-
-Please note, that the line above starts with an *empty space* (`$__export AVAX_..`) to avoid the variables getting cached in the `bash` history! In general this is good practice when handling credentials via the CLI (but otherwise it is not required).
-
-### User deletion
-
-Let's delete the previously created user, where it is not required to provide the `-u` (`--username`) and `-p` (`--password`) options again, since the corresponding environment variables have been exported above:
-
-```sh
-$ avalanche-cli keystore delete-user
-```
-```
-curl --url '127.0.0.1:9650/ext/keystore' --header 'content-type:application/json' --data '{"jsonrpc":"2.0","id":26347,"method":"keystore.deleteUser","params":{"username":"MyUser","password":"…"}}'
-```
-
-```sh
-$ avalanche-cli keystore delete-user -Y
-```
-```json
-{"jsonrpc":"2.0","result":{"success":true},"id":31641}
-```
+All CLI options of the `avalanche-cli` tool can also be set via environment variables. It assumes by default an [AVAX] node available at `https://api.avax.network` &ndash; although this can be changed by setting and exporting the `AVAX_NODE` variable *or* by using the corresponding `--node` (`-N`) option.
 
 ### JSON processing with [`jq`]
 
@@ -134,34 +82,37 @@ $ avalanche-cli info peers -YS | jq .result.peers[0]
 ```
 ```json
 {
-  "ip": "185.144.83.145:9651",
-  "publicIP": "185.144.83.145:9651",
-  "id": "F7qAwDMgFCJ1TG9U4sjFKeYNGKfbToGE5",
-  "version": "avalanche/0.5.5",
-  "lastSent": "2020-06-27T04:16:56+02:00",
-  "lastReceived": "2020-06-27T04:16:38+02:00"
+  "ip": "52.139.201.134:48452",
+  "publicIP": "52.139.201.134:9651",
+  "nodeID": "NodeID-DueWyGi3B9jtKfa9mPoecd4YSDJ1ftF69",
+  "version": "avalanche/1.3.2",
+  "up": true,
+  "lastSent": "2021-05-01T18:33:38Z",
+  "lastReceived": "2021-05-01T18:33:38Z",
+  "benched": []
 }
 ```
+
 ..where the `-S` (`--silent-rpc`) option tells the internal `curl` tool to not produce unnessary output, so we get the desired result from above. ;D
 
 ## Common Options
 
 All commands share the following options and corresponding environment variables:
 
-### `${AVAX_NODE-127.0.0.1:9650}` or `--node` (`-N`)
+### `${AVAX_NODE-https://api.avax.network}` or `--node` (`-N`)
 
-Can be used to set the [AVAX] node which the `avalanche-cli` tool will be communicating with &ndash; where the default is `127.0.0.1:9650`. For example:
+Can be used to set the [AVAX] node which the `avalanche-cli` tool will be communicating with &ndash; where the default is `https://api.avax.network`. For example:
 
 ```sh
-$ avalanche-cli info peers -N=127.0.0.1:9650
+$ avalanche-cli info peers -N=https://api.avax.network
 ```
 
 ```
-$ avalanche-cli info peers --node=127.0.0.1:9650
+$ avalanche-cli info peers --node=https://api.avax.network
 ```
 
 ```
-$ AVAX_NODE=127.0.0.1:9650 avalanche-cli info peers
+$ AVAX_NODE=https://api.avax.network avalanche-cli info peers
 ```
 
 ### `${AVAX_YES_RUN_RPC}` or `--yes-run-rpc` (`-Y`)

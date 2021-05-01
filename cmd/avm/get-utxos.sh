@@ -23,7 +23,7 @@ function cli_help {
     usage+=" [--start-index-utxo=\${AVAX_START_INDEX_UTXO}]" ;
     usage+=" [-s|--source-chain=\${AVAX_SOURCE_CHAIN}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
-    usage+=" [-N|--node=\${AVAX_NODE-127.0.0.1:9650}]" ;
+    usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
     usage+=" [-Y|--yes-run-rpc|\${AVAX_YES_RUN_RPC}]" ;
@@ -108,7 +108,7 @@ function cli {
         AVAX_BLOCKCHAIN_ID="X" ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
-        AVAX_NODE="127.0.0.1:9650" ;
+        AVAX_NODE="https://api.avax.network" ;
     fi
     shift $((OPTIND-1)) ;
 }
