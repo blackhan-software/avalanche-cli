@@ -39,7 +39,7 @@ function cli_options {
     options+=( "--start-index-address=" ) ;
     options+=( "--start-index-utxo=" ) ;
     options+=( "-s" "--source-chain=" ) ;
-    options+=( "-e" "--encoding=" ) ;
+    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;

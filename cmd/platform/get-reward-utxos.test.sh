@@ -2,7 +2,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh platform get-tx" ;
+    printf "./avalanche-cli.sh platform get-reward-utxos" ;
 }
 
 function check {
@@ -17,7 +17,7 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"platform.getTx",' ;
+    expect_d+='"method":"platform.getRewardUTXOs",' ;
     expect_d+='"params":{' ;
     expect_d+='"txID":"TX_ID",' ;
     expect_d+='"encoding":"cb58"' ;
@@ -27,15 +27,15 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_platform__get_tx_1a {
+function test_platform__get_utxos_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) -t TX_ID -e cb58)" ;
 }
 
-function test_platform__get_tx_1b {
+function test_platform__get_utxos_1b {
     check "$(AVAX_ID_RPC=1 AVAX_TX_ID=TX_ID $(cmd) -e cb58)" ;
 }
 
-function test_platform__get_tx_1c {
+function test_platform__get_utxos_1c {
     check "$(AVAX_ID_RPC=1 AVAX_ENCODING=cb58 $(cmd) -t TX_ID)" ;
 }
 

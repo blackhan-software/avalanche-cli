@@ -40,7 +40,7 @@ function cli_options {
     local -a options ;
     options+=( "-a" "--asset-id=" ) ;
     options+=( "-P" "--payload=" ) ;
-    options+=( "-e" "--encoding=" ) ;
+    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
     options+=( "-@" "--to=" ) ;
     options+=( "-f" "--from=" "--from-address=" ) ;
     options+=( "-c" "--change=" "--change-address=" ) ;

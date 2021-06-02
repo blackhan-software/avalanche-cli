@@ -15,9 +15,8 @@ source "$CMD_SCRIPT/../../cli/rpc/post.sh" ;
 function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
-    usage+=" [-t|--tx=\${AVAX_TX}]" ;
+    usage+=" [-t|--tx-id=\${AVAX_TX_ID}]" ;
     usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
-    usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -29,9 +28,8 @@ function cli_help {
 
 function cli_options {
     local -a options ;
-    options+=( "-t" "--tx=" ) ;
+    options+=( "-t" "--tx-id=" ) ;
     options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
-    options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -41,7 +39,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:t:e:b:-:" OPT "$@"
+    while getopts ":hSVYN:t:e:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -51,12 +49,10 @@ function cli {
         case "${OPT}" in
             list-options)
                 cli_options && exit 0 ;;
-            t|tx)
-                AVAX_TX="${OPTARG}" ;;
+            t|tx-id)
+                AVAX_TX_ID="${OPTARG}" ;;
             e|encoding)
                 AVAX_ENCODING="${OPTARG}" ;;
-            b|blockchain-id)
-                AVAX_BLOCKCHAIN_ID="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -71,14 +67,11 @@ function cli {
                 cli_help && exit 1 ;;
         esac
     done
-    if [ -z "$AVAX_TX" ] ; then
+    if [ -z "$AVAX_TX_ID" ] ; then
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_ENCODING" ] ; then
         AVAX_ENCODING="cb58" ;
-    fi
-    if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
-        AVAX_BLOCKCHAIN_ID="X" ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="https://api.avax.network" ;
@@ -88,19 +81,19 @@ function cli {
 
 
 function rpc_method {
-    printf "wallet.issueTx" ;
+    printf "platform.getRewardUTXOs" ;
 }
 
 function rpc_params {
     printf '{' ;
-    printf '"tx":"%s",' "$AVAX_TX" ;
+    printf '"txID":"%s",' "$AVAX_TX_ID" ;
     printf '"encoding":"%s"' "$AVAX_ENCODING" ;
     printf '}' ;
 }
 
 ###############################################################################
 
-cli "$@" && rpc_post "$AVAX_NODE/ext/bc/$AVAX_BLOCKCHAIN_ID/wallet" "$(rpc_data)" ;
+cli "$@" && rpc_post "$AVAX_NODE/ext/P" "$(rpc_data)" ;
 
 ###############################################################################
 ###############################################################################

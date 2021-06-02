@@ -16,6 +16,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-t|--tx-id=\${AVAX_TX_ID}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -28,6 +29,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-t" "--tx-id=" ) ;
+    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -37,7 +39,7 @@ function cli_options {
 }
 
 function cli {
-    while getopts ":hSVYN:t:-:" OPT "$@"
+    while getopts ":hSVYN:t:e:-:" OPT "$@"
     do
         if [ "$OPT" = "-" ] ; then
             OPT="${OPTARG%%=*}" ;
@@ -49,6 +51,8 @@ function cli {
                 cli_options && exit 0 ;;
             t|tx-id)
                 AVAX_TX_ID="${OPTARG}" ;;
+            e|encoding)
+                AVAX_ENCODING="${OPTARG}" ;;
             N|node)
                 AVAX_NODE="${OPTARG}" ;;
             S|silent-rpc)
@@ -66,6 +70,9 @@ function cli {
     if [ -z "$AVAX_TX_ID" ] ; then
         cli_help && exit 1 ;
     fi
+    if [ -z "$AVAX_ENCODING" ] ; then
+        AVAX_ENCODING="cb58" ;
+    fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="https://api.avax.network" ;
     fi
@@ -79,7 +86,8 @@ function rpc_method {
 
 function rpc_params {
     printf '{' ;
-    printf '"txID":"%s"' "$AVAX_TX_ID" ;
+    printf '"txID":"%s",' "$AVAX_TX_ID" ;
+    printf '"encoding":"%s"' "$AVAX_ENCODING" ;
     printf '}' ;
 }
 

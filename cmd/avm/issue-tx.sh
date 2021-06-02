@@ -30,7 +30,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-t" "--tx=" ) ;
-    options+=( "-e" "--encoding=" ) ;
+    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
     options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
