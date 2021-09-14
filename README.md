@@ -1,5 +1,5 @@
 [![NPM version](https://badge.fury.io/js/avalanche-cli.svg)](https://npmjs.org/package/avalanche-cli)
-[![Build Status](https://travis-ci.org/hsk81/avalanche-cli.svg?branch=master)](https://travis-ci.org/hsk81/avalanche-cli)
+[![Build Status](https://api.travis-ci.com/hsk81/avalanche-cli.svg?branch=master)](https://app.travis-ci.com/github/hsk81/avalanche-cli)
 
 # A Command Line Interface for Avalanche APIs
 
