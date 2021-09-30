@@ -66,7 +66,7 @@ function cli {
 }
 
 function rpc_method {
-    printf "health.getLiveness" ;
+    printf "health.health" ;
 }
 
 function rpc_params {

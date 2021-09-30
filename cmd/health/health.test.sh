@@ -3,7 +3,7 @@
 ###############################################################################
 
 function cmd {
-    printf "./avalanche-cli.sh health get-liveness" ;
+    printf "./avalanche-cli.sh health health" ;
 }
 
 function check {
@@ -18,7 +18,7 @@ function check {
     local expect_d ; expect_d="'{" ;
     expect_d+='"jsonrpc":"2.0",' ;
     expect_d+='"id":1,' ;
-    expect_d+='"method":"health.getLiveness",' ;
+    expect_d+='"method":"health.health",' ;
     expect_d+='"params":{' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
@@ -26,7 +26,7 @@ function check {
     assertEquals "$expect" "$result" ;
 }
 
-function test_health__get_liveness {
+function test_health__health {
     check "$(AVAX_ID_RPC=1 $(cmd))" ;
 }
 
