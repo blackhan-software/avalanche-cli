@@ -242,6 +242,18 @@ $ avalanche-cli -h ## show help info
 
 While the recommendation above holds true for GNU/Linux users, it probably may be skipped for macOS users. Further, `zsh` users may also need to adjust the instructions accordingly (since they are for `bash` users).
 
+### How to enable `zsh` completions?
+
+Enable `zsh`'s `bash` completion script *compatiblity mode*, by appending the snippet below to your `.zshrc` configuration:
+
+```sh
+# Use compatiblity mode for bash completions
+if [[ -e $HOME/.bash_completion ]]; then
+  autoload bashcompinit && bashcompinit
+  source $HOME/.bash_completion           
+fi
+```
+
 ## Copyright
 
 (c) 2021, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
