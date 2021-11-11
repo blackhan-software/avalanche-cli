@@ -334,6 +334,7 @@ CLI_HELP+=( "info|get-node-version|Get the version of this node." ) ;
 CLI_HELP+=( "info|get-tx-fee|Get the transaction fee of the network." ) ;
 CLI_HELP+=( "info|is-bootstrapped|Check whether a given chain is done bootstrapping." ) ;
 CLI_HELP+=( "info|peers|Get description of peer connections." ) ;
+CLI_HELP+=( "info|uptime|Returns the network's observed uptime of this node." ) ;
 
 ## IPC API:
 CLI_TEXT+=( "ipcs|The IPC API allows users to create UNIX domain sockets for blockchains to publish to. When the blockchain accepts a vertex/block it will publish it to a socket and the decisions contained inside will be published to another. See: ${LK}https://docs.avax.network/build/avalanchego-apis/ipc-api${NN}" ) ;
