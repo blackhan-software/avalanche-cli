@@ -17,7 +17,7 @@ function cli_help {
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-i|--start-index=\${AVAX_START_INDEX}]" ;
     usage+=" [-f|--num-to-fetch=\${AVAX_NUM_TO_FETCH}]" ;
-    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-hex}]" ;
     usage+=" [-b|--blockchain-id=\${AVAX_BLOCKCHAIN_ID-X}]" ;
     usage+=" [-n|--index-name=\${AVAX_INDEX_NAME-tx|block}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
@@ -33,7 +33,7 @@ function cli_options {
     local -a options ;
     options+=( "-i" "--start-index=" ) ;
     options+=( "-f" "--num-to-fetch=" ) ;
-    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
+    options+=( "-e" "--encoding=" "--encoding=hex" ) ;
     options+=( "-b" "--blockchain-id=" "--blockchain-id=X" "--blockchain-id=P" "--blockchain-id=C" ) ;
     options+=( "-n" "--index-name=" "--index-name=tx" "--index-name=vtx" "--index-name=block" ) ;
     options+=( "-N" "--node=" ) ;
@@ -86,7 +86,7 @@ function cli {
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_ENCODING" ] ; then
-        AVAX_ENCODING="cb58" ;
+        AVAX_ENCODING="hex" ;
     fi
     if [ -z "$AVAX_BLOCKCHAIN_ID" ] ; then
         AVAX_BLOCKCHAIN_ID="X" ;

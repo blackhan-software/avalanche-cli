@@ -16,7 +16,7 @@ function cli_help {
     local usage ;
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-t|--tx-id=\${AVAX_TX_ID}]" ;
-    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-hex}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -29,7 +29,7 @@ function cli_help {
 function cli_options {
     local -a options ;
     options+=( "-t" "--tx-id=" ) ;
-    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
+    options+=( "-e" "--encoding=" "--encoding=hex" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -71,7 +71,7 @@ function cli {
         cli_help && exit 1 ;
     fi
     if [ -z "$AVAX_ENCODING" ] ; then
-        AVAX_ENCODING="cb58" ;
+        AVAX_ENCODING="hex" ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="https://api.avax.network" ;

@@ -22,7 +22,7 @@ function cli_help {
     usage+=" [--start-index-address=\${AVAX_START_INDEX_ADDRESS}]" ;
     usage+=" [--start-index-utxo=\${AVAX_START_INDEX_UTXO}]" ;
     usage+=" [-s|--source-chain=\${AVAX_SOURCE_CHAIN}]" ;
-    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-hex}]" ;
     usage+=" [-N|--node=\${AVAX_NODE-https://api.avax.network}]" ;
     usage+=" [-S|--silent-rpc|\${AVAX_SILENT_RPC}]" ;
     usage+=" [-V|--verbose-rpc|\${AVAX_VERBOSE_RPC}]" ;
@@ -39,7 +39,7 @@ function cli_options {
     options+=( "--start-index-address=" ) ;
     options+=( "--start-index-utxo=" ) ;
     options+=( "-s" "--source-chain=" ) ;
-    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
+    options+=( "-e" "--encoding=" "--encoding=hex" ) ;
     options+=( "-N" "--node=" ) ;
     options+=( "-S" "--silent-rpc" ) ;
     options+=( "-V" "--verbose-rpc" ) ;
@@ -105,7 +105,7 @@ function cli {
         fi
     fi
     if [ -z "$AVAX_ENCODING" ] ; then
-        AVAX_ENCODING="cb58" ;
+        AVAX_ENCODING="hex" ;
     fi
     if [ -z "$AVAX_NODE" ] ; then
         AVAX_NODE="https://api.avax.network" ;

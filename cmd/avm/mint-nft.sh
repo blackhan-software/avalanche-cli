@@ -20,7 +20,7 @@ function cli_help {
     usage="${BB}Usage:${NB} $(command_fqn "${0}")" ;
     usage+=" [-a|--asset-id=\${AVAX_ASSET_ID}]" ;
     usage+=" [-P|--payload=\${AVAX_PAYLOAD}]" ;
-    usage+=" [-e|--encoding=\${AVAX_ENCODING-cb58}]" ;
+    usage+=" [-e|--encoding=\${AVAX_ENCODING-hex}]" ;
     usage+=" [-@|--to=\${AVAX_TO}]" ;
     usage+=" [-f|--from|--from-address=\${AVAX_FROM_ADDRESS_\$IDX}]*" ;
     usage+=" [-c|--change|--change-address=\${AVAX_CHANGE_ADDRESS_\$IDX}]" ;
@@ -40,7 +40,7 @@ function cli_options {
     local -a options ;
     options+=( "-a" "--asset-id=" ) ;
     options+=( "-P" "--payload=" ) ;
-    options+=( "-e" "--encoding=" "--encoding=cb58" "--encoding=hex" ) ;
+    options+=( "-e" "--encoding=" "--encoding=hex" ) ;
     options+=( "-@" "--to=" ) ;
     options+=( "-f" "--from=" "--from-address=" ) ;
     options+=( "-c" "--change=" "--change-address=" ) ;
@@ -108,7 +108,7 @@ function cli {
         cli_help && exit 1 ;
     fi
     if [ -n "$AVAX_ENCODING" ] ; then
-        local -a AVAX_ENCODINGS=( "cb58" "hex" ) ;
+        local -a AVAX_ENCODINGS=( "hex" ) ;
         if [[ ! " ${AVAX_ENCODINGS[*]} " =~ " ${AVAX_ENCODING} " ]]; then
             cli_help && exit 1 ;
         fi

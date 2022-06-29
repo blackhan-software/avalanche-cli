@@ -21,7 +21,7 @@ function check {
     expect_d+='"method":"index.getContainerByIndex",' ;
     expect_d+='"params":{' ;
     expect_d+='"index":0,' ;
-    expect_d+='"encoding":"cb58"' ;
+    expect_d+='"encoding":"hex"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -33,43 +33,43 @@ function test_index_get_container_by_index_0 {
 }
 
 function test_index_get_container_by_index_1 {
-    check "$(AVAX_ID_RPC=1 $(cmd) -i 0 -e cb58 -b X -n tx)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -i 0 -e hex -b X -n tx)" ;
 }
 
 function test_index_get_container_by_index_2 {
-    check "$(AVAX_ID_RPC=1 AVAX_INDEX=0 $(cmd) -e cb58 -b X -n tx)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_INDEX=0 $(cmd) -e hex -b X -n tx)" ;
 }
 
 function test_index_get_container_by_index_3 {
-    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=cb58 $(cmd) -i 0 -b X -n tx)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=hex $(cmd) -i 0 -b X -n tx)" ;
 }
 
 function test_index_get_container_by_index_4a {
-    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=X $(cmd) -i 0 -e cb58 -n tx)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=X $(cmd) -i 0 -e hex -n tx)" ;
 }
 
 function test_index_get_container_by_index_4b {
-    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=tx $(cmd) -i 0 -e cb58 -b X)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=tx $(cmd) -i 0 -e hex -b X)" ;
 }
 
 function test_index_get_container_by_index_4c {
-    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=vtx $(cmd) -i 0 -e cb58 -b X)" "X/vtx" ;
+    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=vtx $(cmd) -i 0 -e hex -b X)" "X/vtx" ;
 }
 
 function test_index_get_container_by_index_5a {
-    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=P $(cmd) -i 0 -e cb58 -n block)" "P/block" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=P $(cmd) -i 0 -e hex -n block)" "P/block" ;
 }
 
 function test_index_get_container_by_index_5b {
-    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=block $(cmd) -i 0 -e cb58 -b P)" "P/block" ;
+    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=block $(cmd) -i 0 -e hex -b P)" "P/block" ;
 }
 
 function test_index_get_container_by_index_6a {
-    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=C $(cmd) -i 0 -e cb58 -n block)" "C/block" ;
+    check "$(AVAX_ID_RPC=1 AVAX_BLOCKCHAIN_ID=C $(cmd) -i 0 -e hex -n block)" "C/block" ;
 }
 
 function test_index_get_container_by_index_6b {
-    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=block $(cmd) -i 0 -e cb58 -b C)" "C/block" ;
+    check "$(AVAX_ID_RPC=1 AVAX_INDEX_NAME=block $(cmd) -i 0 -e hex -b C)" "C/block" ;
 }
 
 ###############################################################################

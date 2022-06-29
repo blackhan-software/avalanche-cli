@@ -27,7 +27,7 @@ function check {
     expect_d+='"utxo":"SI_UTXO"' ;
     expect_d+="}," ;
     expect_d+='"sourceChain":"X",' ;
-    expect_d+='"encoding":"cb58"' ;
+    expect_d+='"encoding":"hex"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -37,42 +37,42 @@ function check {
 function test_avm__get_utxos_1a {
     check "$(AVAX_ID_RPC=1 $(cmd) -@X1 -@X2 -@X3 -l 1024 \
         --start-index-address=SI_X0 --start-index-utxo=SI_UTXO \
-        -s X -e cb58)" ;
+        -s X -e hex)" ;
 }
 
 function test_avm__get_utxos_1b {
     check "$(AVAX_ID_RPC=1 \
         AVAX_ADDRESS_0=X1 AVAX_ADDRESS_1=X2 AVAX_ADDRESS_2=X3 $(cmd) -l 1024 \
         --start-index-address=SI_X0 --start-index-utxo=SI_UTXO \
-        -s X -e cb58)" ;
+        -s X -e hex)" ;
 }
 
 function test_avm__get_utxos_1c {
     check "$(AVAX_ID_RPC=1 AVAX_LIMIT=1024 $(cmd) -@X1 -@X2 -@X3 \
         --start-index-address=SI_X0 --start-index-utxo=SI_UTXO \
-        -s X -e cb58)" ;
+        -s X -e hex)" ;
 }
 
 function test_avm__get_utxos_1d {
     check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_ADDRESS=SI_X0 \
         $(cmd) -@X1 -@X2 -@X3 --limit=1024 --start-index-utxo=SI_UTXO \
-        -s X -e cb58)" ;
+        -s X -e hex)" ;
 }
 
 function test_avm__get_utxos_1e {
     check "$(AVAX_ID_RPC=1 AVAX_START_INDEX_UTXO=SI_UTXO \
         $(cmd) -@X1 -@X2 -@X3 --limit=1024 --start-index-address=SI_X0 \
-        -s X -e cb58)" ;
+        -s X -e hex)" ;
 }
 
 function test_avm__get_utxos_1f {
     check "$(AVAX_ID_RPC=1 AVAX_SOURCE_CHAIN=X $(cmd) -@X1 -@X2 -@X3 -l 1024 \
         --start-index-address=SI_X0 --start-index-utxo=SI_UTXO \
-        -e cb58)" ;
+        -e hex)" ;
 }
 
 function test_avm__get_utxos_1h {
-    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=cb58 $(cmd) -@X1 -@X2 -@X3 -l 1024 \
+    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=hex $(cmd) -@X1 -@X2 -@X3 -l 1024 \
         --start-index-address=SI_X0 --start-index-utxo=SI_UTXO \
         -s X)" ;
 }

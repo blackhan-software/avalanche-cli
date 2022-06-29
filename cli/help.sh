@@ -228,7 +228,7 @@ CLI_HELP+=( "avm|get-utxos|Get the UTXOs that reference a given address. If 'sou
 CLI_HELP+=( "avm|import|Finalize a transfer of AVAX from the P-Chain or C-Chain to the X-Chain. Before this method is called, you must call the P-Chain’s 'platform.exportAVAX' or C-Chain’s 'avax.export' method to initiate the transfer." ) ;
 CLI_HELP+=( "avm|import-avax|Finalize a transfer of AVAX from the P-Chain to the X-Chain. Before this method is called, you must call the P-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "avm|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
-CLI_HELP+=( "avm|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Can be either 'cb58' or 'hex'. Defaults to 'cb58'." ) ;
+CLI_HELP+=( "avm|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Defaults to 'hex'." ) ;
 CLI_HELP+=( "avm|list-addresses|List addresses controlled by the given user." ) ;
 CLI_HELP+=( "avm|mint|Mint units of a variable-cap asset (an asset created with 'avm create-variable-cap-asset')." ) ;
 CLI_HELP+=( "avm|mint-nft|Mint non-fungible tokens which were created with 'avm create-nft-asset'." ) ;
@@ -239,7 +239,7 @@ CLI_HELP+=( "avm|send-nft|Send a non-fungible token." ) ;
 ## Exchange Chain (X-Chain) Wallet API:
 CLI_HELP+=( "wallet|send|Send a quantity of an asset to an address and assume the tx will be accepted so that future calls can use the modified UTXO set." ) ;
 CLI_HELP+=( "wallet|send-multiple|Send multiple transfers of 'amount' of 'assetID', to a specified address from a list of owned of addresses and assume the tx will be accepted so that future calls can use the modified UTXO set." ) ;
-CLI_HELP+=( "wallet|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Can be either 'cb58' or 'hex'. Defaults to 'cb58'." ) ;
+CLI_HELP+=( "wallet|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Defaults to 'hex'." ) ;
 
 ## Contract Chain (C-Chain) API:
 CLI_TEXT+=( "evm|This section describes the API of the C-Chain, which is an instance of the Ethereum Virtual Machine (EVM). ${BB}Note${NB}: Ethereum has its own notion of 'networkID' and 'chainID'. The C-Chain uses '1' and '43110' for these values, respectively. These have no relationship to AVAX's view of 'networkID' and 'chainID', and are purely internal to the C-Chain. See: ${LK}https://docs.avax.network/build/avalanchego-apis/contract-chain-c-chain-api${NN}")

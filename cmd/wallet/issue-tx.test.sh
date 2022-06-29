@@ -21,7 +21,7 @@ function check {
     expect_d+='"method":"wallet.issueTx",' ;
     expect_d+='"params":{' ;
     expect_d+='"tx":"TX",' ;
-    expect_d+='"encoding":"cb58"' ;
+    expect_d+='"encoding":"hex"' ;
     expect_d+="}}'" ;
     assertEquals "$expect_d" "$result_d" ;
     local expect="curl --url $expect_u --header $expect_h --data $expect_d" ;
@@ -29,7 +29,7 @@ function check {
 }
 
 function test_wallet__issue_tx_1a {
-    check "$(AVAX_ID_RPC=1 $(cmd) -t TX -e cb58)" ;
+    check "$(AVAX_ID_RPC=1 $(cmd) -t TX -e hex)" ;
 }
 
 function test_wallet__issue_tx_1b {
@@ -37,7 +37,7 @@ function test_wallet__issue_tx_1b {
 }
 
 function test_wallet__issue_tx_1c {
-    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=cb58 $(cmd) -t TX)" ;
+    check "$(AVAX_ID_RPC=1 AVAX_ENCODING=hex $(cmd) -t TX)" ;
 }
 
 function test_wallet__issue_tx_2a {
