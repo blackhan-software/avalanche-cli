@@ -4,7 +4,7 @@
 # A Command Line Interface for Avalanche APIs
 
 ```
-Usage: avalanche-cli [OPTIONS] COMMMAND
+Usage: avalanche-cli [OPTIONS] COMMAND
 ```
 
 ## Options
@@ -250,13 +250,13 @@ Enable `zsh`'s `bash` completion script *compatiblity mode*, by appending the sn
 # Use compatiblity mode for bash completions
 if [[ -e $HOME/.bash_completion ]]; then
   autoload bashcompinit && bashcompinit
-  source $HOME/.bash_completion           
+  source $HOME/.bash_completion
 fi
 ```
 
 ## Copyright
 
-(c) 2021, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
+(c) 2022, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
 
 [AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
