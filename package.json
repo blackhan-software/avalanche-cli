@@ -23,6 +23,8 @@
     "url": "git+https://github.com/hsk81/avalanche-cli.git"
   },
   "scripts": {
+    "prepack": "./npm/prepack.sh",
+    "postpack": "./npm/postpack.sh",
     "postinstall": "./npm/postinstall.sh",
     "postuninstall": "./npm/postuninstall.sh",
     "test": "./avalanche-cli.test.sh"
