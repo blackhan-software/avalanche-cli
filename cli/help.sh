@@ -310,6 +310,7 @@ CLI_HELP+=( "avax|export-key|Get the private key that controls a given address. 
 CLI_HELP+=( "avax|get-utxos|Gets the UTXOs that reference a given address." ) ;
 CLI_HELP+=( "avax|import|Finalize the transfer of a non-AVAX or AVAX from the X-Chain to the C-Chain. Before this method is called, you must call the X-Chain's 'export' method to initiate the transfer." ) ;
 CLI_HELP+=( "avax|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
+CLI_HELP+=( "avax|issue-tx|Send a signed transaction to the network. 'encoding' specifies the format of the signed transaction. Can only be 'hex' when a value is provided." ) ;
 
 ## Health API:
 CLI_TEXT+=( "health|This API can be used for measuring node health. See: ${LK}https://docs.avax.network/reference/avalanchego/health-api${NN}" ) ;
