@@ -31,12 +31,22 @@ if [ -z "${1}" ] ; then
         run "$script" ;
     done
     for script in $(find "$CLI_TEST_SCRIPT/cmd" -name '*.test.sh' | sort) ; do
-        AVAX_DEBUG_RPC=1 AVAX_ARGS_RPC="" AVAX_PIPE_RPC="" AVAX_NODE="" AVAX_SUBNET_ID="" \
+        AVAX_ARGS_RPC="" \
+        AVAX_DEBUG_RPC=1 \
+        AVAX_NODE="" \
+        AVAX_PIPE_RPC="" \
+        AVAX_SILENT_RPC="" \
+        AVAX_SUBNET_ID="" \
             run "$script" ;
     done
 else
     for script in $(find "$CLI_TEST_SCRIPT/${1}" -name '*.test.sh' | sort) ; do
-        AVAX_DEBUG_RPC=1 AVAX_ARGS_RPC="" AVAX_PIPE_RPC="" AVAX_NODE="" AVAX_SUBNET_ID="" \
+        AVAX_ARGS_RPC="" \
+        AVAX_DEBUG_RPC=1 \
+        AVAX_PIPE_RPC="" \
+        AVAX_NODE="" \
+        AVAX_SILENT_RPC="" \
+        AVAX_SUBNET_ID="" \
             run "$script" ;
     done
 fi
