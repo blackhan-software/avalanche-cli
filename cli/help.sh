@@ -326,6 +326,7 @@ CLI_HELP+=( "index|is-accepted|Returns true if the container is in this index." 
 
 ## Info API:
 CLI_TEXT+=( "info|This API can be used to access basic information about the node. See: ${LK}https://docs.avax.network/reference/avalanchego/info-api${NN}" ) ;
+CLI_HELP+=( "info|acps|Get supported and objected ACPs of validators." ) ;
 CLI_HELP+=( "info|get-blockchain-id|Given a blockchain's alias, get its ID. (See 'avm alias-chain' for more context)." ) ;
 CLI_HELP+=( "info|get-network-id|Get the ID of the network this node is participating in." ) ;
 CLI_HELP+=( "info|get-network-name|Get the name of the network this node is running on." ) ;
