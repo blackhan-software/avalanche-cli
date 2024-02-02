@@ -382,6 +382,7 @@ CLI_HELP+=( "platform|get-stake|Get the amount of nAVAX staked by a set of addre
 CLI_HELP+=( "platform|get-staking-asset-id|Retrieve an assetID for a subnet's staking asset. Currently this always returns the primary network's staking assetID." ) ;
 CLI_HELP+=( "platform|get-subnets|Get all the subnets that exist." ) ;
 CLI_HELP+=( "platform|get-total-stake|Get the total amount of nAVAX staked on the primary network." ) ;
+CLI_HELP+=( "platform|get-timestamp|Get the current P-Chain timestamp." ) ;
 CLI_HELP+=( "platform|get-tx|Gets a transaction by its ID." ) ;
 CLI_HELP+=( "platform|get-tx-status|Gets a transaction's status by its ID." ) ;
 CLI_HELP+=( "platform|get-utxos|Gets the UTXOs that reference a given set address." ) ;
