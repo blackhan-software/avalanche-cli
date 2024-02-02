@@ -373,6 +373,7 @@ CLI_HELP+=( "platform|get-block|Returns the block with the given id." ) ;
 CLI_HELP+=( "platform|get-block-by-height|Returns block at the given height." ) ;
 CLI_HELP+=( "platform|get-blockchains|Get all the blockchains that exist (excluding the P-Chain)." ) ;
 CLI_HELP+=( "platform|get-blockchain-status|Get the status of a blockchain." ) ;
+CLI_HELP+=( "platform|get-current-supply|Returns an upper bound on amount of tokens that exist that can stake the requested Subnet. This is an upper bound because it does not account for burnt tokens, including transaction fees." ) ;
 CLI_HELP+=( "platform|get-current-validators|List the current validators of the given subnet." ) ;
 CLI_HELP+=( "platform|get-height|Returns the height of the last accepted block." ) ;
 CLI_HELP+=( "platform|get-min-stake|Get the minimum amount of AVAX required to validate the primary network and the minimum amount of AVAX that can be delegated." ) ;
