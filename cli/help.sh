@@ -386,6 +386,7 @@ CLI_HELP+=( "platform|get-timestamp|Get the current P-Chain timestamp." ) ;
 CLI_HELP+=( "platform|get-tx|Gets a transaction by its ID." ) ;
 CLI_HELP+=( "platform|get-tx-status|Gets a transaction's status by its ID." ) ;
 CLI_HELP+=( "platform|get-utxos|Gets the UTXOs that reference a given set address." ) ;
+CLI_HELP+=( "platform|get-validators-at|Get the validators and their weights of a Subnet or the Primary Network at a given P-Chain height." ) ;
 CLI_HELP+=( "platform|import-avax|Complete a transfer of AVAX from the X-Chain to the P-Chain. Before this method is called, you must call the X-Chain's 'export-avax' method to initiate the transfer." ) ;
 CLI_HELP+=( "platform|import-key|Give a user control over an address by providing the private key that controls the address." ) ;
 CLI_HELP+=( "platform|issue-tx|Issue a transaction to the P-Chain." ) ;
