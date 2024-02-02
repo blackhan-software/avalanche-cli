@@ -376,6 +376,7 @@ CLI_HELP+=( "platform|get-blockchain-status|Get the status of a blockchain." ) ;
 CLI_HELP+=( "platform|get-current-supply|Returns an upper bound on amount of tokens that exist that can stake the requested Subnet. This is an upper bound because it does not account for burnt tokens, including transaction fees." ) ;
 CLI_HELP+=( "platform|get-current-validators|List the current validators of the given subnet." ) ;
 CLI_HELP+=( "platform|get-height|Returns the height of the last accepted block." ) ;
+CLI_HELP+=( "platform|get-max-stake-amount|Returns the maximum amount of nAVAX staking to the named node during a particular time period." ) ;
 CLI_HELP+=( "platform|get-min-stake|Get the minimum amount of AVAX required to validate the primary network and the minimum amount of AVAX that can be delegated." ) ;
 CLI_HELP+=( "platform|get-pending-validators|List the validators in the pending validator set of the specified subnet. Each validator is not currently validating the subnet but will in the future." ) ;
 CLI_HELP+=( "platform|get-stake|Get the amount of nAVAX staked by a set of addresses. The amount returned does not include staking rewards." ) ;
