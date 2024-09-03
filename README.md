@@ -256,7 +256,7 @@ fi
 
 ## Copyright
 
-(c) 2022, Hasan Karahan, MSc in CS, ETH Zurich. Twitter: [@notexeditor](https://twitter.com/notexeditor).
+© 2024 [Moorhead LLC](#)
 
 [AVAX]: https://docs.avax.network/v1.0/en/quickstart/ava-getting-started/
 [`jq`]: https://stedolan.github.io/jq/
